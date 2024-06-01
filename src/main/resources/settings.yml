@@ -1,31 +1,31 @@
 compass-settings:
-  # Тип отображения компаса. Доступные значения: actionbar, bossbar
+  # Type of compass display. Available values: actionbar, bossbar
   type: bossbar
-  # Cтиль отображения компаса. Доступные значения: degrees, simple, rust
+  # Style of compass display. Available values: degrees, simple, rust
   display: rust
   bossbar:
-    # Цвет полоски боссбара. Доступные цвета:
+    # Color of the bossbar progressbar. Available colors:
     # PINK, BLUE, RED, GREEN, YELLOW, PURPLE, WHITE
     color: WHITE
-    # Должна ли полоска боссбара менять свой прогресс зависимо от
-    # поворота головы игрока
+    # Should the bossbar progressbar change its progress depending on
+    # the player's head rotation
     progress: false
 
 display-settings:
   degrees:
-    # Цвет отображения углов на компасе (display: degrees)
+    # Color of the angles displayed on the compass (display: degrees)
     angle-color: '#FFFFFF'
-    # Цвет отображения центрального угла на компасе (display: degrees)
+    # Color of the central angle displayed on the compass (display: degrees)
     angle-color-center: '#9966CC'
   rust:
-    # Цвет всего компаса (display: rust)
+    # Color of the entire compass (display: rust)
     color: '#FFFFFF'
 
 waypoint-settings:
-  # Цвет отображения кардинальных направлений (N, NE, E, ...)
+  # Color of the cardinal directions display (N, NE, E, ...)
   cardinal-color: '#00FFFF'
-  # Символ, используемый для обозначения точки дома на компасе
+  # Symbol used to mark the home point on the compass
   home-marker: '▼'
 
-# Отображать точки дома из Essentials на компасе?
+# Display home points from Essentials on the compass?
 essentials-home: true
