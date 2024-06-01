@@ -1,0 +1,8 @@
+name: HorizontalCompass
+version: '${version}'
+main: omg.alcoloid.horizontalcompass.HorizontalCompass
+api-version: '1.20'
+authors: [ alcoloid ]
+softdepend:
+  - Essentials
+  - ProtocolLib
