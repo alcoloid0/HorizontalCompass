@@ -3,6 +3,7 @@ import java.util.Calendar
 plugins {
     id("java")
     id("org.cadixdev.licenser") version "0.6.1"
+    id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
 group = "omg.alcoloid"
@@ -24,24 +25,33 @@ dependencies {
 
     // ProtocolLib
     compileOnly("com.comphenix.protocol:ProtocolLib:5.1.0")
+
+    // Adventure
+    implementation("net.kyori:adventure-platform-bukkit:4.3.2")
 }
 
 java {
     toolchain.languageVersion.set(JavaLanguageVersion.of(17))
 }
 
-tasks.processResources {
-    filesMatching("**/plugin.yml") {
-        expand("version" to project.version)
+tasks {
+    processResources {
+        filesMatching("**/plugin.yml") {
+            expand("version" to project.version)
+        }
+    }
+
+    withType<JavaCompile> {
+        options.encoding = "UTF-8"
+    }
+
+    shadowJar {
+        relocate("net.kyori.adventure", "omg.alcoloid.shaded.kyori.adventure")
     }
 }
 
-tasks.withType<JavaCompile> {
-    options.encoding = "UTF-8"
-}
-
 license {
-    header = resources.text.fromFile(file("HEADER.txt"))
+    header = resources.text.fromFile("HEADER.txt")
     properties {
         set("author", "alcoloid (alcoloid0)")
         set("year", Calendar.getInstance().get(Calendar.YEAR))
