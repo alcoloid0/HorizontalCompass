@@ -1,5 +1,8 @@
+import java.util.Calendar
+
 plugins {
     id("java")
+    id("org.cadixdev.licenser") version "0.6.1"
 }
 
 group = "omg.alcoloid"
@@ -35,4 +38,13 @@ tasks.processResources {
 
 tasks.withType<JavaCompile> {
     options.encoding = "UTF-8"
+}
+
+license {
+    header = resources.text.fromFile(file("HEADER.txt"))
+    properties {
+        set("author", "alcoloid (alcoloid0)")
+        set("year", Calendar.getInstance().get(Calendar.YEAR))
+    }
+    exclude("**/*.yml")
 }
