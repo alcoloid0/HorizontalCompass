@@ -43,7 +43,7 @@ public class HomeListener implements Listener {
     public void onHomeModify(@NotNull HomeModifyEvent event) {
         Player player = event.getHomeOwner().getBase();
 
-        if (!this.compassPlugin.getSettings().getEssentialsHome()) {
+        if (this.compassPlugin.getSettings().isEssentialsHomeDisabled()) {
             return;
         }
 

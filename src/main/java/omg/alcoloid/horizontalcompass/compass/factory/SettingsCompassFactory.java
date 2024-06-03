@@ -17,6 +17,7 @@
 
 package omg.alcoloid.horizontalcompass.compass.factory;
 
+import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.format.TextColor;
 import omg.alcoloid.horizontalcompass.compass.Compass;
 import omg.alcoloid.horizontalcompass.compass.display.CompassDisplay;
@@ -41,7 +42,8 @@ public final class SettingsCompassFactory implements CompassFactory {
 
     @Override
     public @NotNull Compass createBossBarCompass(@NotNull Player player) {
-        BossBarCompass compass = new BossBarCompass(player, this.createCompassDisplay());
+        Audience audience = this.settings.getPlugin().getAdventure().player(player);
+        BossBarCompass compass = new BossBarCompass(player, audience, this.createCompassDisplay());
         compass.setColor(this.settings.getBossBarColor());
         compass.setProgress(this.settings.getBossBarProgress());
         compass.getWaypoints().addAll(this.waypointFactory.getCardinalWaypointList());
@@ -50,7 +52,8 @@ public final class SettingsCompassFactory implements CompassFactory {
 
     @Override
     public @NotNull Compass createActionBarCompass(@NotNull Player player) {
-        Compass compass = new ActionBarCompass(player, this.createCompassDisplay());
+        Audience audience = this.settings.getPlugin().getAdventure().player(player);
+        Compass compass = new ActionBarCompass(player, audience, this.createCompassDisplay());
         compass.getWaypoints().addAll(this.waypointFactory.getCardinalWaypointList());
         return compass;
     }

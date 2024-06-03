@@ -11,14 +11,18 @@ version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
-    maven("https://repo.papermc.io/repository/maven-public/")
+
+    maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
     maven("https://repo.essentialsx.net/releases/")
     maven("https://repo.dmulloy2.net/repository/public/")
+
+    // For EssentialsX dependency
+    maven("https://papermc.io/repo/repository/maven-public/")
 }
 
 dependencies {
-    // Paper API
-    compileOnly("io.papermc.paper:paper-api:1.20.4-R0.1-SNAPSHOT")
+    // Spigot API
+    compileOnly("org.spigotmc:spigot-api:1.20.4-R0.1-SNAPSHOT")
 
     // Essentials
     compileOnly("net.essentialsx:EssentialsX:2.20.0")

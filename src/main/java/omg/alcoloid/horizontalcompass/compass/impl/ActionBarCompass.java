@@ -17,6 +17,7 @@
 
 package omg.alcoloid.horizontalcompass.compass.impl;
 
+import net.kyori.adventure.audience.Audience;
 import omg.alcoloid.horizontalcompass.compass.Compass;
 import omg.alcoloid.horizontalcompass.compass.display.CompassDisplay;
 import omg.alcoloid.horizontalcompass.util.SimpleBukkitTask;
@@ -26,8 +27,11 @@ import org.jetbrains.annotations.NotNull;
 public final class ActionBarCompass extends Compass implements Runnable {
     private final SimpleBukkitTask bukkitTask;
 
-    public ActionBarCompass(@NotNull Player player, @NotNull CompassDisplay display) {
-        super(player, display);
+    public ActionBarCompass(@NotNull Player player,
+                            @NotNull Audience audience,
+                            @NotNull CompassDisplay display) {
+
+        super(player, audience, display);
 
         this.bukkitTask = new SimpleBukkitTask(this);
     }
@@ -44,6 +48,6 @@ public final class ActionBarCompass extends Compass implements Runnable {
 
     @Override
     public void run() {
-        this.player.sendActionBar(this.display.getComponent());
+        this.audience.sendActionBar(this.display.getComponent());
     }
 }

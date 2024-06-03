@@ -20,24 +20,23 @@ package omg.alcoloid.horizontalcompass.settings;
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
+import omg.alcoloid.horizontalcompass.HorizontalCompass;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.util.Optional;
 
 public final class Settings {
-    private static final String DEFAULT_LOCATION_MARKER = "▼";
-    private static final String DEFAULT_HOME_MARKER = "\uD83C\uDFE0";
+    private static final String DEFAULT_HOME_MARKER = "▼";
     private static final String SETTINGS_FILE_NAME = "settings.yml";
 
-    private final JavaPlugin plugin;
+    private final HorizontalCompass plugin;
     private final File file;
     private FileConfiguration config;
 
-    public Settings(@NotNull JavaPlugin plugin) {
+    public Settings(@NotNull HorizontalCompass plugin) {
         this.plugin = plugin;
         this.file = new File(this.plugin.getDataFolder(), SETTINGS_FILE_NAME);
     }
@@ -84,15 +83,19 @@ public final class Settings {
     }
 
     public char getLocationMarker() {
-        return this.config.getString("waypoint-settings.location-marker", DEFAULT_LOCATION_MARKER).charAt(0);
+        return this.getHomeMarker();
     }
 
     public char getHomeMarker() {
         return this.config.getString("waypoint-settings.home-marker", DEFAULT_HOME_MARKER).charAt(0);
     }
 
-    public boolean getEssentialsHome() {
-        return this.config.getBoolean("essentials-home", true);
+    public boolean isEssentialsHomeDisabled() {
+        return !this.config.getBoolean("essentials-home", true);
+    }
+
+    public HorizontalCompass getPlugin() {
+        return this.plugin;
     }
 
     private @NotNull TextColor getConfigColor(String path, TextColor defaultColor) {

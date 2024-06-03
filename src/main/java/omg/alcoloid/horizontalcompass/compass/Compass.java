@@ -17,6 +17,7 @@
 
 package omg.alcoloid.horizontalcompass.compass;
 
+import net.kyori.adventure.audience.Audience;
 import omg.alcoloid.horizontalcompass.compass.display.CompassDisplay;
 import omg.alcoloid.horizontalcompass.waypoint.Waypoint;
 import org.bukkit.Location;
@@ -30,11 +31,16 @@ import java.util.Optional;
 
 public abstract class Compass {
     protected final Player player;
+    protected final Audience audience;
     private final List<Waypoint> waypoints;
     protected CompassDisplay display;
 
-    protected Compass(@NotNull Player player, @NotNull CompassDisplay display) {
+    protected Compass(@NotNull Player player,
+                      @NotNull Audience audience,
+                      @NotNull CompassDisplay display) {
+
         this.player = player;
+        this.audience = audience;
         this.display = display;
         this.waypoints = new ArrayList<>();
     }

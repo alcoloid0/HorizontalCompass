@@ -17,6 +17,7 @@
 
 package omg.alcoloid.horizontalcompass;
 
+import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import omg.alcoloid.horizontalcompass.compass.Compass;
 import omg.alcoloid.horizontalcompass.compass.factory.CompassFactory;
 import omg.alcoloid.horizontalcompass.compass.factory.SettingsCompassFactory;
@@ -35,7 +36,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.HashMap;
 import java.util.Map;
 
-@SuppressWarnings("unused")
 public final class HorizontalCompass extends JavaPlugin {
     private static HorizontalCompass instance;
     private final Map<Player, Compass> playerCompassMap = new HashMap<>();
@@ -43,6 +43,7 @@ public final class HorizontalCompass extends JavaPlugin {
     private CompassFactory compassFactory;
     private WaypointFactory waypointFactory;
     private HookManager hookManager;
+    private BukkitAudiences adventure;
 
     public static HorizontalCompass getInstance() {
         return instance;
@@ -51,6 +52,8 @@ public final class HorizontalCompass extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
+
+        this.adventure = BukkitAudiences.create(this);
 
         this.settings = new Settings(this).load();
 
@@ -70,6 +73,10 @@ public final class HorizontalCompass extends JavaPlugin {
         this.hookManager.protocolLib().ifPresent(protocolLib -> {
             protocolLib.addPacketListener(new LookListener(this));
         });
+    }
+
+    public BukkitAudiences getAdventure() {
+        return this.adventure;
     }
 
     public Map<Player, Compass> getPlayerCompassMap() {

@@ -17,6 +17,7 @@
 
 package omg.alcoloid.horizontalcompass.compass.impl;
 
+import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.Component;
 import omg.alcoloid.horizontalcompass.compass.Compass;
@@ -28,8 +29,11 @@ public final class BossBarCompass extends Compass {
     private final BossBar bossBar;
     private boolean progress;
 
-    public BossBarCompass(@NotNull Player player, @NotNull CompassDisplay display) {
-        super(player, display);
+    public BossBarCompass(@NotNull Player player,
+                          @NotNull Audience audience,
+                          @NotNull CompassDisplay display) {
+
+        super(player, audience, display);
 
         this.bossBar = BossBar.bossBar(Component.empty(),
                 0,
@@ -52,12 +56,12 @@ public final class BossBarCompass extends Compass {
 
     @Override
     public void show() {
-        this.player.showBossBar(this.bossBar);
+        this.audience.showBossBar(this.bossBar);
     }
 
     @Override
     public void hide() {
-        this.player.hideBossBar(this.bossBar);
+        this.audience.hideBossBar(this.bossBar);
     }
 
     public void setColor(@NotNull BossBar.Color color) {

@@ -77,7 +77,7 @@ public class PlayerListener implements Listener {
     private @NotNull List<Waypoint> getPlayerHomeWaypoints(@NotNull Player player) {
         List<Waypoint> waypoints = new ArrayList<>();
 
-        if (!this.compassPlugin.getSettings().getEssentialsHome()) {
+        if (this.compassPlugin.getSettings().isEssentialsHomeDisabled()) {
             return waypoints;
         }
 
