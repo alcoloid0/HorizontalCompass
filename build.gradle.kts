@@ -6,7 +6,7 @@ plugins {
     id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
-group = "omg.alcoloid"
+group = "com.github.alcoloid0"
 version = "1.0-SNAPSHOT"
 
 repositories {
@@ -50,7 +50,7 @@ tasks {
     }
 
     shadowJar {
-        relocate("net.kyori.adventure", "omg.alcoloid.shaded.kyori.adventure")
+        relocate("net.kyori.adventure", "com.github.alcoloid0.shaded.kyori.adventure")
     }
 }
 
