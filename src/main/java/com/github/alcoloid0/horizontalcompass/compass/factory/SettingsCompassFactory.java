@@ -17,10 +17,6 @@
 
 package com.github.alcoloid0.horizontalcompass.compass.factory;
 
-import com.github.alcoloid0.horizontalcompass.settings.Settings;
-import com.github.alcoloid0.horizontalcompass.waypoint.factory.WaypointFactory;
-import net.kyori.adventure.audience.Audience;
-import net.kyori.adventure.text.format.TextColor;
 import com.github.alcoloid0.horizontalcompass.compass.Compass;
 import com.github.alcoloid0.horizontalcompass.compass.display.CompassDisplay;
 import com.github.alcoloid0.horizontalcompass.compass.display.DegreesCompassDisplay;
@@ -28,6 +24,10 @@ import com.github.alcoloid0.horizontalcompass.compass.display.RustCompassDisplay
 import com.github.alcoloid0.horizontalcompass.compass.display.SimpleCompassDisplay;
 import com.github.alcoloid0.horizontalcompass.compass.impl.ActionBarCompass;
 import com.github.alcoloid0.horizontalcompass.compass.impl.BossBarCompass;
+import com.github.alcoloid0.horizontalcompass.settings.Settings;
+import com.github.alcoloid0.horizontalcompass.waypoint.factory.WaypointFactory;
+import net.kyori.adventure.audience.Audience;
+import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 

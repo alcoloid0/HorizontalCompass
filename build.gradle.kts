@@ -1,4 +1,4 @@
-import java.util.Calendar
+import java.util.*
 
 plugins {
     id("java")
@@ -6,12 +6,7 @@ plugins {
     id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
-group = "com.github.alcoloid0"
-version = "1.0-SNAPSHOT"
-
 repositories {
-    mavenCentral()
-
     maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
     maven("https://repo.essentialsx.net/releases/")
     maven("https://repo.dmulloy2.net/repository/public/")
@@ -32,33 +27,52 @@ dependencies {
 
     // Adventure
     implementation("net.kyori:adventure-platform-bukkit:4.3.2")
-}
 
-java {
-    toolchain.languageVersion.set(JavaLanguageVersion.of(17))
+    // API
+    implementation(project(":api"))
 }
 
 tasks {
-    processResources {
-        filesMatching("**/plugin.yml") {
-            expand("version" to project.version)
-        }
-    }
-
-    withType<JavaCompile> {
-        options.encoding = "UTF-8"
-    }
-
     shadowJar {
         relocate("net.kyori.adventure", "com.github.alcoloid0.shaded.kyori.adventure")
     }
 }
 
-license {
-    header = resources.text.fromFile("HEADER.txt")
-    properties {
-        set("author", "alcoloid (alcoloid0)")
-        set("year", Calendar.getInstance().get(Calendar.YEAR))
+allprojects {
+    apply(plugin = "java")
+    apply(plugin = "org.cadixdev.licenser")
+
+    group = "com.github.alcoloid0"
+    version = "1.0-SNAPSHOT"
+
+    java {
+        toolchain.languageVersion.set(JavaLanguageVersion.of(17))
     }
-    exclude("**/*.yml")
+
+    license {
+        header = resources.text.fromFile(rootProject.file("HEADER.txt"))
+        properties {
+            set("author", "alcoloid (alcoloid0)")
+            set("year", Calendar.getInstance().get(Calendar.YEAR))
+        }
+        exclude("**/*.yml")
+    }
+
+    tasks.processResources {
+        filesMatching("**/plugin.yml") {
+            expand("version" to project.version)
+        }
+    }
+
+    tasks.withType<JavaCompile> {
+        options.encoding = "UTF-8"
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        compileOnly("org.jetbrains:annotations:24.0.0")
+    }
 }

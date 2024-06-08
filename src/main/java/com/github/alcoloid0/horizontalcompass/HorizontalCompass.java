@@ -17,17 +17,17 @@
 
 package com.github.alcoloid0.horizontalcompass;
 
-import com.github.alcoloid0.horizontalcompass.hook.HookManager;
-import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import com.github.alcoloid0.horizontalcompass.compass.Compass;
 import com.github.alcoloid0.horizontalcompass.compass.factory.CompassFactory;
 import com.github.alcoloid0.horizontalcompass.compass.factory.SettingsCompassFactory;
+import com.github.alcoloid0.horizontalcompass.hook.HookManager;
 import com.github.alcoloid0.horizontalcompass.listener.HomeListener;
 import com.github.alcoloid0.horizontalcompass.listener.LookListener;
 import com.github.alcoloid0.horizontalcompass.listener.PlayerListener;
 import com.github.alcoloid0.horizontalcompass.settings.Settings;
 import com.github.alcoloid0.horizontalcompass.waypoint.factory.SettingsWaypointFactory;
 import com.github.alcoloid0.horizontalcompass.waypoint.factory.WaypointFactory;
+import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;

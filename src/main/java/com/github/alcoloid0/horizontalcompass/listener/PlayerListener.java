@@ -18,12 +18,11 @@
 package com.github.alcoloid0.horizontalcompass.listener;
 
 import com.github.alcoloid0.horizontalcompass.HorizontalCompass;
+import com.github.alcoloid0.horizontalcompass.compass.Compass;
 import com.github.alcoloid0.horizontalcompass.compass.factory.CompassFactory;
 import com.github.alcoloid0.horizontalcompass.hook.HookManager;
-import com.github.alcoloid0.horizontalcompass.settings.CompassTypeSetting;
 import com.github.alcoloid0.horizontalcompass.waypoint.Waypoint;
 import com.github.alcoloid0.horizontalcompass.waypoint.factory.WaypointFactory;
-import com.github.alcoloid0.horizontalcompass.compass.Compass;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

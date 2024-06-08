@@ -17,8 +17,8 @@
 
 package com.github.alcoloid0.horizontalcompass.waypoint;
 
-import net.kyori.adventure.text.format.TextColor;
 import com.github.alcoloid0.horizontalcompass.util.CardinalDirection;
+import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;
 
