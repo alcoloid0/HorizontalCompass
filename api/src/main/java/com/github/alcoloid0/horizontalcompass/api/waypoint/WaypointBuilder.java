@@ -5,16 +5,16 @@ import org.jetbrains.annotations.NotNull;
 
 public interface WaypointBuilder {
     @NotNull
-    Waypoint color(@NotNull TextColor color);
+    WaypointBuilder color(@NotNull TextColor color);
 
     @NotNull
-    Waypoint label(@NotNull String label);
+    WaypointBuilder label(@NotNull String label);
 
     @NotNull
-    Waypoint marker(char markerSymbol);
+    WaypointBuilder marker(char markerSymbol);
 
     @NotNull
-    Waypoint identifier(@NotNull WaypointIdentifier identifier);
+    WaypointBuilder identifier(@NotNull WaypointIdentifier identifier);
 
     @NotNull
     Waypoint build();
