@@ -17,6 +17,18 @@
 
 package com.github.alcoloid0.horizontalcompass.api;
 
-public interface HorizontalCompassAPI {
+import com.github.alcoloid0.horizontalcompass.api.compass.Compass;
+import com.github.alcoloid0.horizontalcompass.api.waypoint.WaypointBuilder;
+import org.bukkit.Location;
+import org.bukkit.OfflinePlayer;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.Optional;
+
+public interface HorizontalCompassAPI {
+    @NotNull
+    Optional<Compass> getCompassByPlayer(@NotNull OfflinePlayer player);
+
+    @NotNull
+    WaypointBuilder newWaypointBuilder(@NotNull Location location);
 }
