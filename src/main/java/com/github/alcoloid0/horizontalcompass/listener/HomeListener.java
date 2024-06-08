@@ -18,11 +18,11 @@
 package com.github.alcoloid0.horizontalcompass.listener;
 
 import com.github.alcoloid0.horizontalcompass.HorizontalCompass;
+import com.github.alcoloid0.horizontalcompass.compass.Compass;
 import com.github.alcoloid0.horizontalcompass.waypoint.HomeWaypoint;
 import com.github.alcoloid0.horizontalcompass.waypoint.Waypoint;
 import com.github.alcoloid0.horizontalcompass.waypoint.factory.WaypointFactory;
 import net.essentialsx.api.v2.events.HomeModifyEvent;
-import com.github.alcoloid0.horizontalcompass.compass.Compass;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

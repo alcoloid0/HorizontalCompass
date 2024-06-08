@@ -17,13 +17,13 @@
 
 package com.github.alcoloid0.horizontalcompass.waypoint.factory;
 
-import com.github.alcoloid0.horizontalcompass.waypoint.HomeWaypoint;
-import net.kyori.adventure.text.format.TextColor;
 import com.github.alcoloid0.horizontalcompass.settings.Settings;
 import com.github.alcoloid0.horizontalcompass.util.CardinalDirection;
 import com.github.alcoloid0.horizontalcompass.waypoint.CardinalWaypoint;
+import com.github.alcoloid0.horizontalcompass.waypoint.HomeWaypoint;
 import com.github.alcoloid0.horizontalcompass.waypoint.LocationWaypoint;
 import com.github.alcoloid0.horizontalcompass.waypoint.Waypoint;
+import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;
 

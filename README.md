@@ -1,7 +1,9 @@
 # HorizontalCompass
+
 Perhaps the best horizontal compass plugin for your minecraft server
 
 ## Demonstration
+
 | display: | GIF-preview                 |
 |----------|-----------------------------|
 | degrees  | ![](readme-src/degrees.gif) |
@@ -9,6 +11,7 @@ Perhaps the best horizontal compass plugin for your minecraft server
 | simple   | ![](readme-src/simple.gif)  |
 
 ## Settings (settings.yml)
+
 ```yaml
 compass-settings:
   # Type of compass display. Available values: actionbar, bossbar
@@ -44,8 +47,10 @@ essentials-home: true
 ```
 
 ## Optional(Soft) Dependencies
+
 - Essentials - houses, displaying their points on the compass
 - ProtocolLib (recommended) - update the compass when you turn your head
 
 ## License
+
 HorizontalCompass is licensed under the GNU General Public License v3.0. See [COPYING](COPYING) for more information.

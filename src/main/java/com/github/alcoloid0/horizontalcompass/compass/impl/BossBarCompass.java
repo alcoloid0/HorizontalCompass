@@ -17,11 +17,11 @@
 
 package com.github.alcoloid0.horizontalcompass.compass.impl;
 
+import com.github.alcoloid0.horizontalcompass.compass.Compass;
 import com.github.alcoloid0.horizontalcompass.compass.display.CompassDisplay;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.Component;
-import com.github.alcoloid0.horizontalcompass.compass.Compass;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
