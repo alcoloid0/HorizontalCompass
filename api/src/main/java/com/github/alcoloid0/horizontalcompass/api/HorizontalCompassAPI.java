@@ -23,9 +23,13 @@ import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface HorizontalCompassAPI {
+    @NotNull
+    List<Compass> getCompassList();
+
     @NotNull
     Optional<Compass> getCompassByPlayer(@NotNull OfflinePlayer player);
 
