@@ -18,6 +18,4 @@ public interface Waypoint {
 
     @NotNull
     Location getLocation();
-
-    int getRotationAngle(@NotNull Location location);
 }
