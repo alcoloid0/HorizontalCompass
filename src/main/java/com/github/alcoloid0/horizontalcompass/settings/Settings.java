@@ -89,10 +89,6 @@ public final class Settings {
         return this.getConfigColor("waypoint-settings.cardinal-color", NamedTextColor.AQUA);
     }
 
-    public boolean isEssentialsHomeDisabled() {
-        return !this.config.getBoolean("essentials-home", true);
-    }
-
     private @NotNull TextColor getConfigColor(String path, TextColor defaultColor) {
         if (!this.config.contains(path)) {
             return defaultColor;

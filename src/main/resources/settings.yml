@@ -26,6 +26,3 @@ display-settings:
 waypoint-settings:
   # Color of the cardinal directions display (N, NE, E, ...)
   cardinal-color: '#00FFFF'
-
-# Display home points from Essentials on the compass?
-essentials-home: true
