@@ -24,10 +24,10 @@ import com.comphenix.protocol.events.PacketEvent;
 import com.github.alcoloid0.horizontalcompass.HorizontalCompass;
 import org.jetbrains.annotations.NotNull;
 
-public class LookListener extends PacketAdapter {
+public final class LookPacketListener extends PacketAdapter {
     private final HorizontalCompass compassPlugin;
 
-    public LookListener(@NotNull HorizontalCompass compassPlugin) {
+    public LookPacketListener(@NotNull HorizontalCompass compassPlugin) {
         super(compassPlugin, ListenerPriority.NORMAL, PacketType.Play.Client.LOOK);
 
         this.compassPlugin = compassPlugin;

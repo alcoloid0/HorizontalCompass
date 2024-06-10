@@ -17,7 +17,8 @@
 
 package com.github.alcoloid0.horizontalcompass.compass.factory;
 
-import com.github.alcoloid0.horizontalcompass.compass.Compass;
+import com.github.alcoloid0.horizontalcompass.HorizontalCompass;
+import com.github.alcoloid0.horizontalcompass.compass.AbstractCompass;
 import com.github.alcoloid0.horizontalcompass.compass.display.CompassDisplay;
 import com.github.alcoloid0.horizontalcompass.compass.display.DegreesCompassDisplay;
 import com.github.alcoloid0.horizontalcompass.compass.display.RustCompassDisplay;
@@ -25,48 +26,41 @@ import com.github.alcoloid0.horizontalcompass.compass.display.SimpleCompassDispl
 import com.github.alcoloid0.horizontalcompass.compass.impl.ActionBarCompass;
 import com.github.alcoloid0.horizontalcompass.compass.impl.BossBarCompass;
 import com.github.alcoloid0.horizontalcompass.settings.Settings;
-import com.github.alcoloid0.horizontalcompass.waypoint.factory.WaypointFactory;
-import net.kyori.adventure.audience.Audience;
-import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 public final class SettingsCompassFactory implements CompassFactory {
+    private final HorizontalCompass compassPlugin;
     private final Settings settings;
-    private final WaypointFactory waypointFactory;
 
-    public SettingsCompassFactory(@NotNull Settings settings, @NotNull WaypointFactory factory) {
+    public SettingsCompassFactory(@NotNull HorizontalCompass compassPlugin,
+                                  @NotNull Settings settings) {
+
+        this.compassPlugin = compassPlugin;
         this.settings = settings;
-        this.waypointFactory = factory;
     }
 
     @Override
-    public @NotNull Compass createBossBarCompass(@NotNull Player player) {
-        Audience audience = this.settings.getPlugin().getAdventure().player(player);
-        BossBarCompass compass = new BossBarCompass(player, audience, this.createCompassDisplay());
+    public @NotNull AbstractCompass createBossBarCompass(@NotNull Player player) {
+        CompassDisplay display = this.createCompassDisplay();
+        BossBarCompass compass = new BossBarCompass(this.compassPlugin, player, display);
         compass.setColor(this.settings.getBossBarColor());
         compass.setProgress(this.settings.getBossBarProgress());
-        compass.getWaypoints().addAll(this.waypointFactory.getCardinalWaypointList());
         return compass;
     }
 
     @Override
-    public @NotNull Compass createActionBarCompass(@NotNull Player player) {
-        Audience audience = this.settings.getPlugin().getAdventure().player(player);
-        Compass compass = new ActionBarCompass(player, audience, this.createCompassDisplay());
-        compass.getWaypoints().addAll(this.waypointFactory.getCardinalWaypointList());
-        return compass;
+    public @NotNull AbstractCompass createActionBarCompass(@NotNull Player player) {
+        CompassDisplay display = this.createCompassDisplay();
+
+        return new ActionBarCompass(this.compassPlugin, player, display);
     }
 
     private @NotNull CompassDisplay createCompassDisplay() {
-        TextColor angle = this.settings.getDegreesAngleColor();
-        TextColor center = this.settings.getDegreesCenterAngleColor();
-        TextColor color = this.settings.getRustColor();
-
         return switch (this.settings.getCompassDisplay()) {
-            case DEGREES -> new DegreesCompassDisplay(angle, center);
-            case RUST -> new RustCompassDisplay(color);
-            case SIMPLE -> new SimpleCompassDisplay();
+            case DEGREES -> new DegreesCompassDisplay(this.settings);
+            case RUST -> new RustCompassDisplay(this.settings);
+            case SIMPLE -> new SimpleCompassDisplay(this.settings);
         };
     }
 }

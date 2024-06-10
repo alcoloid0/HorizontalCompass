@@ -18,24 +18,27 @@
 package com.github.alcoloid0.horizontalcompass.listener;
 
 import com.github.alcoloid0.horizontalcompass.HorizontalCompass;
-import com.github.alcoloid0.horizontalcompass.compass.Compass;
-import com.github.alcoloid0.horizontalcompass.waypoint.HomeWaypoint;
-import com.github.alcoloid0.horizontalcompass.waypoint.Waypoint;
-import com.github.alcoloid0.horizontalcompass.waypoint.factory.WaypointFactory;
+import com.github.alcoloid0.horizontalcompass.api.compass.Compass;
+import com.github.alcoloid0.horizontalcompass.api.util.Identifier;
+import com.github.alcoloid0.horizontalcompass.api.waypoint.Waypoint;
+import com.github.alcoloid0.horizontalcompass.hook.HookManager;
 import net.essentialsx.api.v2.events.HomeModifyEvent;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Predicate;
 
-public class HomeListener implements Listener {
+public final class HomeListener implements Listener {
+    private final Identifier identifier;
     private final HorizontalCompass compassPlugin;
 
     public HomeListener(@NotNull HorizontalCompass compassPlugin) {
+        this.identifier = Identifier.plugin(compassPlugin, "home");
         this.compassPlugin = compassPlugin;
     }
 
@@ -47,18 +50,36 @@ public class HomeListener implements Listener {
             return;
         }
 
-        Compass compass = this.compassPlugin.getPlayerCompassMap().get(player);
+        this.compassPlugin.getCompassByPlayer(player).ifPresent(compass -> {
+            switch (event.getCause()) {
+                case DELETE -> this.onHomeDelete(compass, event.getOldName());
+                case CREATE -> this.onHomeCreate(compass, event.getNewLocation(), event.getNewName());
+            }
+        });
+    }
 
-        switch (event.getCause()) {
-            case DELETE -> this.onHomeDelete(compass, event.getOldName());
-            case CREATE -> this.onHomeCreate(compass, event.getNewLocation(), event.getNewName());
-        }
+    @EventHandler
+    public void onPlayerJoin(@NotNull PlayerJoinEvent event) {
+        this.compassPlugin.getCompassByPlayer(event.getPlayer()).ifPresent(compass -> {
+            if (this.compassPlugin.getSettings().isEssentialsHomeDisabled()) {
+                return;
+            }
+
+            Player player = event.getPlayer();
+
+            HookManager hookManager = this.compassPlugin.getHookManager();
+
+            hookManager.essentials().ifPresent(essentials -> {
+                for (String homeName : essentials.getPlayerHomeList(player)) {
+                    Location homeLocation = essentials.getPlayerHome(player, homeName);
+                    compass.getWaypoints().add(this.createHomeWaypoint(homeLocation, homeName));
+                }
+            });
+        });
     }
 
     private void onHomeCreate(@NotNull Compass compass, @NotNull Location location, @NotNull String name) {
-        WaypointFactory factory = this.compassPlugin.getWaypointFactory();
-
-        compass.getWaypoints().add(factory.createHomeWaypoint(location, name));
+        compass.getWaypoints().add(this.createHomeWaypoint(location, name));
     }
 
     private void onHomeDelete(@NotNull Compass compass, @NotNull String name) {
@@ -68,11 +89,18 @@ public class HomeListener implements Listener {
     @Contract(pure = true)
     private @NotNull Predicate<Waypoint> deleteFilter(@NotNull String homeName) {
         return waypoint -> {
-            if (waypoint instanceof HomeWaypoint homeWaypoint) {
-                return homeWaypoint.getHomeName().equals(homeName);
+            if (waypoint.getIdentifier().equals(this.identifier)) {
+                return waypoint.getLabel().equals(homeName);
             }
 
             return false;
         };
+    }
+
+    private @NotNull Waypoint createHomeWaypoint(@NotNull Location location, @NotNull String name) {
+        return this.compassPlugin.newWaypointBuilder(location)
+                .label(name)
+                .identifier(this.identifier)
+                .build();
     }
 }

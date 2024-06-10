@@ -17,7 +17,6 @@
 
 package com.github.alcoloid0.horizontalcompass.util;
 
-import com.github.alcoloid0.horizontalcompass.HorizontalCompass;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitScheduler;
@@ -26,7 +25,7 @@ import org.bukkit.scheduler.BukkitTask;
 import java.util.Optional;
 import java.util.function.Consumer;
 
-public class SimpleBukkitTask {
+public final class SimpleBukkitTask {
     private final Plugin plugin;
     private final Runnable runnable;
     private final BukkitScheduler scheduler;
@@ -37,10 +36,6 @@ public class SimpleBukkitTask {
         this.runnable = runnable;
         this.scheduler = Bukkit.getScheduler();
         this.bukkitTask = null;
-    }
-
-    public SimpleBukkitTask(Runnable runnable) {
-        this(HorizontalCompass.getInstance(), runnable);
     }
 
     public void runTaskTimer(long delay, long period) {

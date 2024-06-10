@@ -29,7 +29,6 @@ import java.io.File;
 import java.util.Optional;
 
 public final class Settings {
-    private static final String DEFAULT_HOME_MARKER = "▼";
     private static final String SETTINGS_FILE_NAME = "settings.yml";
 
     private final HorizontalCompass plugin;
@@ -63,39 +62,35 @@ public final class Settings {
     }
 
     public boolean getBossBarProgress() {
-        return this.config.getBoolean("compass-settings.bossbar.progress", false);
+        return this.config.getBoolean("compass-settings.bossbar.show-progress", false);
     }
 
     public @NotNull TextColor getDegreesAngleColor() {
-        return this.getConfigColor("display-settings.degrees.angle-color", NamedTextColor.WHITE);
+        return this.getConfigColor("display-settings.degrees.color", NamedTextColor.WHITE);
     }
 
     public @NotNull TextColor getDegreesCenterAngleColor() {
-        return this.getConfigColor("display-settings.angle-color-center", NamedTextColor.LIGHT_PURPLE);
+        return this.getConfigColor("display-settings.color-center", NamedTextColor.LIGHT_PURPLE);
     }
 
     public @NotNull TextColor getRustColor() {
         return this.getConfigColor("display-settings.rust.color", NamedTextColor.WHITE);
     }
 
+    public @NotNull String getRustMarker() {
+        return this.config.getString("display-settings.rust.marker-symbol", "▼");
+    }
+
+    public @NotNull String getRustDelimiter() {
+        return this.config.getString("display-settings.rust.delimiter", "|");
+    }
+
     public @NotNull TextColor getCardinalColor() {
         return this.getConfigColor("waypoint-settings.cardinal-color", NamedTextColor.AQUA);
     }
 
-    public char getLocationMarker() {
-        return this.getHomeMarker();
-    }
-
-    public char getHomeMarker() {
-        return this.config.getString("waypoint-settings.home-marker", DEFAULT_HOME_MARKER).charAt(0);
-    }
-
     public boolean isEssentialsHomeDisabled() {
         return !this.config.getBoolean("essentials-home", true);
-    }
-
-    public HorizontalCompass getPlugin() {
-        return this.plugin;
     }
 
     private @NotNull TextColor getConfigColor(String path, TextColor defaultColor) {

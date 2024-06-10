@@ -9,23 +9,23 @@ compass-settings:
     color: WHITE
     # Should the bossbar progressbar change its progress depending on
     # the player's head rotation
-    progress: false
+    show-progress: false
 
 display-settings:
   degrees:
     # Color of the angles displayed on the compass (display: degrees)
-    angle-color: '#FFFFFF'
+    color: '#FFFFFF'
     # Color of the central angle displayed on the compass (display: degrees)
-    angle-color-center: '#9966CC'
+    color-center: '#9966CC'
   rust:
     # Color of the entire compass (display: rust)
     color: '#FFFFFF'
+    marker-symbol: '▼'
+    delimiter: '|'
 
 waypoint-settings:
   # Color of the cardinal directions display (N, NE, E, ...)
   cardinal-color: '#00FFFF'
-  # Symbol used to mark the home point on the compass
-  home-marker: '▼'
 
 # Display home points from Essentials on the compass?
 essentials-home: true

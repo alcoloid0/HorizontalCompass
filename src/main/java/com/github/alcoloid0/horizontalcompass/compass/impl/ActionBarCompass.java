@@ -17,23 +17,26 @@
 
 package com.github.alcoloid0.horizontalcompass.compass.impl;
 
-import com.github.alcoloid0.horizontalcompass.compass.Compass;
+import com.github.alcoloid0.horizontalcompass.HorizontalCompass;
+import com.github.alcoloid0.horizontalcompass.compass.AbstractCompass;
 import com.github.alcoloid0.horizontalcompass.compass.display.CompassDisplay;
 import com.github.alcoloid0.horizontalcompass.util.SimpleBukkitTask;
 import net.kyori.adventure.audience.Audience;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public final class ActionBarCompass extends Compass implements Runnable {
+public final class ActionBarCompass extends AbstractCompass implements Runnable {
     private final SimpleBukkitTask bukkitTask;
+    private final Audience audience;
 
-    public ActionBarCompass(@NotNull Player player,
-                            @NotNull Audience audience,
+    public ActionBarCompass(@NotNull HorizontalCompass compassPlugin,
+                            @NotNull Player player,
                             @NotNull CompassDisplay display) {
 
-        super(player, audience, display);
+        super(player, display);
 
-        this.bukkitTask = new SimpleBukkitTask(this);
+        this.bukkitTask = new SimpleBukkitTask(compassPlugin, this);
+        this.audience = compassPlugin.getAdventure().player(player);
     }
 
     @Override

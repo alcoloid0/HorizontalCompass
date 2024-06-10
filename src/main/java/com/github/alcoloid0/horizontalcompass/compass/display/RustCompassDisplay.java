@@ -17,57 +17,42 @@
 
 package com.github.alcoloid0.horizontalcompass.compass.display;
 
-import com.github.alcoloid0.horizontalcompass.waypoint.CardinalWaypoint;
-import com.github.alcoloid0.horizontalcompass.waypoint.Waypoint;
+import com.github.alcoloid0.horizontalcompass.api.waypoint.Waypoint;
+import com.github.alcoloid0.horizontalcompass.settings.Settings;
+import com.github.alcoloid0.horizontalcompass.util.CardinalDirection;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.TextComponent;
-import net.kyori.adventure.text.format.TextColor;
 import org.jetbrains.annotations.NotNull;
 
-public final class RustCompassDisplay implements CompassDisplay {
-    private static final String DELIMITER = "|";
+public final class RustCompassDisplay extends AbstractCompassDisplay {
+    private final Settings settings;
 
-    private final TextColor color;
-    private TextComponent.Builder component;
-
-    public RustCompassDisplay(@NotNull TextColor color) {
-        this.color = color;
-
-        this.flush();
-    }
-
-    @Override
-    public void flush() {
-        this.component = Component.text();
-    }
-
-    @Override
-    public int getViewAngleCount() {
-        return 71;
+    public RustCompassDisplay(@NotNull Settings settings) {
+        this.settings = settings;
     }
 
     @Override
     public void append(int angle, boolean center) {
         if (angle % 10 == 0) {
-            this.component.append(Component.text(angle, this.color));
+            this.component.append(Component.text(angle, this.settings.getRustColor()));
         } else if (angle % 5 == 0) {
-            this.component.append(Component.text(DELIMITER, this.color));
+            this.component.append(Component.text(this.settings.getRustDelimiter(), this.settings.getRustColor()));
+        } else {
+            this.component.appendSpace();
         }
-
-        this.component.appendSpace();
     }
 
     @Override
     public void append(int angle, @NotNull Waypoint waypoint) {
-        if (waypoint instanceof CardinalWaypoint cardinal) {
-            this.component.append(Component.text(cardinal.getDirection().name(), this.color));
-        } else {
-            this.component.append(Component.text(waypoint.getMarkerSymbol(), waypoint.getTextColor()));
-        }
+        this.component.append(Component.text(this.settings.getRustMarker(), waypoint.getTextColor()));
     }
 
     @Override
-    public @NotNull Component getComponent() {
-        return this.component.build();
+    public void append(int angle, @NotNull CardinalDirection direction) {
+        this.component.append(Component.text(direction.name(), this.settings.getRustColor()));
+    }
+
+    @Override
+    public int getAngleCount() {
+        return 71;
     }
 }

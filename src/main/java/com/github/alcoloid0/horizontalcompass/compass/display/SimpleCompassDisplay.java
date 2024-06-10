@@ -17,27 +17,18 @@
 
 package com.github.alcoloid0.horizontalcompass.compass.display;
 
-import com.github.alcoloid0.horizontalcompass.waypoint.Waypoint;
+import com.github.alcoloid0.horizontalcompass.api.waypoint.Waypoint;
+import com.github.alcoloid0.horizontalcompass.settings.Settings;
+import com.github.alcoloid0.horizontalcompass.util.CardinalDirection;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.jetbrains.annotations.NotNull;
 
-public final class SimpleCompassDisplay implements CompassDisplay {
-    private TextComponent.Builder component;
+public final class SimpleCompassDisplay extends AbstractCompassDisplay {
+    private final Settings settings;
 
-    public SimpleCompassDisplay() {
-        this.flush();
-    }
-
-    @Override
-    public void flush() {
-        this.component = Component.text();
-    }
-
-    @Override
-    public int getViewAngleCount() {
-        return 1;
+    public SimpleCompassDisplay(@NotNull Settings settings) {
+        this.settings = settings;
     }
 
     @Override
@@ -47,12 +38,17 @@ public final class SimpleCompassDisplay implements CompassDisplay {
 
     @Override
     public void append(int angle, @NotNull Waypoint waypoint) {
-        String text = String.format("%d (%c)", angle, waypoint.getMarkerSymbol());
-        this.component.append(Component.text(text, waypoint.getTextColor()));
+        this.component.append(format(waypoint.getTextColor(), "%d (%s)", angle, waypoint.getLabel()));
+
     }
 
     @Override
-    public @NotNull Component getComponent() {
-        return this.component.build();
+    public void append(int angle, @NotNull CardinalDirection direction) {
+        this.component.append(format(this.settings.getCardinalColor(), "%d (%s)", angle, direction.name()));
+    }
+
+    @Override
+    public int getAngleCount() {
+        return 1;
     }
 }
