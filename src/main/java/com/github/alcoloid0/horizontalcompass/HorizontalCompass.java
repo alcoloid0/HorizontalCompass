@@ -22,8 +22,7 @@ import com.github.alcoloid0.horizontalcompass.api.compass.Compass;
 import com.github.alcoloid0.horizontalcompass.api.waypoint.WaypointBuilder;
 import com.github.alcoloid0.horizontalcompass.compass.factory.CompassFactory;
 import com.github.alcoloid0.horizontalcompass.compass.factory.SettingsCompassFactory;
-import com.github.alcoloid0.horizontalcompass.hook.HookManager;
-import com.github.alcoloid0.horizontalcompass.listener.HomeListener;
+import com.github.alcoloid0.horizontalcompass.hook.ProtocolLibWrapper;
 import com.github.alcoloid0.horizontalcompass.listener.LookPacketListener;
 import com.github.alcoloid0.horizontalcompass.listener.PlayerListener;
 import com.github.alcoloid0.horizontalcompass.settings.Settings;
@@ -50,7 +49,6 @@ public final class HorizontalCompass extends JavaPlugin implements HorizontalCom
 
     private Settings settings;
     private CompassFactory compassFactory;
-    private HookManager hookManager;
     private BukkitAudiences adventure;
 
     @Override
@@ -58,21 +56,15 @@ public final class HorizontalCompass extends JavaPlugin implements HorizontalCom
         this.adventure = BukkitAudiences.create(this);
         this.settings = new Settings(this).load();
         this.compassFactory = new SettingsCompassFactory(this, this.settings);
-        this.hookManager = new HookManager(this);
 
         PluginManager pluginManager = Bukkit.getPluginManager();
         pluginManager.registerEvents(new PlayerListener(this), this);
 
-        if (this.hookManager.essentials().isPresent()) {
-            pluginManager.registerEvents(new HomeListener(this), this);
+        if (Bukkit.getPluginManager().getPlugin("ProtocolLib") != null) {
+            ProtocolLibWrapper.addPacketListener(new LookPacketListener(this));
         }
 
-        this.hookManager.protocolLib().ifPresent(protocolLib -> {
-            protocolLib.addPacketListener(new LookPacketListener(this));
-        });
-
         ServicesManager manager = this.getServer().getServicesManager();
-
         manager.register(HorizontalCompassAPI.class, this, this, ServicePriority.Normal);
     }
 
@@ -111,9 +103,5 @@ public final class HorizontalCompass extends JavaPlugin implements HorizontalCom
 
     public Settings getSettings() {
         return settings;
-    }
-
-    public HookManager getHookManager() {
-        return hookManager;
     }
 }
