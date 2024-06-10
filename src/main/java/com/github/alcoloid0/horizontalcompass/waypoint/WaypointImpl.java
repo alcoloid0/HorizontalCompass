@@ -25,9 +25,9 @@ import org.jetbrains.annotations.NotNull;
 
 public final class WaypointImpl implements Waypoint {
     private final Identifier identifier;
-    private final Location location;
-    private final String label;
-    private final TextColor color;
+    private Location location;
+    private String label;
+    private TextColor color;
 
     public WaypointImpl(@NotNull Identifier identifier,
                         @NotNull Location location,
@@ -48,11 +48,26 @@ public final class WaypointImpl implements Waypoint {
         return this.color;
     }
 
+    @Override
+    public void setTextColor(@NotNull TextColor color) {
+        this.color = color;
+    }
+
     public @NotNull String getLabel() {
         return this.label;
     }
 
+    @Override
+    public void setLabel(@NotNull String label) {
+        this.label = label;
+    }
+
     public @NotNull Location getLocation() {
         return this.location;
+    }
+
+    @Override
+    public void updateLocation(@NotNull Location location) {
+        this.location = location;
     }
 }
