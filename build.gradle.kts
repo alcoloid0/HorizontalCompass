@@ -2,12 +2,14 @@ import java.util.*
 
 plugins {
     id("java")
+    id("maven-publish")
     id("org.cadixdev.licenser") version "0.6.1"
     id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
 allprojects {
     apply(plugin = "java")
+    apply(plugin = "maven-publish")
     apply(plugin = "org.cadixdev.licenser")
 
     group = "com.github.alcoloid0"
@@ -15,6 +17,7 @@ allprojects {
 
     java {
         toolchain.languageVersion.set(JavaLanguageVersion.of(17))
+        withSourcesJar()
     }
 
     license {
@@ -34,6 +37,14 @@ allprojects {
 
     tasks.withType<JavaCompile> {
         options.encoding = "UTF-8"
+    }
+
+    publishing {
+        publications {
+            register("mavenJava", MavenPublication::class) {
+                from(components["java"])
+            }
+        }
     }
 
     repositories {
