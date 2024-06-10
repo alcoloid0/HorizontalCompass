@@ -34,6 +34,8 @@ import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
+import org.bukkit.plugin.ServicePriority;
+import org.bukkit.plugin.ServicesManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Unmodifiable;
@@ -68,6 +70,10 @@ public final class HorizontalCompass extends JavaPlugin implements HorizontalCom
         this.hookManager.protocolLib().ifPresent(protocolLib -> {
             protocolLib.addPacketListener(new LookPacketListener(this));
         });
+
+        ServicesManager manager = this.getServer().getServicesManager();
+
+        manager.register(HorizontalCompassAPI.class, this, this, ServicePriority.Normal);
     }
 
     @Override
