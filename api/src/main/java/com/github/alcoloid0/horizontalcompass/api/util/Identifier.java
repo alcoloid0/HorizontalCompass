@@ -15,23 +15,27 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.alcoloid0.horizontalcompass.api.compass;
+package com.github.alcoloid0.horizontalcompass.api.util;
 
-import org.bukkit.entity.Player;
-import org.jetbrains.annotations.ApiStatus;
+import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
-public interface Compass {
-    @NotNull
-    CompassWaypoints getWaypoints();
+import java.util.UUID;
 
-    @NotNull
-    Player getCompassPlayer();
+public record Identifier(@NotNull String base, @NotNull String id) {
+    public static @NotNull Identifier plugin(@NotNull Plugin plugin, @NotNull String id) {
+        return new Identifier(plugin.getName(), id);
+    }
 
-    void hide();
+    public static @NotNull Identifier uuid(@NotNull UUID uuid) {
+        return new Identifier("uuid", uuid.toString());
+    }
 
-    void show();
+    public static @NotNull Identifier at(@NotNull String base, @NotNull String id) {
+        return new Identifier(base, id);
+    }
 
-    @ApiStatus.Internal
-    void update();
+    public @NotNull String toFullString() {
+        return "%s:%s".formatted(this.base, this.id);
+    }
 }
