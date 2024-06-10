@@ -29,9 +29,15 @@ public interface Waypoint {
     @NotNull
     TextColor getTextColor();
 
+    void setTextColor(@NotNull TextColor color);
+
     @NotNull
     String getLabel();
 
+    void setLabel(@NotNull String label);
+
     @NotNull
     Location getLocation();
+
+    void updateLocation(@NotNull Location location);
 }
