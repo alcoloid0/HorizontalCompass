@@ -15,38 +15,34 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.alcoloid0.horizontalcompass.waypoint;
+package com.github.alcoloid0.horizontalcompass.compass.display;
 
-import com.github.alcoloid0.horizontalcompass.util.CardinalDirection;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.TextColor;
-import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;
 
-public final class CardinalWaypoint implements Waypoint {
-    private final CardinalDirection direction;
-    private final TextColor color;
+public abstract class AbstractCompassDisplay implements CompassDisplay {
+    protected TextComponent.Builder component;
 
-    public CardinalWaypoint(@NotNull CardinalDirection direction, @NotNull TextColor color) {
-        this.direction = direction;
-        this.color = color;
+    public AbstractCompassDisplay() {
+        this.flush();
     }
 
     @Override
-    public int getRotationAngle(@NotNull Location location) {
-        return this.direction.getRotationAngle();
+    public void flush() {
+        this.component = Component.text();
     }
 
     @Override
-    public @NotNull TextColor getTextColor() {
-        return this.color;
+    public @NotNull Component getComponent() {
+        return this.component.build();
     }
 
-    @Override
-    public char getMarkerSymbol() {
-        return 0;
-    }
+    protected @NotNull Component format(@NotNull TextColor color,
+                                        @NotNull String format,
+                                        @NotNull Object... args) {
 
-    public CardinalDirection getDirection() {
-        return direction;
+        return Component.text(String.format(format, args), color);
     }
 }

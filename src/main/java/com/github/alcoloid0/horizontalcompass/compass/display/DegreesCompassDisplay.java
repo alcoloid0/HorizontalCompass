@@ -17,42 +17,24 @@
 
 package com.github.alcoloid0.horizontalcompass.compass.display;
 
-import com.github.alcoloid0.horizontalcompass.waypoint.Waypoint;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.TextComponent;
-import net.kyori.adventure.text.format.TextColor;
+import com.github.alcoloid0.horizontalcompass.api.waypoint.Waypoint;
+import com.github.alcoloid0.horizontalcompass.settings.Settings;
+import com.github.alcoloid0.horizontalcompass.util.CardinalDirection;
 import org.jetbrains.annotations.NotNull;
 
-public final class DegreesCompassDisplay implements CompassDisplay {
-    private final TextColor angleColor;
-    private final TextColor centerColor;
-    private TextComponent.Builder component;
+public final class DegreesCompassDisplay extends AbstractCompassDisplay {
+    private final Settings settings;
 
-    public DegreesCompassDisplay(@NotNull TextColor angleColor,
-                                 @NotNull TextColor centerColor) {
-
-        this.angleColor = angleColor;
-        this.centerColor = centerColor;
-
-        this.flush();
-    }
-
-    @Override
-    public void flush() {
-        this.component = Component.text();
-    }
-
-    @Override
-    public int getViewAngleCount() {
-        return 15;
+    public DegreesCompassDisplay(@NotNull Settings settings) {
+        this.settings = settings;
     }
 
     @Override
     public void append(int angle, boolean center) {
         if (center) {
-            this.component.append(this.angleToComponent(angle, this.centerColor));
+            this.component.append(format(this.settings.getDegreesCenterAngleColor(), "%03d", angle));
         } else {
-            this.component.append(this.angleToComponent(angle, this.angleColor));
+            this.component.append(format(this.settings.getDegreesAngleColor(), "%03d", angle));
         }
 
         this.component.appendSpace();
@@ -60,16 +42,18 @@ public final class DegreesCompassDisplay implements CompassDisplay {
 
     @Override
     public void append(int angle, @NotNull Waypoint waypoint) {
-        this.component.append(this.angleToComponent(angle, waypoint.getTextColor()));
+        this.component.append(format(waypoint.getTextColor(), "%03d", angle));
         this.component.appendSpace();
     }
 
     @Override
-    public @NotNull Component getComponent() {
-        return this.component.build();
+    public void append(int angle, @NotNull CardinalDirection direction) {
+        this.component.append(format(this.settings.getCardinalColor(), "%03d", angle));
+        this.component.appendSpace();
     }
 
-    private @NotNull Component angleToComponent(int angle, TextColor color) {
-        return Component.text(String.format("%03d", angle), color);
+    @Override
+    public int getAngleCount() {
+        return 15;
     }
 }

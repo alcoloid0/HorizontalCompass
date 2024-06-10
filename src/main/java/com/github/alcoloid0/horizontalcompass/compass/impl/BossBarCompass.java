@@ -17,23 +17,26 @@
 
 package com.github.alcoloid0.horizontalcompass.compass.impl;
 
-import com.github.alcoloid0.horizontalcompass.compass.Compass;
+import com.github.alcoloid0.horizontalcompass.HorizontalCompass;
+import com.github.alcoloid0.horizontalcompass.compass.AbstractCompass;
 import com.github.alcoloid0.horizontalcompass.compass.display.CompassDisplay;
+import com.github.alcoloid0.horizontalcompass.util.PlayerLookUtil;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public final class BossBarCompass extends Compass {
+public final class BossBarCompass extends AbstractCompass {
     private final BossBar bossBar;
+    private final Audience audience;
     private boolean progress;
 
-    public BossBarCompass(@NotNull Player player,
-                          @NotNull Audience audience,
+    public BossBarCompass(@NotNull HorizontalCompass compassPlugin,
+                          @NotNull Player player,
                           @NotNull CompassDisplay display) {
 
-        super(player, audience, display);
+        super(player, display);
 
         this.bossBar = BossBar.bossBar(Component.empty(),
                 0,
@@ -41,6 +44,7 @@ public final class BossBarCompass extends Compass {
                 BossBar.Overlay.PROGRESS);
 
         this.progress = false;
+        this.audience = compassPlugin.getAdventure().player(player);
     }
 
     @Override
@@ -50,7 +54,7 @@ public final class BossBarCompass extends Compass {
         this.bossBar.name(this.display.getComponent());
 
         if (this.progress) {
-            this.bossBar.progress(this.getPlayerLookAngle() / 360.0f);
+            this.bossBar.progress(PlayerLookUtil.lookAngle(this.player) / 360.0f);
         }
     }
 

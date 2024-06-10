@@ -17,53 +17,48 @@
 
 package com.github.alcoloid0.horizontalcompass;
 
-import com.github.alcoloid0.horizontalcompass.compass.Compass;
+import com.github.alcoloid0.horizontalcompass.api.HorizontalCompassAPI;
+import com.github.alcoloid0.horizontalcompass.api.compass.Compass;
+import com.github.alcoloid0.horizontalcompass.api.waypoint.WaypointBuilder;
 import com.github.alcoloid0.horizontalcompass.compass.factory.CompassFactory;
 import com.github.alcoloid0.horizontalcompass.compass.factory.SettingsCompassFactory;
 import com.github.alcoloid0.horizontalcompass.hook.HookManager;
 import com.github.alcoloid0.horizontalcompass.listener.HomeListener;
-import com.github.alcoloid0.horizontalcompass.listener.LookListener;
+import com.github.alcoloid0.horizontalcompass.listener.LookPacketListener;
 import com.github.alcoloid0.horizontalcompass.listener.PlayerListener;
 import com.github.alcoloid0.horizontalcompass.settings.Settings;
-import com.github.alcoloid0.horizontalcompass.waypoint.factory.SettingsWaypointFactory;
-import com.github.alcoloid0.horizontalcompass.waypoint.factory.WaypointFactory;
+import com.github.alcoloid0.horizontalcompass.waypoint.WaypointBuilderImpl;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Unmodifiable;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
-public final class HorizontalCompass extends JavaPlugin {
-    private static HorizontalCompass instance;
+public final class HorizontalCompass extends JavaPlugin implements HorizontalCompassAPI {
     private final Map<Player, Compass> playerCompassMap = new HashMap<>();
+
     private Settings settings;
     private CompassFactory compassFactory;
-    private WaypointFactory waypointFactory;
     private HookManager hookManager;
     private BukkitAudiences adventure;
 
-    public static HorizontalCompass getInstance() {
-        return instance;
-    }
-
     @Override
     public void onEnable() {
-        instance = this;
-
         this.adventure = BukkitAudiences.create(this);
-
         this.settings = new Settings(this).load();
-
-        this.waypointFactory = new SettingsWaypointFactory(this.settings);
-        this.compassFactory = new SettingsCompassFactory(this.settings, this.waypointFactory);
-
+        this.compassFactory = new SettingsCompassFactory(this, this.settings);
         this.hookManager = new HookManager(this);
 
         PluginManager pluginManager = Bukkit.getPluginManager();
-
         pluginManager.registerEvents(new PlayerListener(this), this);
 
         if (this.hookManager.essentials().isPresent()) {
@@ -71,24 +66,41 @@ public final class HorizontalCompass extends JavaPlugin {
         }
 
         this.hookManager.protocolLib().ifPresent(protocolLib -> {
-            protocolLib.addPacketListener(new LookListener(this));
+            protocolLib.addPacketListener(new LookPacketListener(this));
         });
+    }
+
+    @Override
+    public @NotNull @Unmodifiable List<Compass> getCompassList() {
+        return List.copyOf(this.playerCompassMap.values());
+    }
+
+    @Override
+    public @NotNull Optional<Compass> getCompassByPlayer(@NotNull OfflinePlayer player) {
+        if (!player.isOnline()) {
+            return Optional.empty();
+        }
+
+        return this.getCompassList().stream()
+                .filter(compass -> compass.getCompassPlayer().equals(player.getPlayer()))
+                .findFirst();
+    }
+
+    @Override
+    public @NotNull WaypointBuilder newWaypointBuilder(@NotNull Location location) {
+        return new WaypointBuilderImpl(location);
+    }
+
+    public Map<Player, Compass> getPlayerCompassMap() {
+        return playerCompassMap;
     }
 
     public BukkitAudiences getAdventure() {
         return this.adventure;
     }
 
-    public Map<Player, Compass> getPlayerCompassMap() {
-        return this.playerCompassMap;
-    }
-
     public CompassFactory getCompassFactory() {
         return compassFactory;
-    }
-
-    public WaypointFactory getWaypointFactory() {
-        return waypointFactory;
     }
 
     public Settings getSettings() {

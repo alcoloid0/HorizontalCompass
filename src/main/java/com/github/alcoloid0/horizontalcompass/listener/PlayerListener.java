@@ -18,35 +18,29 @@
 package com.github.alcoloid0.horizontalcompass.listener;
 
 import com.github.alcoloid0.horizontalcompass.HorizontalCompass;
-import com.github.alcoloid0.horizontalcompass.compass.Compass;
+import com.github.alcoloid0.horizontalcompass.api.compass.Compass;
 import com.github.alcoloid0.horizontalcompass.compass.factory.CompassFactory;
-import com.github.alcoloid0.horizontalcompass.hook.HookManager;
-import com.github.alcoloid0.horizontalcompass.waypoint.Waypoint;
-import com.github.alcoloid0.horizontalcompass.waypoint.factory.WaypointFactory;
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class PlayerListener implements Listener {
+public final class PlayerListener implements Listener {
     private final HorizontalCompass compassPlugin;
 
     public PlayerListener(@NotNull HorizontalCompass compassPlugin) {
         this.compassPlugin = compassPlugin;
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerJoin(@NotNull PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
-        CompassFactory factory = HorizontalCompass.getInstance().getCompassFactory();
+        CompassFactory factory = compassPlugin.getCompassFactory();
 
         Compass compass = switch (this.compassPlugin.getSettings().getCompassType()) {
             case ACTIONBAR -> factory.createActionBarCompass(player);
@@ -54,8 +48,6 @@ public class PlayerListener implements Listener {
         };
 
         this.compassPlugin.getPlayerCompassMap().put(event.getPlayer(), compass);
-
-        compass.getWaypoints().addAll(this.getPlayerHomeWaypoints(player));
 
         compass.update();
         compass.show();
@@ -72,25 +64,5 @@ public class PlayerListener implements Listener {
 
         this.compassPlugin.getPlayerCompassMap().get(player).hide();
         this.compassPlugin.getPlayerCompassMap().remove(player);
-    }
-
-    private @NotNull List<Waypoint> getPlayerHomeWaypoints(@NotNull Player player) {
-        List<Waypoint> waypoints = new ArrayList<>();
-
-        if (this.compassPlugin.getSettings().isEssentialsHomeDisabled()) {
-            return waypoints;
-        }
-
-        HookManager hookManager = this.compassPlugin.getHookManager();
-        WaypointFactory factory = this.compassPlugin.getWaypointFactory();
-
-        hookManager.essentials().ifPresent(essentials -> {
-            for (String homeName : essentials.getPlayerHomeList(player)) {
-                Location homeLocation = essentials.getPlayerHome(player, homeName);
-                waypoints.add(factory.createHomeWaypoint(homeLocation, homeName));
-            }
-        });
-
-        return waypoints;
     }
 }

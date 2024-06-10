@@ -17,18 +17,21 @@
 
 package com.github.alcoloid0.horizontalcompass.compass.display;
 
-import com.github.alcoloid0.horizontalcompass.waypoint.Waypoint;
+import com.github.alcoloid0.horizontalcompass.api.waypoint.Waypoint;
+import com.github.alcoloid0.horizontalcompass.util.CardinalDirection;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 
 public interface CompassDisplay {
     void flush();
 
-    int getViewAngleCount();
-
     void append(int angle, boolean center);
 
     void append(int angle, @NotNull Waypoint waypoint);
+
+    void append(int angle, @NotNull CardinalDirection direction);
+
+    int getAngleCount();
 
     @NotNull
     Component getComponent();
