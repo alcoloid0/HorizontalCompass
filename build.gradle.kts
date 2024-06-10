@@ -60,17 +60,10 @@ allprojects {
 
 repositories {
     maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
-    maven("https://repo.essentialsx.net/releases/")
     maven("https://repo.dmulloy2.net/repository/public/")
-
-    // For EssentialsX dependency
-    maven("https://papermc.io/repo/repository/maven-public/")
 }
 
 dependencies {
-    // Essentials
-    compileOnly("net.essentialsx:EssentialsX:2.20.0")
-
     // ProtocolLib
     compileOnly("com.comphenix.protocol:ProtocolLib:5.1.0")
 
