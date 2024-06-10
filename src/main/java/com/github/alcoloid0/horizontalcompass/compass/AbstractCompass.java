@@ -32,7 +32,7 @@ import java.util.Arrays;
 public abstract class AbstractCompass implements Compass {
     protected final Player player;
     private final CompassWaypoints waypoints;
-    protected CompassDisplay display;
+    protected final CompassDisplay display;
 
     protected AbstractCompass(@NotNull Player player, @NotNull CompassDisplay display) {
         this.player = player;
