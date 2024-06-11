@@ -19,8 +19,8 @@ package com.github.alcoloid0.horizontalcompass.compass;
 
 import com.github.alcoloid0.horizontalcompass.api.compass.Compass;
 import com.github.alcoloid0.horizontalcompass.api.compass.CompassWaypoints;
-import com.github.alcoloid0.horizontalcompass.api.util.Identifier;
 import com.github.alcoloid0.horizontalcompass.api.waypoint.Waypoint;
+import com.github.alcoloid0.horizontalcompass.api.waypoint.WaypointIdentifier;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
@@ -53,7 +53,7 @@ public final class CompassWaypointsImpl implements CompassWaypoints {
     }
 
     @Override
-    public void remove(@NotNull Identifier identifier) {
+    public void remove(@NotNull WaypointIdentifier identifier) {
         this.waypoints.removeIf(waypoint -> waypoint.getIdentifier().equals(identifier));
     }
 
@@ -63,7 +63,7 @@ public final class CompassWaypointsImpl implements CompassWaypoints {
     }
 
     @Override
-    public @NotNull List<Waypoint> get(@NotNull Identifier identifier) {
+    public @NotNull List<Waypoint> get(@NotNull WaypointIdentifier identifier) {
         return this.waypoints.stream()
                 .filter(waypoint -> waypoint.getIdentifier().equals(identifier))
                 .toList();
