@@ -17,7 +17,6 @@
 
 package com.github.alcoloid0.horizontalcompass.api.waypoint;
 
-import com.github.alcoloid0.horizontalcompass.api.util.Identifier;
 import net.kyori.adventure.text.format.TextColor;
 import org.jetbrains.annotations.NotNull;
 
@@ -29,7 +28,7 @@ public interface WaypointBuilder {
     WaypointBuilder label(@NotNull String label);
 
     @NotNull
-    WaypointBuilder identifier(@NotNull Identifier identifier);
+    WaypointBuilder identifier(@NotNull WaypointIdentifier identifier);
 
     @NotNull
     Waypoint build();

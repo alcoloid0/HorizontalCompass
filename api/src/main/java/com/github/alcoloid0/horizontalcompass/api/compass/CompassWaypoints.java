@@ -17,8 +17,8 @@
 
 package com.github.alcoloid0.horizontalcompass.api.compass;
 
-import com.github.alcoloid0.horizontalcompass.api.util.Identifier;
 import com.github.alcoloid0.horizontalcompass.api.waypoint.Waypoint;
+import com.github.alcoloid0.horizontalcompass.api.waypoint.WaypointIdentifier;
 import org.bukkit.Location;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
@@ -35,12 +35,12 @@ public interface CompassWaypoints extends Iterable<Waypoint> {
 
     void remove(@NotNull Waypoint waypoint);
 
-    void remove(@NotNull Identifier identifier);
+    void remove(@NotNull WaypointIdentifier identifier);
 
     void removeIf(@NotNull Predicate<Waypoint> waypointPredicate);
 
     @NotNull
-    List<Waypoint> get(@NotNull Identifier identifier);
+    List<Waypoint> get(@NotNull WaypointIdentifier identifier);
 
     @NotNull
     Compass getCompass();
