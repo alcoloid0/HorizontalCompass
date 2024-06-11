@@ -17,19 +17,19 @@
 
 package com.github.alcoloid0.horizontalcompass.waypoint;
 
-import com.github.alcoloid0.horizontalcompass.api.util.Identifier;
 import com.github.alcoloid0.horizontalcompass.api.waypoint.Waypoint;
+import com.github.alcoloid0.horizontalcompass.api.waypoint.WaypointIdentifier;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;
 
 public final class WaypointImpl implements Waypoint {
-    private final Identifier identifier;
+    private final WaypointIdentifier identifier;
     private Location location;
     private String label;
     private TextColor color;
 
-    public WaypointImpl(@NotNull Identifier identifier,
+    public WaypointImpl(@NotNull WaypointIdentifier identifier,
                         @NotNull Location location,
                         @NotNull String label,
                         @NotNull TextColor color) {
@@ -40,7 +40,7 @@ public final class WaypointImpl implements Waypoint {
         this.color = color;
     }
 
-    public @NotNull Identifier getIdentifier() {
+    public @NotNull WaypointIdentifier getIdentifier() {
         return this.identifier;
     }
 

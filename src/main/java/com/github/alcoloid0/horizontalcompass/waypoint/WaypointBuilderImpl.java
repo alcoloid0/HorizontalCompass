@@ -17,27 +17,26 @@
 
 package com.github.alcoloid0.horizontalcompass.waypoint;
 
-import com.github.alcoloid0.horizontalcompass.api.util.Identifier;
 import com.github.alcoloid0.horizontalcompass.api.waypoint.Waypoint;
 import com.github.alcoloid0.horizontalcompass.api.waypoint.WaypointBuilder;
+import com.github.alcoloid0.horizontalcompass.api.waypoint.WaypointIdentifier;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
 
 public final class WaypointBuilderImpl implements WaypointBuilder {
     private final Location location;
     private TextColor color;
     private String label;
-    private Identifier identifier;
+    private WaypointIdentifier identifier;
 
     public WaypointBuilderImpl(@NotNull Location location) {
         this.location = location;
         this.color = TextColor.color(ThreadLocalRandom.current().nextInt(0xFFFFFF));
         this.label = "";
-        this.identifier = Identifier.uuid(UUID.randomUUID());
+        this.identifier = new NullWaypointIdentifier();
     }
 
     @Override
@@ -53,7 +52,7 @@ public final class WaypointBuilderImpl implements WaypointBuilder {
     }
 
     @Override
-    public @NotNull WaypointBuilder identifier(@NotNull Identifier identifier) {
+    public @NotNull WaypointBuilder identifier(@NotNull WaypointIdentifier identifier) {
         this.identifier = identifier;
         return this;
     }
