@@ -17,14 +17,13 @@
 
 package com.github.alcoloid0.horizontalcompass.api.waypoint;
 
-import com.github.alcoloid0.horizontalcompass.api.util.Identifier;
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;
 
 public interface Waypoint {
     @NotNull
-    Identifier getIdentifier();
+    WaypointIdentifier getIdentifier();
 
     @NotNull
     TextColor getTextColor();
