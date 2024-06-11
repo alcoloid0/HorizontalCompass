@@ -36,7 +36,7 @@ public final class PlayerListener implements Listener {
         this.compassPlugin = compassPlugin;
     }
 
-    @EventHandler(priority = EventPriority.HIGH)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerJoin(@NotNull PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
@@ -58,7 +58,7 @@ public final class PlayerListener implements Listener {
         this.compassPlugin.getPlayerCompassMap().get(moveEvent.getPlayer()).update();
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerLeave(@NotNull PlayerQuitEvent quitEvent) {
         Player player = quitEvent.getPlayer();
 
