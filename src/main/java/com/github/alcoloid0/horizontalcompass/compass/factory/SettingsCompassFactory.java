@@ -19,10 +19,10 @@ package com.github.alcoloid0.horizontalcompass.compass.factory;
 
 import com.github.alcoloid0.horizontalcompass.HorizontalCompass;
 import com.github.alcoloid0.horizontalcompass.api.compass.Compass;
-import com.github.alcoloid0.horizontalcompass.compass.AbstractCompass;
 import com.github.alcoloid0.horizontalcompass.compass.display.CompassDisplay;
 import com.github.alcoloid0.horizontalcompass.compass.display.DegreesCompassDisplay;
 import com.github.alcoloid0.horizontalcompass.compass.display.RustCompassDisplay;
+import com.github.alcoloid0.horizontalcompass.compass.display.SimpleCompassDisplay;
 import com.github.alcoloid0.horizontalcompass.compass.impl.ActionBarCompass;
 import com.github.alcoloid0.horizontalcompass.compass.impl.BossBarCompass;
 import com.github.alcoloid0.horizontalcompass.settings.Settings;
@@ -35,7 +35,7 @@ import java.util.Map;
 public final class SettingsCompassFactory implements CompassFactory {
     private static final Map<CompassDisplayType, CompassDisplay> DISPLAY_MAP = Map.of(
             CompassDisplayType.DEGREES, new DegreesCompassDisplay(),
-            CompassDisplayType.SIMPLE, new RustCompassDisplay(),
+            CompassDisplayType.SIMPLE, new SimpleCompassDisplay(),
             CompassDisplayType.RUST, new RustCompassDisplay()
     );
 
@@ -48,7 +48,7 @@ public final class SettingsCompassFactory implements CompassFactory {
     @Override
     public @NotNull Compass createCompass(@NotNull Player forPlayer) {
         CompassDisplay display = DISPLAY_MAP.get(Settings.compass().getDisplay());
-        
+
         return switch (Settings.compass().getType()) {
             case ACTIONBAR -> new ActionBarCompass(this.compassPlugin, forPlayer, display);
             case BOSSBAR -> new BossBarCompass(this.compassPlugin, forPlayer, display);
