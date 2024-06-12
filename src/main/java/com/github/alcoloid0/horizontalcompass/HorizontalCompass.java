@@ -46,6 +46,8 @@ import java.util.Map;
 import java.util.Optional;
 
 public final class HorizontalCompass extends JavaPlugin implements HorizontalCompassAPI {
+    private static final ServicesManager SERVICES = Bukkit.getServicesManager();
+
     private final Map<Player, Compass> playerCompassMap = new HashMap<>();
 
     private CompassFactory compassFactory;
@@ -63,16 +65,26 @@ public final class HorizontalCompass extends JavaPlugin implements HorizontalCom
 
         this.compassFactory = new SettingsCompassFactory(this);
 
-        PluginManager pluginManager = Bukkit.getPluginManager();
-        pluginManager.registerEvents(new PlayerListener(this), this);
+        Bukkit.getPluginManager().registerEvents(new PlayerListener(this), this);
 
         if (Bukkit.getPluginManager().getPlugin("ProtocolLib") != null) {
             ProtocolLibWrapper.addPacketListener(new LookPacketListener(this));
         }
 
-        ServicesManager manager = this.getServer().getServicesManager();
+        SERVICES.register(HorizontalCompassAPI.class, this, this, ServicePriority.Normal);
+    }
 
-        manager.register(HorizontalCompassAPI.class, this, this, ServicePriority.Normal);
+    @Override
+    public void onDisable() {
+        SERVICES.unregister(HorizontalCompassAPI.class, this);
+
+        if (this.adventure != null) {
+            this.adventure.close();
+        }
+
+        this.playerCompassMap.clear();
+        this.compassFactory = null;
+        this.adventure = null;
     }
 
     @Override
