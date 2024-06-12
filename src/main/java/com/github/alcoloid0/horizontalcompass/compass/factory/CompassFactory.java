@@ -18,7 +18,6 @@
 package com.github.alcoloid0.horizontalcompass.compass.factory;
 
 import com.github.alcoloid0.horizontalcompass.api.compass.Compass;
-import com.github.alcoloid0.horizontalcompass.compass.AbstractCompass;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
