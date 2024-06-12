@@ -20,6 +20,7 @@ package com.github.alcoloid0.horizontalcompass.compass.impl;
 import com.github.alcoloid0.horizontalcompass.HorizontalCompass;
 import com.github.alcoloid0.horizontalcompass.compass.AbstractCompass;
 import com.github.alcoloid0.horizontalcompass.compass.display.CompassDisplay;
+import com.github.alcoloid0.horizontalcompass.settings.Settings;
 import com.github.alcoloid0.horizontalcompass.util.PlayerLookUtil;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.bossbar.BossBar;
@@ -30,7 +31,6 @@ import org.jetbrains.annotations.NotNull;
 public final class BossBarCompass extends AbstractCompass {
     private final BossBar bossBar;
     private final Audience audience;
-    private boolean progress;
 
     public BossBarCompass(@NotNull HorizontalCompass compassPlugin,
                           @NotNull Player player,
@@ -40,10 +40,9 @@ public final class BossBarCompass extends AbstractCompass {
 
         this.bossBar = BossBar.bossBar(Component.empty(),
                 0,
-                BossBar.Color.WHITE,
-                BossBar.Overlay.PROGRESS);
+                Settings.compass().getBossBar().getColor(),
+                Settings.compass().getBossBar().getOverlay());
 
-        this.progress = false;
         this.audience = compassPlugin.getAdventure().player(player);
     }
 
@@ -53,7 +52,7 @@ public final class BossBarCompass extends AbstractCompass {
 
         this.bossBar.name(this.display.getComponent());
 
-        if (this.progress) {
+        if (Settings.compass().getBossBar().isShowProgress()) {
             this.bossBar.progress(PlayerLookUtil.lookAngle(this.player) / 360.0f);
         }
     }
@@ -66,13 +65,5 @@ public final class BossBarCompass extends AbstractCompass {
     @Override
     public void hide() {
         this.audience.hideBossBar(this.bossBar);
-    }
-
-    public void setColor(@NotNull BossBar.Color color) {
-        this.bossBar.color(color);
-    }
-
-    public void setProgress(boolean progress) {
-        this.progress = progress;
     }
 }

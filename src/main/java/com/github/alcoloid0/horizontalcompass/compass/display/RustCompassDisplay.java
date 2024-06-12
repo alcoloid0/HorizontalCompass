@@ -24,18 +24,13 @@ import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 
 public final class RustCompassDisplay extends AbstractCompassDisplay {
-    private final Settings settings;
-
-    public RustCompassDisplay(@NotNull Settings settings) {
-        this.settings = settings;
-    }
-
     @Override
     public void append(int angle, boolean center) {
         if (angle % 10 == 0) {
-            this.component.append(Component.text(angle, this.settings.getRustColor()));
+            this.component.append(Component.text(angle, Settings.display().getRust().getColor()));
         } else if (angle % 5 == 0) {
-            this.component.append(Component.text(this.settings.getRustDelimiter(), this.settings.getRustColor()));
+            this.component.append(Component.text(Settings.display().getRust().getDelimiter(),
+                    Settings.display().getRust().getColor()));
         } else {
             this.component.appendSpace();
         }
@@ -43,12 +38,13 @@ public final class RustCompassDisplay extends AbstractCompassDisplay {
 
     @Override
     public void append(int angle, @NotNull Waypoint waypoint) {
-        this.component.append(Component.text(this.settings.getRustMarker(), waypoint.getTextColor()));
+        this.component.append(Component.text(Settings.display().getRust().getMarkerSymbol(),
+                waypoint.getTextColor()));
     }
 
     @Override
     public void append(int angle, @NotNull CardinalDirection direction) {
-        this.component.append(Component.text(direction.name(), this.settings.getRustColor()));
+        this.component.append(Component.text(direction.name(), Settings.display().getRust().getColor()));
     }
 
     @Override

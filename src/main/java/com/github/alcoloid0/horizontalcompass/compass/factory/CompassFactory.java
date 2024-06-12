@@ -17,14 +17,12 @@
 
 package com.github.alcoloid0.horizontalcompass.compass.factory;
 
+import com.github.alcoloid0.horizontalcompass.api.compass.Compass;
 import com.github.alcoloid0.horizontalcompass.compass.AbstractCompass;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 public interface CompassFactory {
     @NotNull
-    AbstractCompass createBossBarCompass(@NotNull Player player);
-
-    @NotNull
-    AbstractCompass createActionBarCompass(@NotNull Player player);
+    Compass createCompass(@NotNull Player forPlayer);
 }

@@ -23,18 +23,12 @@ import com.github.alcoloid0.horizontalcompass.util.CardinalDirection;
 import org.jetbrains.annotations.NotNull;
 
 public final class DegreesCompassDisplay extends AbstractCompassDisplay {
-    private final Settings settings;
-
-    public DegreesCompassDisplay(@NotNull Settings settings) {
-        this.settings = settings;
-    }
-
     @Override
     public void append(int angle, boolean center) {
         if (center) {
-            this.component.append(format(this.settings.getDegreesCenterAngleColor(), "%03d", angle));
+            this.component.append(format(Settings.display().getDegrees().getColorCenter(), "%03d", angle));
         } else {
-            this.component.append(format(this.settings.getDegreesAngleColor(), "%03d", angle));
+            this.component.append(format(Settings.display().getDegrees().getColor(), "%03d", angle));
         }
 
         this.component.appendSpace();
@@ -48,7 +42,7 @@ public final class DegreesCompassDisplay extends AbstractCompassDisplay {
 
     @Override
     public void append(int angle, @NotNull CardinalDirection direction) {
-        this.component.append(format(this.settings.getCardinalColor(), "%03d", angle));
+        this.component.append(format(Settings.waypoints().getCardinalColor(), "%03d", angle));
         this.component.appendSpace();
     }
 

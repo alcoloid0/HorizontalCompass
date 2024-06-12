@@ -36,6 +36,7 @@ public final class ActionBarCompass extends AbstractCompass implements Runnable 
         super(player, display);
 
         this.bukkitTask = new SimpleBukkitTask(compassPlugin, this);
+
         this.audience = compassPlugin.getAdventure().player(player);
     }
 

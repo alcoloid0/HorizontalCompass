@@ -40,12 +40,7 @@ public final class PlayerListener implements Listener {
     public void onPlayerJoin(@NotNull PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
-        CompassFactory factory = compassPlugin.getCompassFactory();
-
-        Compass compass = switch (this.compassPlugin.getSettings().getCompassType()) {
-            case ACTIONBAR -> factory.createActionBarCompass(player);
-            case BOSSBAR -> factory.createBossBarCompass(player);
-        };
+        Compass compass = compassPlugin.getCompassFactory().createCompass(player);
 
         this.compassPlugin.getPlayerCompassMap().put(event.getPlayer(), compass);
 

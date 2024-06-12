@@ -39,6 +39,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Unmodifiable;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,15 +48,20 @@ import java.util.Optional;
 public final class HorizontalCompass extends JavaPlugin implements HorizontalCompassAPI {
     private final Map<Player, Compass> playerCompassMap = new HashMap<>();
 
-    private Settings settings;
     private CompassFactory compassFactory;
     private BukkitAudiences adventure;
 
     @Override
     public void onEnable() {
         this.adventure = BukkitAudiences.create(this);
-        this.settings = new Settings(this).load();
-        this.compassFactory = new SettingsCompassFactory(this, this.settings);
+
+        try {
+            Settings.initialize(this.getDataFolder()).load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        this.compassFactory = new SettingsCompassFactory(this);
 
         PluginManager pluginManager = Bukkit.getPluginManager();
         pluginManager.registerEvents(new PlayerListener(this), this);
@@ -65,6 +71,7 @@ public final class HorizontalCompass extends JavaPlugin implements HorizontalCom
         }
 
         ServicesManager manager = this.getServer().getServicesManager();
+
         manager.register(HorizontalCompassAPI.class, this, this, ServicePriority.Normal);
     }
 
@@ -99,9 +106,5 @@ public final class HorizontalCompass extends JavaPlugin implements HorizontalCom
 
     public CompassFactory getCompassFactory() {
         return compassFactory;
-    }
-
-    public Settings getSettings() {
-        return settings;
     }
 }

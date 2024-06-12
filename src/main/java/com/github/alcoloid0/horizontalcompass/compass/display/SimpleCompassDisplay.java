@@ -25,12 +25,6 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import org.jetbrains.annotations.NotNull;
 
 public final class SimpleCompassDisplay extends AbstractCompassDisplay {
-    private final Settings settings;
-
-    public SimpleCompassDisplay(@NotNull Settings settings) {
-        this.settings = settings;
-    }
-
     @Override
     public void append(int angle, boolean center) {
         this.component.append(Component.text(angle, NamedTextColor.WHITE));
@@ -44,7 +38,7 @@ public final class SimpleCompassDisplay extends AbstractCompassDisplay {
 
     @Override
     public void append(int angle, @NotNull CardinalDirection direction) {
-        this.component.append(format(this.settings.getCardinalColor(), "%d (%s)", angle, direction.name()));
+        this.component.append(format(Settings.waypoints().getCardinalColor(), "%d (%s)", angle, direction.name()));
     }
 
     @Override
