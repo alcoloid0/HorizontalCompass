@@ -3,5 +3,5 @@ plugins {
 }
 
 dependencies {
-    api("net.kyori:adventure-api:4.11.0")
+    api("net.kyori:adventure-api:4.13.1")
 }
