@@ -22,6 +22,7 @@ import com.github.alcoloid0.horizontalcompass.util.CardinalDirection;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 
+/* https://i0.wp.com/www.lovattostudio.com/en/wp-content/uploads/2018/12/2018-11-16-03_58_51-Window.png?fit=1907%2C907&ssl=1 */
 public interface CompassDisplay {
     void flush();
 

@@ -19,10 +19,7 @@ package com.github.alcoloid0.horizontalcompass.compass.factory;
 
 import com.github.alcoloid0.horizontalcompass.HorizontalCompass;
 import com.github.alcoloid0.horizontalcompass.api.compass.Compass;
-import com.github.alcoloid0.horizontalcompass.compass.display.CompassDisplay;
-import com.github.alcoloid0.horizontalcompass.compass.display.DegreesCompassDisplay;
-import com.github.alcoloid0.horizontalcompass.compass.display.RustCompassDisplay;
-import com.github.alcoloid0.horizontalcompass.compass.display.SimpleCompassDisplay;
+import com.github.alcoloid0.horizontalcompass.compass.display.*;
 import com.github.alcoloid0.horizontalcompass.compass.impl.ActionBarCompass;
 import com.github.alcoloid0.horizontalcompass.compass.impl.BossBarCompass;
 import com.github.alcoloid0.horizontalcompass.settings.Settings;
@@ -36,7 +33,8 @@ public final class SettingsCompassFactory implements CompassFactory {
     private static final Map<CompassDisplayType, CompassDisplay> DISPLAY_MAP = Map.of(
             CompassDisplayType.DEGREES, new DegreesCompassDisplay(),
             CompassDisplayType.SIMPLE, new SimpleCompassDisplay(),
-            CompassDisplayType.RUST, new RustCompassDisplay()
+            CompassDisplayType.RUST, new RustCompassDisplay(),
+            CompassDisplayType.RUSTME, new RustMeCompassDisplay()
     );
 
     private final HorizontalCompass compassPlugin;

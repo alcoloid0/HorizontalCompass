@@ -19,6 +19,7 @@ package com.github.alcoloid0.horizontalcompass.settings.type;
 
 public enum CompassDisplayType {
     DEGREES,
+    SIMPLE,
     RUST,
-    SIMPLE
+    RUSTME
 }
