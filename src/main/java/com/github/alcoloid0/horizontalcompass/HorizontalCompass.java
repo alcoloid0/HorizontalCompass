@@ -20,6 +20,7 @@ package com.github.alcoloid0.horizontalcompass;
 import com.github.alcoloid0.horizontalcompass.api.HorizontalCompassAPI;
 import com.github.alcoloid0.horizontalcompass.api.compass.Compass;
 import com.github.alcoloid0.horizontalcompass.api.waypoint.WaypointBuilder;
+import com.github.alcoloid0.horizontalcompass.command.CompassCommand;
 import com.github.alcoloid0.horizontalcompass.compass.factory.CompassFactory;
 import com.github.alcoloid0.horizontalcompass.compass.factory.SettingsCompassFactory;
 import com.github.alcoloid0.horizontalcompass.hook.ProtocolLibWrapper;
@@ -31,6 +32,8 @@ import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.command.Command;
+import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.ServicesManager;
@@ -71,6 +74,15 @@ public final class HorizontalCompass extends JavaPlugin implements HorizontalCom
         }
 
         SERVICES.register(HorizontalCompassAPI.class, this, this, ServicePriority.Normal);
+
+        CompassCommand command = new CompassCommand(this);
+
+        PluginCommand pluginCommand = this.getCommand("horizontalcompass");
+
+        if (pluginCommand != null) {
+            pluginCommand.setExecutor(command);
+            pluginCommand.setTabCompleter(command);
+        }
     }
 
     @Override
