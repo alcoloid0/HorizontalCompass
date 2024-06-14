@@ -13,7 +13,7 @@ allprojects {
     apply(plugin = "org.cadixdev.licenser")
 
     group = "com.github.alcoloid0"
-    version = "1.0-SNAPSHOT"
+    version = "1.1"
 
     java {
         toolchain.languageVersion.set(JavaLanguageVersion.of(17))
