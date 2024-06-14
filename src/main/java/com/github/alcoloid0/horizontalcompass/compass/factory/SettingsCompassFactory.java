@@ -19,24 +19,14 @@ package com.github.alcoloid0.horizontalcompass.compass.factory;
 
 import com.github.alcoloid0.horizontalcompass.HorizontalCompass;
 import com.github.alcoloid0.horizontalcompass.api.compass.Compass;
-import com.github.alcoloid0.horizontalcompass.compass.display.*;
 import com.github.alcoloid0.horizontalcompass.compass.impl.ActionBarCompass;
 import com.github.alcoloid0.horizontalcompass.compass.impl.BossBarCompass;
+import com.github.alcoloid0.horizontalcompass.display.CompassDisplay;
 import com.github.alcoloid0.horizontalcompass.settings.Settings;
-import com.github.alcoloid0.horizontalcompass.settings.type.CompassDisplayType;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Map;
-
 public final class SettingsCompassFactory implements CompassFactory {
-    private static final Map<CompassDisplayType, CompassDisplay> DISPLAY_MAP = Map.of(
-            CompassDisplayType.DEGREES, new DegreesCompassDisplay(),
-            CompassDisplayType.SIMPLE, new SimpleCompassDisplay(),
-            CompassDisplayType.RUST, new RustCompassDisplay(),
-            CompassDisplayType.RUSTME, new RustMeCompassDisplay()
-    );
-
     private final HorizontalCompass compassPlugin;
 
     public SettingsCompassFactory(@NotNull HorizontalCompass compassPlugin) {
@@ -45,8 +35,11 @@ public final class SettingsCompassFactory implements CompassFactory {
 
     @Override
     public @NotNull Compass createCompass(@NotNull Player forPlayer) {
-        CompassDisplay display = DISPLAY_MAP.get(Settings.compass().getDisplay());
+        return this.createCompass(forPlayer, Settings.compass().getDisplay().newInstance());
+    }
 
+    @Override
+    public @NotNull Compass createCompass(@NotNull Player forPlayer, @NotNull CompassDisplay display) {
         return switch (Settings.compass().getType()) {
             case ACTIONBAR -> new ActionBarCompass(this.compassPlugin, forPlayer, display);
             case BOSSBAR -> new BossBarCompass(this.compassPlugin, forPlayer, display);

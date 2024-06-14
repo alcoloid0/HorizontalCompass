@@ -15,29 +15,15 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.alcoloid0.horizontalcompass.util;
+package com.github.alcoloid0.horizontalcompass.display;
 
-import org.bukkit.entity.Player;
+import com.github.alcoloid0.horizontalcompass.api.compass.Compass;
+import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 
-public final class PlayerLookUtil {
-    private PlayerLookUtil() throws IllegalAccessException {
-        throw new IllegalAccessException();
-    }
+public interface CompassDisplay {
+    void update(@NotNull Compass forCompass);
 
-    public static int lookAngle(@NotNull Player player) {
-        return Math.round(player.getEyeLocation().getYaw()) + 180;
-    }
-
-    public static int @NotNull [] lookAngleOffsets(@NotNull Player player, int count) {
-        int[] offsets = new int[count];
-
-        int lookAngle = PlayerLookUtil.lookAngle(player);
-
-        for (int i = 0; i < offsets.length; i++) {
-            offsets[i] = Math.floorMod(lookAngle - (offsets.length / 2) + i, 360);
-        }
-
-        return offsets;
-    }
+    @NotNull
+    Component getComponent();
 }

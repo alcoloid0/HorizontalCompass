@@ -19,15 +19,9 @@ package com.github.alcoloid0.horizontalcompass.compass;
 
 import com.github.alcoloid0.horizontalcompass.api.compass.Compass;
 import com.github.alcoloid0.horizontalcompass.api.compass.CompassWaypoints;
-import com.github.alcoloid0.horizontalcompass.api.waypoint.Waypoint;
-import com.github.alcoloid0.horizontalcompass.compass.display.CompassDisplay;
-import com.github.alcoloid0.horizontalcompass.util.CardinalDirection;
-import com.github.alcoloid0.horizontalcompass.util.PlayerLookUtil;
-import org.bukkit.Location;
+import com.github.alcoloid0.horizontalcompass.display.CompassDisplay;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Arrays;
 
 public abstract class AbstractCompass implements Compass {
     protected final Player player;
@@ -42,34 +36,7 @@ public abstract class AbstractCompass implements Compass {
 
     @Override
     public void update() {
-        this.display.flush();
-
-        Location location = this.player.getLocation();
-
-        int lookAngle = PlayerLookUtil.lookAngle(this.player);
-        int angleCount = this.display.getAngleCount();
-
-        for (int angle : PlayerLookUtil.lookAngleOffsets(this.player, angleCount)) {
-            Waypoint waypoint = this.waypoints.getByAngleBetween(location, angle)
-                    .orElse(null);
-
-            if (waypoint != null) {
-                this.display.append(angle, waypoint);
-                continue;
-            }
-
-            CardinalDirection direction = Arrays.stream(CardinalDirection.values())
-                    .filter(dir -> dir.getRotationAngle() == angle)
-                    .findFirst()
-                    .orElse(null);
-
-            if (direction != null) {
-                this.display.append(angle, direction);
-                continue;
-            }
-
-            this.display.append(angle, angle == lookAngle);
-        }
+        this.display.update(this);
     }
 
     @Override

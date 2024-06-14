@@ -19,9 +19,8 @@ package com.github.alcoloid0.horizontalcompass.compass.impl;
 
 import com.github.alcoloid0.horizontalcompass.HorizontalCompass;
 import com.github.alcoloid0.horizontalcompass.compass.AbstractCompass;
-import com.github.alcoloid0.horizontalcompass.compass.display.CompassDisplay;
+import com.github.alcoloid0.horizontalcompass.display.CompassDisplay;
 import com.github.alcoloid0.horizontalcompass.settings.Settings;
-import com.github.alcoloid0.horizontalcompass.util.PlayerLookUtil;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.Component;
@@ -53,7 +52,7 @@ public final class BossBarCompass extends AbstractCompass {
         this.bossBar.name(this.display.getComponent());
 
         if (Settings.compass().getBossBar().isShowProgress()) {
-            this.bossBar.progress(PlayerLookUtil.lookAngle(this.player) / 360.0f);
+            this.bossBar.progress((this.player.getEyeLocation().getYaw() + 180.0f) / 360.0f);
         }
     }
 

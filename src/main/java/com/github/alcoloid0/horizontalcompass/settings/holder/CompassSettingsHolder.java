@@ -1,7 +1,7 @@
 package com.github.alcoloid0.horizontalcompass.settings.holder;
 
-import com.github.alcoloid0.horizontalcompass.settings.type.CompassDisplayType;
-import com.github.alcoloid0.horizontalcompass.settings.type.CompassType;
+import com.github.alcoloid0.horizontalcompass.compass.CompassType;
+import com.github.alcoloid0.horizontalcompass.display.CompassDisplayType;
 import net.kyori.adventure.bossbar.BossBar;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;

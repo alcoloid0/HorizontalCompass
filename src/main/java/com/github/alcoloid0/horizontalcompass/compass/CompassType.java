@@ -15,11 +15,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.alcoloid0.horizontalcompass.settings.type;
+package com.github.alcoloid0.horizontalcompass.compass;
 
-public enum CompassDisplayType {
-    DEGREES,
-    SIMPLE,
-    RUST,
-    RUSTME
+public enum CompassType {
+    ACTIONBAR,
+    BOSSBAR
 }

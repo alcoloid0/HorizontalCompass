@@ -19,7 +19,7 @@ package com.github.alcoloid0.horizontalcompass.compass.impl;
 
 import com.github.alcoloid0.horizontalcompass.HorizontalCompass;
 import com.github.alcoloid0.horizontalcompass.compass.AbstractCompass;
-import com.github.alcoloid0.horizontalcompass.compass.display.CompassDisplay;
+import com.github.alcoloid0.horizontalcompass.display.CompassDisplay;
 import com.github.alcoloid0.horizontalcompass.util.SimpleBukkitTask;
 import net.kyori.adventure.audience.Audience;
 import org.bukkit.entity.Player;

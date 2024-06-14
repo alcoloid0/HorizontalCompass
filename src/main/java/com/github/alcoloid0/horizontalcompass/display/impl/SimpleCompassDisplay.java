@@ -15,39 +15,33 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.alcoloid0.horizontalcompass.compass.display;
+package com.github.alcoloid0.horizontalcompass.display.impl;
 
 import com.github.alcoloid0.horizontalcompass.api.waypoint.Waypoint;
+import com.github.alcoloid0.horizontalcompass.display.AppendableCompassDisplay;
 import com.github.alcoloid0.horizontalcompass.settings.Settings;
 import com.github.alcoloid0.horizontalcompass.util.CardinalDirection;
+import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 
-public final class DegreesCompassDisplay extends AbstractCompassDisplay {
+public final class SimpleCompassDisplay extends AppendableCompassDisplay {
     @Override
-    public void append(int angle, boolean center) {
-        if (center) {
-            this.component.append(format(Settings.display().getDegrees().getColorCenter(), "%03d", angle));
-        } else {
-            this.component.append(format(Settings.display().getDegrees().getColor(), "%03d", angle));
-        }
-
-        this.component.appendSpace();
+    protected void append(int angle, boolean center) {
+        this.append(Component.text(angle));
     }
 
     @Override
-    public void append(int angle, @NotNull Waypoint waypoint) {
-        this.component.append(format(waypoint.getTextColor(), "%03d", angle));
-        this.component.appendSpace();
+    protected void append(int angle, @NotNull Waypoint waypoint) {
+        this.append(format("%d (%s)", angle, waypoint.getLabel()).color(waypoint.getTextColor()));
     }
 
     @Override
-    public void append(int angle, @NotNull CardinalDirection direction) {
-        this.component.append(format(Settings.waypoints().getCardinalColor(), "%03d", angle));
-        this.component.appendSpace();
+    protected void append(int angle, @NotNull CardinalDirection direction) {
+        this.append(format("%d (%s)", angle, direction.name()).color(Settings.waypoints().getCardinalColor()));
     }
 
     @Override
-    public int getAngleCount() {
-        return 15;
+    protected int angleCount() {
+        return 1;
     }
 }
