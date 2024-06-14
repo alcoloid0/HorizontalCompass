@@ -7,4 +7,4 @@ softdepend:
   - ProtocolLib
 commands:
   horizontalcompass:
-    aliases: [hcompass]
+    aliases: [ hcompass ]
