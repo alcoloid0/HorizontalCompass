@@ -6,7 +6,7 @@ Perhaps the best horizontal compass plugin for your minecraft server
 
 - ProtocolLib (recommended) - update the compass when you turn your head
 
-# Demonstration
+## Demonstration
 
 | display |         GIF-preview         |
 |---------|:---------------------------:|
@@ -16,7 +16,7 @@ Perhaps the best horizontal compass plugin for your minecraft server
 | RUSTME  | ![](readme-src/rustme.gif)  |
 | PURPUR  | ![](readme-src/purpur.gif)  |
 
-# Settings (settings.yml)
+## Settings (settings.yml)
 
 ```yaml
 compass-settings:
@@ -41,9 +41,9 @@ waypoint-settings:
   cardinal-color: aqua
 ```
 
-# API <img align="right" src="https://jitpack.io/v/alcoloid0/HorizontalCompass.svg" />
+## API <img align="right" src="https://jitpack.io/v/alcoloid0/HorizontalCompass.svg" />
 
-## Gradle
+### Gradle
 
 Add the following lines to your `build.gradle` file:
 ```groovy
@@ -56,7 +56,7 @@ dependencies {
     compileOnly 'com.github.alcoloid0.HorizontalCompass:api:1.1'
 }
 ```
-## Maven
+### Maven
 
 For Maven projects, include the JitPack repository and dependency in your `pom.xml`:
 ```xml
@@ -75,6 +75,6 @@ For Maven projects, include the JitPack repository and dependency in your `pom.x
     <version>1.1</version>
 </dependency>
 ```
-# License
+## License
 
 HorizontalCompass is licensed under the GNU General Public License v3.0. See [COPYING](COPYING) for more information.
