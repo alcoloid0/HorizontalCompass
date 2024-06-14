@@ -27,7 +27,7 @@ import org.spongepowered.configurate.objectmapping.meta.Setting;
 public final class DisplaySettingsHolder {
     private DegreesSetting degrees = new DegreesSetting();
     private RustSetting rust = new RustSetting();
-    private CustomSetting custom = new CustomSetting();
+    private PurPurSetting purpur = new PurPurSetting();
 
     public DegreesSetting getDegrees() {
         return degrees;
@@ -37,8 +37,8 @@ public final class DisplaySettingsHolder {
         return rust;
     }
 
-    public CustomSetting getCustom() {
-        return custom;
+    public PurPurSetting getPurpur() {
+        return purpur;
     }
 
     @SuppressWarnings({"FieldMayBeFinal", "FieldCanBeLocal"})
@@ -80,14 +80,14 @@ public final class DisplaySettingsHolder {
 
     @SuppressWarnings({"FieldMayBeFinal", "FieldCanBeLocal"})
     @ConfigSerializable
-    public static final class CustomSetting {
+    public static final class PurPurSetting {
         @Setting("view-length")
         private int viewLength = 50;
         private String string = """
+                S  ·  ◈  ·  ◈  ·  ◈  ·  SW  ·  ◈  ·  ◈  ·  ◈  ·  \
                 W  ·  ◈  ·  ◈  ·  ◈  ·  NW  ·  ◈  ·  ◈  ·  ◈  ·  \
                 N  ·  ◈  ·  ◈  ·  ◈  ·  NE  ·  ◈  ·  ◈  ·  ◈  ·  \
-                E  ·  ◈  ·  ◈  ·  ◈  ·  SE  ·  ◈  ·  ◈  ·  ◈  ·  \
-                S  ·  ◈  ·  ◈  ·  ◈  ·  SW  ·  ◈  ·  ◈  ·  ◈  · \s""";
+                E  ·  ◈  ·  ◈  ·  ◈  ·  SE  ·  ◈  ·  ◈  ·  ◈  · \s""";
 
         public int getViewLength() {
             return viewLength;

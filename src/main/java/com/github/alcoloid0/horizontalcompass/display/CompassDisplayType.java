@@ -28,7 +28,7 @@ public enum CompassDisplayType {
     SIMPLE(SimpleCompassDisplay::new),
     RUST(RustCompassDisplay::new),
     RUSTME(RustMeCompassDisplay::new),
-    CUSTOM(CustomCompassDisplay::new);
+    PURPUR(PurPurCompassDisplay::new);
 
     private final Supplier<CompassDisplay> supplier;
 

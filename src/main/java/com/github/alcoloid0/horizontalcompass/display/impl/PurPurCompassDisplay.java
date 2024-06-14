@@ -23,21 +23,25 @@ import com.github.alcoloid0.horizontalcompass.settings.Settings;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 
-public final class CustomCompassDisplay implements CompassDisplay {
+public final class PurPurCompassDisplay implements CompassDisplay {
     private Component component = Component.empty();
 
     @Override
     public void update(@NotNull Compass forCompass) {
-        float yaw = forCompass.getCompassPlayer().getEyeLocation().getYaw() + 180.0f;
+        float yaw = forCompass.getCompassPlayer().getEyeLocation().getYaw();
 
-        int repeatCount = (this.viewLength() / this.getString().length()) + 2;
+        int repeatCount = ((this.viewLength() / this.getString().length()) + 1) * 2;
 
-        String repeatTitle = this.getString().repeat(repeatCount);
+        String string = this.getString().repeat(repeatCount);
 
-        int startIndex = (int) (yaw * (repeatTitle.length() / (360.0f * repeatCount)));
-        int endIndex = startIndex + this.viewLength();
+        int length = string.length();
 
-        this.component = Component.text(repeatTitle.substring(startIndex, endIndex));
+        int center = (int) (yaw * (length / (360.0f * repeatCount)) + (length / 2.0f));
+
+        int startIndex = center - (this.viewLength() / 2);
+        int endIndex = center + (this.viewLength() / 2);
+
+        this.component = Component.text(string.substring(startIndex, endIndex));
     }
 
     @Override
@@ -46,10 +50,10 @@ public final class CustomCompassDisplay implements CompassDisplay {
     }
 
     private @NotNull String getString() {
-        return Settings.display().getCustom().getString();
+        return Settings.display().getPurpur().getString();
     }
 
     private int viewLength() {
-        return Settings.display().getCustom().getViewLength();
+        return Settings.display().getPurpur().getViewLength();
     }
 }
