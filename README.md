@@ -2,55 +2,79 @@
 
 Perhaps the best horizontal compass plugin for your minecraft server
 
-## Demonstration
+### Optional Dependencies
 
-| display: | GIF-preview                 |
-|----------|-----------------------------|
-| degrees  | ![](readme-src/degrees.gif) |
-| rust     | ![](readme-src/rust.gif)    |
-| simple   | ![](readme-src/simple.gif)  |
+- ProtocolLib (recommended) - update the compass when you turn your head
 
-## Settings (settings.yml)
+# Demonstration
+
+| display |         GIF-preview         |
+|---------|:---------------------------:|
+| DEGREES | ![](readme-src/degrees.gif) |
+| RUST    |  ![](readme-src/rust.gif)   |
+| SIMPLE  | ![](readme-src/simple.gif)  |
+| RUSTME  | ![](readme-src/rustme.gif)  |
+| PURPUR  | ![](readme-src/purpur.gif)  |
+
+# Settings (settings.yml)
 
 ```yaml
 compass-settings:
-  # Type of compass display. Available values: actionbar, bossbar
-  type: bossbar
-  # Style of compass display. Available values: degrees, simple, rust
-  display: rust
-  bossbar:
-    # Color of the bossbar progressbar. Available colors:
-    # PINK, BLUE, RED, GREEN, YELLOW, PURPLE, WHITE
-    color: WHITE
-    # Should the bossbar progressbar change its progress depending on
-    # the player's head rotation
-    progress: false
-
+  type: BOSSBAR # BOSSBAR, ACTIONBAR
+  display: RUST # RUST, RUSTME, SIMPLE, DEGREES, PURPUR
+  boss-bar:
+    color: WHITE # PINK, BLUE, RED, GREEN, YELLOW, PURPLE, WHITE
+    overlay: PROGRESS # PROGRESS, NOTCHED_6, NOTCHED_10, NOTCHED_12, NOTCHED_20
+    show-progress: false
 display-settings:
   degrees:
-    # Color of the angles displayed on the compass (display: degrees)
-    angle-color: '#FFFFFF'
-    # Color of the central angle displayed on the compass (display: degrees)
-    angle-color-center: '#9966CC'
+    color: white # Also supports hex colors: '#ABCDEF'
+    color-center: light_purple
   rust:
-    # Color of the entire compass (display: rust)
-    color: '#FFFFFF'
-
+    color: white
+    marker-symbol: ▼
+    delimiter: '|'
+  purpur:
+    view-length: 50
+    string: 'S  ·  ◈  ·  ◈  ·  ◈  ·  SW  ·  ◈  ·  ◈  ·  ◈  ·  W  ·  ◈  ·  ◈  ·  ◈  ·  NW  ·  ◈  ·  ◈  ·  ◈  ·  N  ·  ◈  ·  ◈  ·  ◈  ·  NE  ·  ◈  ·  ◈  ·  ◈  ·  E  ·  ◈  ·  ◈  ·  ◈  ·  SE  ·  ◈  ·  ◈  ·  ◈  ·  '
 waypoint-settings:
-  # Color of the cardinal directions display (N, NE, E, ...)
-  cardinal-color: '#00FFFF'
-  # Symbol used to mark the home point on the compass
-  home-marker: '▼'
-
-# Display home points from Essentials on the compass?
-essentials-home: true
+  cardinal-color: aqua
 ```
 
-## Optional(Soft) Dependencies
+# API <img align="right" src="https://jitpack.io/v/alcoloid0/HorizontalCompass.svg" />
 
-- Essentials - houses, displaying their points on the compass
-- ProtocolLib (recommended) - update the compass when you turn your head
+## Gradle
 
-## License
+Add the following lines to your `build.gradle` file:
+```groovy
+repositories {
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    compileOnly 'com.github.alcoloid0.HorizontalCompass:api:1.1'
+}
+```
+## Maven
+
+For Maven projects, include the JitPack repository and dependency in your `pom.xml`:
+```xml
+<repositories>
+    <repository>
+        <id>jitpack.io</id>
+        <url>https://jitpack.io</url>
+    </repository>
+</repositories>
+```
+```xml
+<!-- HorizontalCompass API -->
+<dependency>
+    <groupId>com.github.alcoloid0.HorizontalCompass</groupId>
+    <artifactId>api</artifactId>
+    <version>1.1</version>
+</dependency>
+```
+# License
 
 HorizontalCompass is licensed under the GNU General Public License v3.0. See [COPYING](COPYING) for more information.
