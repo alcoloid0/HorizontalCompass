@@ -1,6 +1,8 @@
-# HorizontalCompass
+<p align="center">
+  <img src="readme-src/logo.png" style="image-rendering: pixelated" width="65%" alt=""/>
+</p>
 
-Perhaps the best horizontal compass plugin for your minecraft server
+---
 
 ### Optional Dependencies
 
