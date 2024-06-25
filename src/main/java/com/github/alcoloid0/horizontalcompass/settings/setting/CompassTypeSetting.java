@@ -15,28 +15,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.alcoloid0.horizontalcompass.display;
+package com.github.alcoloid0.horizontalcompass.settings.setting;
 
-import com.github.alcoloid0.horizontalcompass.display.impl.*;
-import org.jetbrains.annotations.NotNull;
-
-import java.util.function.Supplier;
-
-@SuppressWarnings("unused")
-public enum CompassDisplayType {
-    DEGREES(DegreesCompassDisplay::new),
-    SIMPLE(SimpleCompassDisplay::new),
-    RUST(RustCompassDisplay::new),
-    RUSTME(RustMeCompassDisplay::new),
-    PURPUR(PurPurCompassDisplay::new);
-
-    private final Supplier<CompassDisplay> supplier;
-
-    CompassDisplayType(@NotNull Supplier<CompassDisplay> supplier) {
-        this.supplier = supplier;
-    }
-
-    public CompassDisplay newInstance() {
-        return this.supplier.get();
-    }
+public enum CompassTypeSetting {
+    ACTIONBAR,
+    BOSSBAR
 }

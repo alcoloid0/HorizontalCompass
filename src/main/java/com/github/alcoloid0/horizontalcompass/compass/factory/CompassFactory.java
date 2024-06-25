@@ -18,14 +18,10 @@
 package com.github.alcoloid0.horizontalcompass.compass.factory;
 
 import com.github.alcoloid0.horizontalcompass.api.compass.Compass;
-import com.github.alcoloid0.horizontalcompass.display.CompassDisplay;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 public interface CompassFactory {
     @NotNull
     Compass createCompass(@NotNull Player forPlayer);
-
-    @NotNull
-    Compass createCompass(@NotNull Player forPlayer, @NotNull CompassDisplay display);
 }

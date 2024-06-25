@@ -17,8 +17,8 @@
 
 package com.github.alcoloid0.horizontalcompass.settings.holder;
 
-import com.github.alcoloid0.horizontalcompass.compass.CompassType;
-import com.github.alcoloid0.horizontalcompass.display.CompassDisplayType;
+import com.github.alcoloid0.horizontalcompass.settings.setting.CompassDisplayTypeSetting;
+import com.github.alcoloid0.horizontalcompass.settings.setting.CompassTypeSetting;
 import net.kyori.adventure.bossbar.BossBar;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
@@ -27,16 +27,16 @@ import org.spongepowered.configurate.objectmapping.meta.Setting;
 @SuppressWarnings({"FieldMayBeFinal", "FieldCanBeLocal"})
 @ConfigSerializable
 public final class CompassSettingsHolder {
-    private CompassType type = CompassType.BOSSBAR;
-    private CompassDisplayType display = CompassDisplayType.RUST;
+    private CompassTypeSetting type = CompassTypeSetting.BOSSBAR;
+    private CompassDisplayTypeSetting display = CompassDisplayTypeSetting.RUST;
     @Setting("boss-bar")
     private BossBarSetting bossBar = new BossBarSetting();
 
-    public @NotNull CompassType getType() {
+    public @NotNull CompassTypeSetting getType() {
         return this.type;
     }
 
-    public @NotNull CompassDisplayType getDisplay() {
+    public @NotNull CompassDisplayTypeSetting getDisplay() {
         return this.display;
     }
 
@@ -44,7 +44,6 @@ public final class CompassSettingsHolder {
         return bossBar;
     }
 
-    @SuppressWarnings({"FieldMayBeFinal", "FieldCanBeLocal"})
     @ConfigSerializable
     public static final class BossBarSetting {
         private BossBar.Color color = BossBar.Color.WHITE;

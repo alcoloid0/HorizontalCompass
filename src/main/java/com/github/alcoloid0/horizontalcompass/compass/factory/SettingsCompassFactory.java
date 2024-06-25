@@ -22,6 +22,7 @@ import com.github.alcoloid0.horizontalcompass.api.compass.Compass;
 import com.github.alcoloid0.horizontalcompass.compass.impl.ActionBarCompass;
 import com.github.alcoloid0.horizontalcompass.compass.impl.BossBarCompass;
 import com.github.alcoloid0.horizontalcompass.display.CompassDisplay;
+import com.github.alcoloid0.horizontalcompass.display.impl.*;
 import com.github.alcoloid0.horizontalcompass.settings.Settings;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -35,11 +36,14 @@ public final class SettingsCompassFactory implements CompassFactory {
 
     @Override
     public @NotNull Compass createCompass(@NotNull Player forPlayer) {
-        return this.createCompass(forPlayer, Settings.compass().getDisplay().newInstance());
-    }
+        CompassDisplay display = switch (Settings.compass().getDisplay()) {
+            case DEGREES -> new DegreesCompassDisplay();
+            case SIMPLE -> new SimpleCompassDisplay();
+            case RUST -> new RustCompassDisplay();
+            case RUSTME -> new RustMeCompassDisplay();
+            case PURPUR -> new PurPurCompassDisplay();
+        };
 
-    @Override
-    public @NotNull Compass createCompass(@NotNull Player forPlayer, @NotNull CompassDisplay display) {
         return switch (Settings.compass().getType()) {
             case ACTIONBAR -> new ActionBarCompass(this.compassPlugin, forPlayer, display);
             case BOSSBAR -> new BossBarCompass(this.compassPlugin, forPlayer, display);

@@ -22,7 +22,7 @@ import net.kyori.adventure.text.format.TextColor;
 import org.spongepowered.configurate.objectmapping.ConfigSerializable;
 import org.spongepowered.configurate.objectmapping.meta.Setting;
 
-@SuppressWarnings("FieldMayBeFinal")
+@SuppressWarnings({"FieldMayBeFinal", "FieldCanBeLocal"})
 @ConfigSerializable
 public final class DisplaySettingsHolder {
     private DegreesSetting degrees = new DegreesSetting();
@@ -41,7 +41,6 @@ public final class DisplaySettingsHolder {
         return purpur;
     }
 
-    @SuppressWarnings({"FieldMayBeFinal", "FieldCanBeLocal"})
     @ConfigSerializable
     public static final class DegreesSetting {
         private TextColor color = NamedTextColor.WHITE;
@@ -57,7 +56,6 @@ public final class DisplaySettingsHolder {
         }
     }
 
-    @SuppressWarnings({"FieldMayBeFinal", "FieldCanBeLocal"})
     @ConfigSerializable
     public static final class RustSetting {
         private TextColor color = NamedTextColor.WHITE;
@@ -78,7 +76,6 @@ public final class DisplaySettingsHolder {
         }
     }
 
-    @SuppressWarnings({"FieldMayBeFinal", "FieldCanBeLocal"})
     @ConfigSerializable
     public static final class PurPurSetting {
         @Setting("view-length")
