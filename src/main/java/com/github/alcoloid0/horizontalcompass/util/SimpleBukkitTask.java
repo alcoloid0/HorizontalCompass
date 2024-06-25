@@ -22,7 +22,6 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.scheduler.BukkitTask;
 
-import java.util.Optional;
 import java.util.function.Consumer;
 
 public final class SimpleBukkitTask {
@@ -55,9 +54,5 @@ public final class SimpleBukkitTask {
 
     public void cancel() {
         this.ifRunning(BukkitTask::cancel);
-    }
-
-    public Optional<BukkitTask> getBukkitTask() {
-        return Optional.ofNullable(this.bukkitTask);
     }
 }

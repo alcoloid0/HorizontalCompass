@@ -19,7 +19,7 @@ package com.github.alcoloid0.horizontalcompass.display;
 
 import com.github.alcoloid0.horizontalcompass.api.compass.Compass;
 import com.github.alcoloid0.horizontalcompass.api.waypoint.Waypoint;
-import com.github.alcoloid0.horizontalcompass.util.CardinalDirection;
+import com.github.alcoloid0.horizontalcompass.util.Direction;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.ComponentLike;
 import net.kyori.adventure.text.TextComponent;
@@ -39,7 +39,7 @@ public abstract class AppendableCompassDisplay implements CompassDisplay {
 
     protected abstract void append(int angle, @NotNull Waypoint waypoint);
 
-    protected abstract void append(int angle, @NotNull CardinalDirection direction);
+    protected abstract void append(int angle, @NotNull Direction direction);
 
     protected abstract int angleCount();
 
@@ -64,8 +64,8 @@ public abstract class AppendableCompassDisplay implements CompassDisplay {
                 continue;
             }
 
-            CardinalDirection direction = Arrays.stream(CardinalDirection.values())
-                    .filter(dir -> dir.getRotationAngle() == angle)
+            Direction direction = Arrays.stream(Direction.values())
+                    .filter(dir -> dir.azimuth() == angle)
                     .findFirst()
                     .orElse(null);
 

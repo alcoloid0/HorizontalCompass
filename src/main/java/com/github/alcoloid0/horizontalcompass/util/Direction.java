@@ -17,7 +17,7 @@
 
 package com.github.alcoloid0.horizontalcompass.util;
 
-public enum CardinalDirection {
+public enum Direction {
     N(0),
     NE(45),
     E(90),
@@ -27,13 +27,13 @@ public enum CardinalDirection {
     W(270),
     NW(315);
 
-    private final int angle;
+    private final int azimuth;
 
-    CardinalDirection(int angle) {
-        this.angle = angle;
+    Direction(int azimuth) {
+        this.azimuth = azimuth;
     }
 
-    public int getRotationAngle() {
-        return this.angle;
+    public int azimuth() {
+        return this.azimuth;
     }
 }

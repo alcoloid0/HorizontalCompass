@@ -20,7 +20,7 @@ package com.github.alcoloid0.horizontalcompass.display.impl;
 import com.github.alcoloid0.horizontalcompass.api.waypoint.Waypoint;
 import com.github.alcoloid0.horizontalcompass.display.AppendableCompassDisplay;
 import com.github.alcoloid0.horizontalcompass.settings.Settings;
-import com.github.alcoloid0.horizontalcompass.util.CardinalDirection;
+import com.github.alcoloid0.horizontalcompass.util.Direction;
 import org.jetbrains.annotations.NotNull;
 
 public final class DegreesCompassDisplay extends AppendableCompassDisplay {
@@ -42,7 +42,7 @@ public final class DegreesCompassDisplay extends AppendableCompassDisplay {
     }
 
     @Override
-    protected void append(int angle, @NotNull CardinalDirection direction) {
+    protected void append(int angle, @NotNull Direction direction) {
         this.append(format("%03d", angle).color(Settings.waypoints().getCardinalColor()));
         this.appendSpace();
     }
