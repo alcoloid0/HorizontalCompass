@@ -40,7 +40,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Unmodifiable;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,10 +57,9 @@ public final class HorizontalCompass extends JavaPlugin implements HorizontalCom
     public void onEnable() {
         this.adventure = BukkitAudiences.create(this);
 
-        try {
-            Settings.initialize(this.getDataFolder()).load();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        if (!Settings.initialize(this.getDataFolder()).load()) {
+            Settings.instance().backupAndRestore().load();
+            getLogger().warning("");
         }
 
         this.compassFactory = new SettingsCompassFactory(this);
@@ -72,8 +70,6 @@ public final class HorizontalCompass extends JavaPlugin implements HorizontalCom
             ProtocolLibWrapper.addPacketListener(new LookPacketListener(this));
         }
 
-        SERVICES.register(HorizontalCompassAPI.class, this, this, ServicePriority.Normal);
-
         CompassCommand command = new CompassCommand(this);
 
         PluginCommand pluginCommand = this.getCommand("horizontalcompass");
@@ -82,6 +78,8 @@ public final class HorizontalCompass extends JavaPlugin implements HorizontalCom
             pluginCommand.setExecutor(command);
             pluginCommand.setTabCompleter(command);
         }
+
+        SERVICES.register(HorizontalCompassAPI.class, this, this, ServicePriority.Normal);
     }
 
     @Override

@@ -24,6 +24,7 @@ import com.github.alcoloid0.horizontalcompass.settings.holder.WaypointSettingsHo
 import net.kyori.adventure.serializer.configurate4.ConfigurateComponentSerializer;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.configurate.loader.ConfigurationLoader;
+import org.spongepowered.configurate.serialize.TypeSerializerCollection;
 import org.spongepowered.configurate.yaml.NodeStyle;
 import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
 
@@ -44,23 +45,35 @@ public final class Settings {
 
     private Settings(@NotNull File dataFolder) {
         this.filePath = new File(dataFolder, FILE_NAME).toPath();
-        this.loader = this.newLoader();
         this.holder = new SettingsHolder();
+
+        TypeSerializerCollection kyori = ConfigurateComponentSerializer.configurate()
+                .serializers();
+
+        this.loader = YamlConfigurationLoader.builder()
+                .nodeStyle(NodeStyle.BLOCK)
+                .indent(2)
+                .path(this.filePath)
+                .defaultOptions(options -> options
+                        .shouldCopyDefaults(true)
+                        .serializers(builder -> builder.registerAll(kyori))
+                        .implicitInitialization(true))
+                .build();
     }
 
     public static @NotNull CompassSettingsHolder compass() {
-        return Settings.getInstance().getSettingsHolder().getCompassSettings();
+        return Settings.instance().getSettingsHolder().getCompassSettings();
     }
 
     public static @NotNull DisplaySettingsHolder display() {
-        return Settings.getInstance().getSettingsHolder().getDisplaySettings();
+        return Settings.instance().getSettingsHolder().getDisplaySettings();
     }
 
     public static @NotNull WaypointSettingsHolder waypoints() {
-        return Settings.getInstance().getSettingsHolder().getWaypointSettings();
+        return Settings.instance().getSettingsHolder().getWaypointSettings();
     }
 
-    public static @NotNull Settings getInstance() {
+    public static @NotNull Settings instance() {
         if (instance == null) {
             throw new RuntimeException("Instance not yet created. Call initialize() first.");
         }
@@ -76,40 +89,50 @@ public final class Settings {
         return (instance = new Settings(dataFolder));
     }
 
-    public void save() throws IOException {
-        if (Files.notExists(this.filePath)) {
-            Files.createDirectories(this.filePath.getParent());
-            Files.createFile(this.filePath);
-        }
+    public boolean save() {
+        try {
+            if (Files.notExists(this.filePath)) {
+                Files.createDirectories(this.filePath.getParent());
+                Files.createFile(this.filePath);
+            }
 
-        this.loader.save(this.loader.load().set(SettingsHolder.class, this.holder));
+            this.loader.save(this.loader.load().set(SettingsHolder.class, this.holder));
+            return true;
+
+        } catch (IOException exception) {
+            return false;
+        }
     }
 
-    public void load() throws IOException {
-        if (Files.notExists(this.filePath)) {
+    public boolean load() {
+        try {
+            if (Files.notExists(this.filePath) && !this.save()) {
+                return false;
+            }
+
+            this.holder = this.loader.load().get(SettingsHolder.class);
+            return true;
+
+        } catch (IOException exception) {
+            return false;
+        }
+    }
+
+    public @NotNull Settings backupAndRestore() {
+        try {
+            Path toPath = this.filePath.resolveSibling("%s.old".formatted(FILE_NAME));
+            Files.deleteIfExists(toPath);
+            Files.move(this.filePath, toPath);
+
             this.save();
+
+        } catch (IOException ignored) {
         }
 
-        this.holder = this.loader.load().get(SettingsHolder.class);
+        return this;
     }
 
     public @NotNull SettingsHolder getSettingsHolder() {
         return this.holder;
-    }
-
-    private @NotNull ConfigurationLoader<?> newLoader() {
-        var kyoriSerializers = ConfigurateComponentSerializer.configurate()
-                .serializers();
-
-        var options = YamlConfigurationLoader.builder().defaultOptions()
-                .shouldCopyDefaults(true)
-                .serializers(builder -> builder.registerAll(kyoriSerializers));
-
-        return YamlConfigurationLoader.builder()
-                .nodeStyle(NodeStyle.BLOCK)
-                .indent(2)
-                .path(this.filePath)
-                .defaultOptions(options)
-                .build();
     }
 }
