@@ -15,21 +15,21 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.alcoloid0.horizontalcompass.hook;
+package com.github.alcoloid0.horizontalcompass.util;
 
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 import com.comphenix.protocol.events.PacketListener;
 import org.jetbrains.annotations.NotNull;
 
-public final class ProtocolLibWrapper {
-    private static final ProtocolManager manager = ProtocolLibrary.getProtocolManager();
+public final class ProtocolManagerWrapper {
+    private static final ProtocolManager MANAGER = ProtocolLibrary.getProtocolManager();
 
-    private ProtocolLibWrapper() throws IllegalAccessException {
+    private ProtocolManagerWrapper() throws IllegalAccessException {
         throw new IllegalAccessException();
     }
 
-    public static void addPacketListener(@NotNull Object packetListener) {
-        manager.addPacketListener((PacketListener) packetListener);
+    public static void addPacketListener(@NotNull Object objectPacketListener) {
+        MANAGER.addPacketListener((PacketListener) objectPacketListener);
     }
 }

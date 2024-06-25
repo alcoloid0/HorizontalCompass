@@ -23,7 +23,7 @@ import com.github.alcoloid0.horizontalcompass.api.waypoint.WaypointBuilder;
 import com.github.alcoloid0.horizontalcompass.command.CompassCommand;
 import com.github.alcoloid0.horizontalcompass.compass.factory.CompassFactory;
 import com.github.alcoloid0.horizontalcompass.compass.factory.SettingsCompassFactory;
-import com.github.alcoloid0.horizontalcompass.hook.ProtocolLibWrapper;
+import com.github.alcoloid0.horizontalcompass.util.ProtocolManagerWrapper;
 import com.github.alcoloid0.horizontalcompass.listener.LookPacketListener;
 import com.github.alcoloid0.horizontalcompass.listener.PlayerListener;
 import com.github.alcoloid0.horizontalcompass.settings.Settings;
@@ -67,7 +67,7 @@ public final class HorizontalCompass extends JavaPlugin implements HorizontalCom
         Bukkit.getPluginManager().registerEvents(new PlayerListener(this), this);
 
         if (Bukkit.getPluginManager().getPlugin("ProtocolLib") != null) {
-            ProtocolLibWrapper.addPacketListener(new LookPacketListener(this));
+            ProtocolManagerWrapper.addPacketListener(new LookPacketListener(this));
         }
 
         CompassCommand command = new CompassCommand(this);
