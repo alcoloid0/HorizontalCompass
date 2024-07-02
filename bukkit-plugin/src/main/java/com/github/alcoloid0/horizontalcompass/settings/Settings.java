@@ -17,10 +17,10 @@
 
 package com.github.alcoloid0.horizontalcompass.settings;
 
+import com.github.alcoloid0.horizontalcompass.settings.holder.WaypointSettingsHolder;
 import com.github.alcoloid0.horizontalcompass.settings.holder.CompassSettingsHolder;
 import com.github.alcoloid0.horizontalcompass.settings.holder.DisplaySettingsHolder;
 import com.github.alcoloid0.horizontalcompass.settings.holder.SettingsHolder;
-import com.github.alcoloid0.horizontalcompass.settings.holder.WaypointSettingsHolder;
 import net.kyori.adventure.serializer.configurate4.ConfigurateComponentSerializer;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.configurate.loader.ConfigurationLoader;

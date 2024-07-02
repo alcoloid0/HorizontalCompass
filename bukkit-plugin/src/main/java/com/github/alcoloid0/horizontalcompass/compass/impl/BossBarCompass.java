@@ -19,39 +19,50 @@ package com.github.alcoloid0.horizontalcompass.compass.impl;
 
 import com.github.alcoloid0.horizontalcompass.HorizontalCompass;
 import com.github.alcoloid0.horizontalcompass.compass.AbstractCompass;
+import com.github.alcoloid0.horizontalcompass.settings.Settings;
 import com.github.alcoloid0.horizontalcompass.display.CompassDisplay;
-import com.github.alcoloid0.horizontalcompass.util.SimpleBukkitTask;
 import net.kyori.adventure.audience.Audience;
+import net.kyori.adventure.bossbar.BossBar;
+import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public final class ActionBarCompass extends AbstractCompass implements Runnable {
-    private final SimpleBukkitTask bukkitTask;
+public final class BossBarCompass extends AbstractCompass {
+    private final BossBar bossBar;
     private final Audience audience;
 
-    public ActionBarCompass(@NotNull HorizontalCompass compassPlugin,
-                            @NotNull Player player,
-                            @NotNull CompassDisplay display) {
+    public BossBarCompass(@NotNull HorizontalCompass compassPlugin,
+                          @NotNull Player player,
+                          @NotNull CompassDisplay display) {
 
         super(player, display);
 
-        this.bukkitTask = new SimpleBukkitTask(compassPlugin, this);
+        this.bossBar = BossBar.bossBar(Component.empty(),
+                0,
+                Settings.compass().getBossBar().getColor(),
+                Settings.compass().getBossBar().getOverlay());
 
         this.audience = compassPlugin.getAdventure().player(player);
     }
 
     @Override
+    public void update() {
+        super.update();
+
+        this.bossBar.name(this.display.getComponent());
+
+        if (Settings.compass().getBossBar().isShowProgress()) {
+            this.bossBar.progress((this.player.getEyeLocation().getYaw() + 180.0f) / 360.0f);
+        }
+    }
+
+    @Override
     public void show() {
-        this.bukkitTask.runTaskTimer(0, 0);
+        this.audience.showBossBar(this.bossBar);
     }
 
     @Override
     public void hide() {
-        this.bukkitTask.cancel();
-    }
-
-    @Override
-    public void run() {
-        this.audience.sendActionBar(this.display.getComponent());
+        this.audience.hideBossBar(this.bossBar);
     }
 }

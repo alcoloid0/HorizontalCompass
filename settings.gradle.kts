@@ -1,3 +1,4 @@
 rootProject.name = "HorizontalCompass"
 include("api")
-include("homes")
+include("bukkit-home-module")
+include("bukkit-plugin")
