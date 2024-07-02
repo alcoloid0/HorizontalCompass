@@ -21,6 +21,7 @@ import com.github.alcoloid0.horizontalcompass.api.HorizontalCompassAPI;
 import com.github.alcoloid0.horizontalcompass.api.compass.Compass;
 import com.github.alcoloid0.horizontalcompass.api.waypoint.Waypoint;
 import com.github.alcoloid0.horizontalcompass.homes.HorizontalCompassHomes;
+import com.github.alcoloid0.horizontalcompass.homes.util.CompassUser;
 import com.github.alcoloid0.horizontalcompass.homes.waypoint.HomeWaypointIdentifier;
 import net.essentialsx.api.v2.events.HomeModifyEvent;
 import org.bukkit.entity.Player;
@@ -33,25 +34,25 @@ public final class HomeListener implements Listener {
 
     @EventHandler
     public void onHomeModify(@NotNull HomeModifyEvent event) {
-        Player player = event.getHomeOwner().getBase();
+        CompassUser user = CompassUser.wrap(event.getHomeOwner());
 
-        Compass compass = compassAPI.getCompassByPlayer(player).orElseThrow();
+        Compass compass = user.getCompass().orElseThrow();
 
         switch (event.getCause()) {
             case CREATE -> {
                 Waypoint waypoint = compassAPI.newWaypointBuilder(event.getNewLocation())
-                        .identifier(HomeWaypointIdentifier.at(player, event.getNewName()))
+                        .identifier(HomeWaypointIdentifier.at(user, event.getNewName()))
                         .label(event.getNewName())
                         .build();
 
                 compass.getWaypoints().add(waypoint);
             }
             case DELETE -> {
-                compass.getWaypoints().remove(HomeWaypointIdentifier.at(player, event.getOldName()));
+                compass.getWaypoints().remove(HomeWaypointIdentifier.at(user, event.getOldName()));
             }
             case RENAME -> {
                 Waypoint waypoint = compass.getWaypoints()
-                        .get(HomeWaypointIdentifier.at(player, event.getOldName()))
+                        .get(HomeWaypointIdentifier.at(user, event.getOldName()))
                         .get(0);
 
                 waypoint.setLabel(event.getNewName());
@@ -62,7 +63,7 @@ public final class HomeListener implements Listener {
             }
             case UPDATE -> {
                 Waypoint waypoint = compass.getWaypoints()
-                        .get(HomeWaypointIdentifier.at(player, event.getNewName()))
+                        .get(HomeWaypointIdentifier.at(user, event.getNewName()))
                         .get(0);
 
                 waypoint.updateLocation(event.getNewLocation());

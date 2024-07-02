@@ -21,7 +21,7 @@ import com.github.alcoloid0.horizontalcompass.api.HorizontalCompassAPI;
 import com.github.alcoloid0.horizontalcompass.api.compass.Compass;
 import com.github.alcoloid0.horizontalcompass.api.waypoint.Waypoint;
 import com.github.alcoloid0.horizontalcompass.homes.HorizontalCompassHomes;
-import com.github.alcoloid0.horizontalcompass.homes.util.EssentialsUtil;
+import com.github.alcoloid0.horizontalcompass.homes.util.CompassUser;
 import com.github.alcoloid0.horizontalcompass.homes.waypoint.HomeWaypointIdentifier;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -33,11 +33,13 @@ public final class PlayerJoinListener implements Listener {
 
     @EventHandler
     public void onPlayerJoin(@NotNull PlayerJoinEvent event) {
-        Compass compass = compassAPI.getCompassByPlayer(event.getPlayer()).orElseThrow();
+        CompassUser user = CompassUser.wrap(event.getPlayer());
 
-        EssentialsUtil.getHomes(event.getPlayer()).forEach((name, location) -> {
+        Compass compass = user.getCompass().orElseThrow();
+
+        user.getHomes().forEach((name, location) -> {
             Waypoint waypoint = compassAPI.newWaypointBuilder(location)
-                    .identifier(HomeWaypointIdentifier.at(event.getPlayer(), name))
+                    .identifier(HomeWaypointIdentifier.at(user, name))
                     .label(name)
                     .build();
 
