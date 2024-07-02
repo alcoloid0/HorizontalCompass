@@ -18,9 +18,9 @@
 package com.github.alcoloid0.horizontalcompass.display.impl;
 
 import com.github.alcoloid0.horizontalcompass.api.waypoint.Waypoint;
+import com.github.alcoloid0.horizontalcompass.display.AppendableCompassDisplay;
 import com.github.alcoloid0.horizontalcompass.settings.Settings;
 import com.github.alcoloid0.horizontalcompass.util.Direction;
-import com.github.alcoloid0.horizontalcompass.display.AppendableCompassDisplay;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 

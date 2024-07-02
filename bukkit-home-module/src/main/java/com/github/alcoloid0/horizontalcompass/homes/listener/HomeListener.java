@@ -24,7 +24,6 @@ import com.github.alcoloid0.horizontalcompass.homes.HorizontalCompassHomes;
 import com.github.alcoloid0.horizontalcompass.homes.util.CompassUser;
 import com.github.alcoloid0.horizontalcompass.homes.waypoint.HomeWaypointIdentifier;
 import net.essentialsx.api.v2.events.HomeModifyEvent;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.jetbrains.annotations.NotNull;

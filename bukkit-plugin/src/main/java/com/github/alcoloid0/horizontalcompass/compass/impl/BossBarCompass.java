@@ -19,8 +19,8 @@ package com.github.alcoloid0.horizontalcompass.compass.impl;
 
 import com.github.alcoloid0.horizontalcompass.HorizontalCompass;
 import com.github.alcoloid0.horizontalcompass.compass.AbstractCompass;
-import com.github.alcoloid0.horizontalcompass.settings.Settings;
 import com.github.alcoloid0.horizontalcompass.display.CompassDisplay;
+import com.github.alcoloid0.horizontalcompass.settings.Settings;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.text.Component;
