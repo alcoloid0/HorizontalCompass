@@ -48,6 +48,7 @@ waypoint-settings:
 ### Gradle
 
 Add the following lines to your `build.gradle` file:
+
 ```groovy
 repositories {
     mavenCentral()
@@ -58,9 +59,11 @@ dependencies {
     compileOnly 'com.github.alcoloid0.HorizontalCompass:api:1.1'
 }
 ```
+
 ### Maven
 
 For Maven projects, include the JitPack repository and dependency in your `pom.xml`:
+
 ```xml
 <repositories>
     <repository>
@@ -69,6 +72,7 @@ For Maven projects, include the JitPack repository and dependency in your `pom.x
     </repository>
 </repositories>
 ```
+
 ```xml
 <!-- HorizontalCompass API -->
 <dependency>
@@ -77,6 +81,7 @@ For Maven projects, include the JitPack repository and dependency in your `pom.x
     <version>1.1</version>
 </dependency>
 ```
+
 ## License
 
 HorizontalCompass is licensed under the GNU General Public License v3.0. See [COPYING](COPYING) for more information.
