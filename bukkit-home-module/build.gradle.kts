@@ -9,5 +9,5 @@ dependencies {
 }
 
 java {
-    base.archivesName.set(rootProject.name + "Homes")
+    base.archivesName.set("${rootProject.name}Home")
 }

@@ -10,7 +10,8 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/api" />
-            <option value="$PROJECT_DIR$/homes" />
+            <option value="$PROJECT_DIR$/bukkit-home-module" />
+            <option value="$PROJECT_DIR$/bukkit-plugin" />
           </set>
         </option>
       </GradleProjectSettings>

@@ -23,10 +23,10 @@ import com.github.alcoloid0.horizontalcompass.api.waypoint.WaypointBuilder;
 import com.github.alcoloid0.horizontalcompass.command.CompassCommand;
 import com.github.alcoloid0.horizontalcompass.compass.factory.CompassFactory;
 import com.github.alcoloid0.horizontalcompass.compass.factory.SettingsCompassFactory;
-import com.github.alcoloid0.horizontalcompass.util.ProtocolManagerWrapper;
 import com.github.alcoloid0.horizontalcompass.listener.LookPacketListener;
 import com.github.alcoloid0.horizontalcompass.listener.PlayerListener;
 import com.github.alcoloid0.horizontalcompass.settings.Settings;
+import com.github.alcoloid0.horizontalcompass.util.ProtocolManagerWrapper;
 import com.github.alcoloid0.horizontalcompass.waypoint.WaypointBuilderImpl;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.Bukkit;
@@ -72,7 +72,7 @@ public final class HorizontalCompass extends JavaPlugin implements HorizontalCom
 
         CompassCommand command = new CompassCommand(this);
 
-        PluginCommand pluginCommand = this.getCommand("horizontalcompass");
+        PluginCommand pluginCommand = this.getCommand("com/github/alcoloid0/horizontalcompass");
 
         if (pluginCommand != null) {
             pluginCommand.setExecutor(command);
