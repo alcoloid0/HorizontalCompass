@@ -36,7 +36,10 @@ public interface CompassWaypoints extends Collection<Waypoint> {
     @NotNull
     Compass getCompass();
 
+    @Deprecated(since = "1.1.1", forRemoval = true)
     @ApiStatus.Internal
     @NotNull
-    Optional<Waypoint> getByAngleBetween(@NotNull Location location, int angle);
+    default Optional<Waypoint> getByAngleBetween(@NotNull Location location, int angle) {
+        throw new RuntimeException("deprecated");
+    }
 }
