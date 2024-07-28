@@ -21,8 +21,6 @@ import com.github.alcoloid0.horizontalcompass.api.compass.Compass;
 import com.github.alcoloid0.horizontalcompass.api.compass.CompassWaypoints;
 import com.github.alcoloid0.horizontalcompass.api.waypoint.Waypoint;
 import com.github.alcoloid0.horizontalcompass.api.waypoint.WaypointIdentifier;
-import org.bukkit.Location;
-import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
@@ -51,20 +49,5 @@ public final class CompassWaypointsImpl extends ArrayList<Waypoint> implements C
     @Override
     public @NotNull Compass getCompass() {
         return this.compass;
-    }
-
-    @Override
-    public @NotNull Optional<Waypoint> getByAngleBetween(@NotNull Location location, int angle) {
-        for (Waypoint waypoint : this.waypoints) {
-            Vector vec = location.toVector().subtract(waypoint.getLocation().toVector());
-            double theta = Math.atan2(vec.getZ(), vec.getX()) - (Math.PI / 2.0);
-            int angleBetween = Math.floorMod(Math.round(Math.toDegrees(theta)), 360);
-
-            if (angleBetween == angle) {
-                return Optional.of(waypoint);
-            }
-        }
-
-        return Optional.empty();
     }
 }
