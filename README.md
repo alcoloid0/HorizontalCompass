@@ -18,6 +18,14 @@
 | RUSTME  | ![](readme-src/rustme.gif)  |
 | PURPUR  | ![](readme-src/purpur.gif)  |
 
+## Commands
+
+| Usage          | Permission            | Description                     |
+|----------------|-----------------------|---------------------------------|
+| /hcompass show | horizontalcompass.use | Displays the horizontal compass |
+| /hcompass hide | horizontalcompass.use | Hides the horizontal compass    |
+
+
 ## Settings (settings.yml)
 
 ```yaml
