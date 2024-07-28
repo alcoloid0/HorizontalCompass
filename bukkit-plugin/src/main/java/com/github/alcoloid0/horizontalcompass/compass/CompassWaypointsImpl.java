@@ -26,9 +26,8 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
-import java.util.function.Predicate;
 
-public final class CompassWaypointsImpl implements CompassWaypoints {
+public final class CompassWaypointsImpl extends ArrayList<Waypoint> implements CompassWaypoints {
     private final Compass compass;
     private final List<Waypoint> waypoints;
 
@@ -38,28 +37,8 @@ public final class CompassWaypointsImpl implements CompassWaypoints {
     }
 
     @Override
-    public void add(@NotNull Waypoint waypoint) {
-        this.waypoints.add(waypoint);
-    }
-
-    @Override
-    public void addAll(@NotNull Collection<Waypoint> waypoints) {
-        this.waypoints.addAll(waypoints);
-    }
-
-    @Override
-    public void remove(@NotNull Waypoint waypoint) {
-        this.waypoints.remove(waypoint);
-    }
-
-    @Override
     public void remove(@NotNull WaypointIdentifier identifier) {
         this.waypoints.removeIf(waypoint -> waypoint.getIdentifier().equals(identifier));
-    }
-
-    @Override
-    public void removeIf(@NotNull Predicate<Waypoint> waypointPredicate) {
-        this.waypoints.removeIf(waypointPredicate);
     }
 
     @Override
@@ -87,11 +66,5 @@ public final class CompassWaypointsImpl implements CompassWaypoints {
         }
 
         return Optional.empty();
-    }
-
-    @NotNull
-    @Override
-    public Iterator<Waypoint> iterator() {
-        return this.waypoints.iterator();
     }
 }
