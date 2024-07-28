@@ -72,7 +72,7 @@ public final class HorizontalCompass extends JavaPlugin implements HorizontalCom
 
         CompassCommand command = new CompassCommand(this);
 
-        PluginCommand pluginCommand = this.getCommand("com/github/alcoloid0/horizontalcompass");
+        PluginCommand pluginCommand = this.getCommand("horizontalcompass");
 
         if (pluginCommand != null) {
             pluginCommand.setExecutor(command);
