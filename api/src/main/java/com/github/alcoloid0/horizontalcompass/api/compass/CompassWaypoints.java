@@ -26,18 +26,9 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Predicate;
 
-public interface CompassWaypoints extends Iterable<Waypoint> {
-    void add(@NotNull Waypoint waypoint);
-
-    void addAll(@NotNull Collection<Waypoint> waypoints);
-
-    void remove(@NotNull Waypoint waypoint);
-
+public interface CompassWaypoints extends Collection<Waypoint> {
     void remove(@NotNull WaypointIdentifier identifier);
-
-    void removeIf(@NotNull Predicate<Waypoint> waypointPredicate);
 
     @NotNull
     List<Waypoint> get(@NotNull WaypointIdentifier identifier);
