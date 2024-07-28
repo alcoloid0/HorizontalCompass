@@ -24,7 +24,9 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.ComponentLike;
 import net.kyori.adventure.text.TextComponent;
 import org.bukkit.Location;
+import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 
@@ -56,18 +58,14 @@ public abstract class AppendableCompassDisplay implements CompassDisplay {
         for (int offset = -halfAngleCount; offset < halfAngleCount; offset++) {
             int angle = Math.floorMod(lookAngle + offset, 360);
 
-            Waypoint waypoint = forCompass.getWaypoints().getByAngleBetween(location, angle)
-                    .orElse(null);
+            Waypoint waypoint = getWaypointByAngleBetween(forCompass, location, angle);
 
             if (waypoint != null) {
                 this.append(angle, waypoint);
                 continue;
             }
 
-            Direction direction = Arrays.stream(Direction.values())
-                    .filter(dir -> dir.azimuth() == angle)
-                    .findFirst()
-                    .orElse(null);
+            Direction direction = getDirectionByAzimuth(angle);
 
             if (direction != null) {
                 this.append(angle, direction);
@@ -76,6 +74,30 @@ public abstract class AppendableCompassDisplay implements CompassDisplay {
 
             this.append(angle, angle == lookAngle);
         }
+    }
+
+    private @Nullable Waypoint getWaypointByAngleBetween(@NotNull Compass compass,
+                                                         @NotNull Location location,
+                                                         int angle) {
+
+        for (Waypoint waypoint : compass.getWaypoints()) {
+            Vector vec = location.toVector().subtract(waypoint.getLocation().toVector());
+            double theta = Math.atan2(vec.getZ(), vec.getX()) - (Math.PI / 2.0);
+            int angleBetween = Math.floorMod(Math.round(Math.toDegrees(theta)), 360);
+
+            if (angleBetween == angle) {
+                return waypoint;
+            }
+        }
+
+        return null;
+    }
+
+    private @Nullable Direction getDirectionByAzimuth(int azimuth) {
+        return Arrays.stream(Direction.values())
+                .filter(dir -> dir.azimuth() == azimuth)
+                .findFirst()
+                .orElse(null);
     }
 
     @Override
