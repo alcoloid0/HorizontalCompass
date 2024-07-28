@@ -56,13 +56,14 @@ public final class HorizontalCompass extends JavaPlugin implements HorizontalCom
     @Override
     public void onEnable() {
         this.adventure = BukkitAudiences.create(this);
-
-        if (!Settings.initialize(this.getDataFolder()).load()) {
-            Settings.instance().backupAndRestore().load();
-            getLogger().warning("");
-        }
-
         this.compassFactory = new SettingsCompassFactory(this);
+
+        Settings settings = Settings.initialize(this.getDataFolder());
+
+        if (!settings.load()) {
+            getLogger().warning("Plugin configuration is corrupted!");
+            settings.backupAndRestore().load();
+        }
 
         Bukkit.getPluginManager().registerEvents(new PlayerListener(this), this);
 
