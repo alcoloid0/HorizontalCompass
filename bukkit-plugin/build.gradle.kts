@@ -26,7 +26,10 @@ dependencies {
 tasks.shadowJar {
     relocate("net.kyori.adventure", "com.github.alcoloid0.horizontalcompass.shaded.adventure")
     relocate("net.kyori.option","com.github.alcoloid0.horizontalcompass.shaded.option")
+    archiveClassifier.set("")
 }
+
+tasks.build { dependsOn(tasks.shadowJar) }
 
 java {
     base.archivesName.set(rootProject.name)
