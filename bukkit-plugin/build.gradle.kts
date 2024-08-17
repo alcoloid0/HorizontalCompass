@@ -11,7 +11,7 @@ dependencies {
     compileOnly("com.comphenix.protocol:ProtocolLib:5.1.0")
 
     // Adventure
-    implementation("net.kyori:adventure-platform-bukkit:4.3.3")
+    implementation("net.kyori:adventure-platform-bukkit:4.3.4")
 
     // Adventure Serializer Configurate4
     implementation("net.kyori:adventure-serializer-configurate4:4.11.0")
@@ -24,7 +24,8 @@ dependencies {
 }
 
 tasks.shadowJar {
-    relocate("net.kyori.adventure", "com.github.alcoloid0.shaded.kyori.adventure")
+    relocate("net.kyori.adventure", "com.github.alcoloid0.horizontalcompass.shaded.adventure")
+    relocate("net.kyori.option","com.github.alcoloid0.horizontalcompass.shaded.option")
 }
 
 java {
