@@ -17,7 +17,7 @@
 
 package com.github.alcoloid0.horizontalcompass.settings.setting;
 
-public enum CompassDisplayTypeSetting {
+public enum CompassStyleTypeSetting {
     DEGREES,
     SIMPLE,
     RUST,

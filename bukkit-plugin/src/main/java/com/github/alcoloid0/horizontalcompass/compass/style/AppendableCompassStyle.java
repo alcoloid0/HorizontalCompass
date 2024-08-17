@@ -15,7 +15,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.alcoloid0.horizontalcompass.display;
+package com.github.alcoloid0.horizontalcompass.compass.style;
 
 import com.github.alcoloid0.horizontalcompass.api.compass.Compass;
 import com.github.alcoloid0.horizontalcompass.api.waypoint.Waypoint;
@@ -30,10 +30,10 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 
-public abstract class AppendableCompassDisplay implements CompassDisplay {
+public abstract class AppendableCompassStyle implements CompassStyle {
     protected TextComponent.Builder builder;
 
-    public AppendableCompassDisplay() {
+    public AppendableCompassStyle() {
         this.flush();
     }
 

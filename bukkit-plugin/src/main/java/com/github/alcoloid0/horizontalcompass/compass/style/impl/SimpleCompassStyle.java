@@ -15,40 +15,33 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.alcoloid0.horizontalcompass.display.impl;
+package com.github.alcoloid0.horizontalcompass.compass.style.impl;
 
 import com.github.alcoloid0.horizontalcompass.api.waypoint.Waypoint;
-import com.github.alcoloid0.horizontalcompass.display.AppendableCompassDisplay;
+import com.github.alcoloid0.horizontalcompass.compass.style.AppendableCompassStyle;
 import com.github.alcoloid0.horizontalcompass.settings.Settings;
 import com.github.alcoloid0.horizontalcompass.util.Direction;
+import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 
-public final class DegreesCompassDisplay extends AppendableCompassDisplay {
+public final class SimpleCompassStyle extends AppendableCompassStyle {
     @Override
     protected void append(int angle, boolean center) {
-        if (center) {
-            this.append(format("%03d", angle).color(Settings.display().getDegrees().getColorCenter()));
-        } else {
-            this.append(format("%03d", angle).color(Settings.display().getDegrees().getColor()));
-        }
-
-        this.appendSpace();
+        this.append(Component.text(angle));
     }
 
     @Override
     protected void append(int angle, @NotNull Waypoint waypoint) {
-        this.append(format("%03d", angle).color(waypoint.getTextColor()));
-        this.appendSpace();
+        this.append(format("%d (%s)", angle, waypoint.getLabel()).color(waypoint.getTextColor()));
     }
 
     @Override
     protected void append(int angle, @NotNull Direction direction) {
-        this.append(format("%03d", angle).color(Settings.waypoints().getCardinalColor()));
-        this.appendSpace();
+        this.append(format("%d (%s)", angle, direction.name()).color(Settings.waypoints().getCardinalColor()));
     }
 
     @Override
     protected int angleCount() {
-        return 15;
+        return 1;
     }
 }

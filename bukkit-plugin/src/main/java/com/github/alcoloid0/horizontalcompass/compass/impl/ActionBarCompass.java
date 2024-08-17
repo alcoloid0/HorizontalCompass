@@ -19,7 +19,7 @@ package com.github.alcoloid0.horizontalcompass.compass.impl;
 
 import com.github.alcoloid0.horizontalcompass.HorizontalCompass;
 import com.github.alcoloid0.horizontalcompass.compass.AbstractCompass;
-import com.github.alcoloid0.horizontalcompass.display.CompassDisplay;
+import com.github.alcoloid0.horizontalcompass.compass.style.CompassStyle;
 import com.github.alcoloid0.horizontalcompass.util.SimpleBukkitTask;
 import net.kyori.adventure.audience.Audience;
 import org.bukkit.entity.Player;
@@ -31,9 +31,9 @@ public final class ActionBarCompass extends AbstractCompass implements Runnable 
 
     public ActionBarCompass(@NotNull HorizontalCompass compassPlugin,
                             @NotNull Player player,
-                            @NotNull CompassDisplay display) {
+                            @NotNull CompassStyle style) {
 
-        super(player, display);
+        super(player, style);
 
         this.bukkitTask = new SimpleBukkitTask(compassPlugin, this);
 
@@ -52,6 +52,6 @@ public final class ActionBarCompass extends AbstractCompass implements Runnable 
 
     @Override
     public void run() {
-        this.audience.sendActionBar(this.display.getComponent());
+        this.audience.sendActionBar(this.style.getComponent());
     }
 }

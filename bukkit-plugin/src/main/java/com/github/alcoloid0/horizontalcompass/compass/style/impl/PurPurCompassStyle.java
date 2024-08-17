@@ -15,15 +15,15 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.alcoloid0.horizontalcompass.display.impl;
+package com.github.alcoloid0.horizontalcompass.compass.style.impl;
 
 import com.github.alcoloid0.horizontalcompass.api.compass.Compass;
-import com.github.alcoloid0.horizontalcompass.display.CompassDisplay;
+import com.github.alcoloid0.horizontalcompass.compass.style.CompassStyle;
 import com.github.alcoloid0.horizontalcompass.settings.Settings;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 
-public final class PurPurCompassDisplay implements CompassDisplay {
+public final class PurPurCompassStyle implements CompassStyle {
     private Component component = Component.empty();
 
     @Override

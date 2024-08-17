@@ -15,17 +15,17 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.alcoloid0.horizontalcompass.display.impl;
+package com.github.alcoloid0.horizontalcompass.compass.style.impl;
 
 import com.github.alcoloid0.horizontalcompass.api.waypoint.Waypoint;
-import com.github.alcoloid0.horizontalcompass.display.AppendableCompassDisplay;
+import com.github.alcoloid0.horizontalcompass.compass.style.AppendableCompassStyle;
 import com.github.alcoloid0.horizontalcompass.settings.Settings;
 import com.github.alcoloid0.horizontalcompass.util.Direction;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import org.jetbrains.annotations.NotNull;
 
-public final class RustCompassDisplay extends AppendableCompassDisplay {
+public final class RustCompassStyle extends AppendableCompassStyle {
     @Override
     protected void append(int angle, boolean center) {
         TextColor color = Settings.display().getRust().getColor();

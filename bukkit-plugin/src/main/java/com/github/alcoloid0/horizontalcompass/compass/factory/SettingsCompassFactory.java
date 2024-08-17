@@ -19,10 +19,10 @@ package com.github.alcoloid0.horizontalcompass.compass.factory;
 
 import com.github.alcoloid0.horizontalcompass.HorizontalCompass;
 import com.github.alcoloid0.horizontalcompass.api.compass.Compass;
+import com.github.alcoloid0.horizontalcompass.compass.style.impl.*;
 import com.github.alcoloid0.horizontalcompass.compass.impl.ActionBarCompass;
 import com.github.alcoloid0.horizontalcompass.compass.impl.BossBarCompass;
-import com.github.alcoloid0.horizontalcompass.display.CompassDisplay;
-import com.github.alcoloid0.horizontalcompass.display.impl.*;
+import com.github.alcoloid0.horizontalcompass.compass.style.CompassStyle;
 import com.github.alcoloid0.horizontalcompass.settings.Settings;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -36,17 +36,17 @@ public final class SettingsCompassFactory implements CompassFactory {
 
     @Override
     public @NotNull Compass createCompass(@NotNull Player forPlayer) {
-        CompassDisplay display = switch (Settings.compass().getDisplay()) {
-            case DEGREES -> new DegreesCompassDisplay();
-            case SIMPLE -> new SimpleCompassDisplay();
-            case RUST -> new RustCompassDisplay();
-            case RUSTME -> new RustMeCompassDisplay();
-            case PURPUR -> new PurPurCompassDisplay();
+        CompassStyle compassStyle = switch (Settings.compass().getStyle()) {
+            case DEGREES -> new DegreesCompassStyle();
+            case SIMPLE -> new SimpleCompassStyle();
+            case RUST -> new RustCompassStyle();
+            case RUSTME -> new RustMeCompassStyle();
+            case PURPUR -> new PurPurCompassStyle();
         };
 
         return switch (Settings.compass().getType()) {
-            case ACTIONBAR -> new ActionBarCompass(this.compassPlugin, forPlayer, display);
-            case BOSSBAR -> new BossBarCompass(this.compassPlugin, forPlayer, display);
+            case ACTIONBAR -> new ActionBarCompass(this.compassPlugin, forPlayer, compassStyle);
+            case BOSSBAR -> new BossBarCompass(this.compassPlugin, forPlayer, compassStyle);
         };
     }
 }

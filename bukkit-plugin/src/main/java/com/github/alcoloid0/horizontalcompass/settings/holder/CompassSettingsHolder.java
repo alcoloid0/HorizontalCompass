@@ -17,7 +17,7 @@
 
 package com.github.alcoloid0.horizontalcompass.settings.holder;
 
-import com.github.alcoloid0.horizontalcompass.settings.setting.CompassDisplayTypeSetting;
+import com.github.alcoloid0.horizontalcompass.settings.setting.CompassStyleTypeSetting;
 import com.github.alcoloid0.horizontalcompass.settings.setting.CompassTypeSetting;
 import net.kyori.adventure.bossbar.BossBar;
 import org.jetbrains.annotations.NotNull;
@@ -28,7 +28,8 @@ import org.spongepowered.configurate.objectmapping.meta.Setting;
 @ConfigSerializable
 public final class CompassSettingsHolder {
     private CompassTypeSetting type = CompassTypeSetting.BOSSBAR;
-    private CompassDisplayTypeSetting display = CompassDisplayTypeSetting.RUST;
+    @Setting("display")
+    private CompassStyleTypeSetting style = CompassStyleTypeSetting.RUST;
     @Setting("boss-bar")
     private BossBarSetting bossBar = new BossBarSetting();
 
@@ -36,8 +37,8 @@ public final class CompassSettingsHolder {
         return this.type;
     }
 
-    public @NotNull CompassDisplayTypeSetting getDisplay() {
-        return this.display;
+    public @NotNull CompassStyleTypeSetting getStyle() {
+        return this.style;
     }
 
     public BossBarSetting getBossBar() {

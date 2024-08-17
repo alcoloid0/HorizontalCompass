@@ -15,42 +15,40 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.alcoloid0.horizontalcompass.display.impl;
+package com.github.alcoloid0.horizontalcompass.compass.style.impl;
 
 import com.github.alcoloid0.horizontalcompass.api.waypoint.Waypoint;
-import com.github.alcoloid0.horizontalcompass.display.AppendableCompassDisplay;
+import com.github.alcoloid0.horizontalcompass.compass.style.AppendableCompassStyle;
 import com.github.alcoloid0.horizontalcompass.settings.Settings;
 import com.github.alcoloid0.horizontalcompass.util.Direction;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
 import org.jetbrains.annotations.NotNull;
 
-public final class RustMeCompassDisplay extends AppendableCompassDisplay {
+public final class DegreesCompassStyle extends AppendableCompassStyle {
     @Override
     protected void append(int angle, boolean center) {
-        TextColor color = Settings.display().getRust().getColor();
-
-        if (angle % 15 == 0) {
-            this.append(Component.text(angle, color));
-        } else if ((angle % 15) % 3 == 0) {
-            this.append(Component.text(Settings.display().getRust().getDelimiter(), color));
+        if (center) {
+            this.append(format("%03d", angle).color(Settings.display().getDegrees().getColorCenter()));
         } else {
-            this.appendSpace();
+            this.append(format("%03d", angle).color(Settings.display().getDegrees().getColor()));
         }
+
+        this.appendSpace();
     }
 
     @Override
     protected void append(int angle, @NotNull Waypoint waypoint) {
-        this.append(Component.text(Settings.display().getRust().getMarkerSymbol(), waypoint.getTextColor()));
+        this.append(format("%03d", angle).color(waypoint.getTextColor()));
+        this.appendSpace();
     }
 
     @Override
     protected void append(int angle, @NotNull Direction direction) {
-        this.append(Component.text(direction.name(), Settings.waypoints().getCardinalColor()));
+        this.append(format("%03d", angle).color(Settings.waypoints().getCardinalColor()));
+        this.appendSpace();
     }
 
     @Override
     protected int angleCount() {
-        return 81;
+        return 15;
     }
 }

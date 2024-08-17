@@ -19,24 +19,24 @@ package com.github.alcoloid0.horizontalcompass.compass;
 
 import com.github.alcoloid0.horizontalcompass.api.compass.Compass;
 import com.github.alcoloid0.horizontalcompass.api.compass.CompassWaypoints;
-import com.github.alcoloid0.horizontalcompass.display.CompassDisplay;
+import com.github.alcoloid0.horizontalcompass.compass.style.CompassStyle;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class AbstractCompass implements Compass {
     protected final Player player;
-    protected final CompassDisplay display;
+    protected final CompassStyle style;
     private final CompassWaypoints waypoints;
 
-    protected AbstractCompass(@NotNull Player player, @NotNull CompassDisplay display) {
+    protected AbstractCompass(@NotNull Player player, @NotNull CompassStyle style) {
         this.player = player;
-        this.display = display;
+        this.style = style;
         this.waypoints = new CompassWaypointsImpl(this);
     }
 
     @Override
     public void update() {
-        this.display.update(this);
+        this.style.update(this);
     }
 
     @Override
