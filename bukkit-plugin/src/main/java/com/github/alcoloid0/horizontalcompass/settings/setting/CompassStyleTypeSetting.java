@@ -21,5 +21,4 @@ public enum CompassStyleTypeSetting {
     DEGREES,
     SIMPLE,
     RUST,
-    PURPUR
 }

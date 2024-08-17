@@ -22,7 +22,9 @@ import com.github.alcoloid0.horizontalcompass.api.compass.Compass;
 import com.github.alcoloid0.horizontalcompass.compass.impl.ActionBarCompass;
 import com.github.alcoloid0.horizontalcompass.compass.impl.BossBarCompass;
 import com.github.alcoloid0.horizontalcompass.compass.style.CompassStyle;
-import com.github.alcoloid0.horizontalcompass.compass.style.impl.*;
+import com.github.alcoloid0.horizontalcompass.compass.style.impl.DegreesCompassStyle;
+import com.github.alcoloid0.horizontalcompass.compass.style.impl.RustCompassStyle;
+import com.github.alcoloid0.horizontalcompass.compass.style.impl.SimpleCompassStyle;
 import com.github.alcoloid0.horizontalcompass.settings.Settings;
 import com.github.alcoloid0.horizontalcompass.settings.setting.CompassStyleTypeSetting;
 import org.bukkit.entity.Player;
@@ -42,7 +44,6 @@ public final class SettingsCompassFactory implements CompassFactory {
         map.put(CompassStyleTypeSetting.DEGREES, DegreesCompassStyle::new);
         map.put(CompassStyleTypeSetting.SIMPLE, SimpleCompassStyle::new);
         map.put(CompassStyleTypeSetting.RUST, RustCompassStyle::new);
-        map.put(CompassStyleTypeSetting.PURPUR, PurPurCompassStyle::new);
 
         STYLE_FACTORY = Collections.unmodifiableMap(map);
     }

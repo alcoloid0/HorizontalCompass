@@ -27,7 +27,6 @@ import org.spongepowered.configurate.objectmapping.meta.Setting;
 public final class DisplaySettingsHolder {
     private DegreesSetting degrees = new DegreesSetting();
     private RustSetting rust = new RustSetting();
-    private PurPurSetting purpur = new PurPurSetting();
 
     public DegreesSetting getDegrees() {
         return degrees;
@@ -35,10 +34,6 @@ public final class DisplaySettingsHolder {
 
     public RustSetting getRust() {
         return rust;
-    }
-
-    public PurPurSetting getPurpur() {
-        return purpur;
     }
 
     @ConfigSerializable
@@ -73,24 +68,6 @@ public final class DisplaySettingsHolder {
 
         public char getDelimiter() {
             return delimiter;
-        }
-    }
-
-    @ConfigSerializable
-    public static final class PurPurSetting {
-        @Setting("view-length")
-        private int viewLength = 50;
-        private String string = "S  ·  ◈  ·  ◈  ·  ◈  ·  SW  ·  ◈  ·  ◈  ·  ◈  ·  " +
-                "W  ·  ◈  ·  ◈  ·  ◈  ·  NW  ·  ◈  ·  ◈  ·  ◈  ·  " +
-                "N  ·  ◈  ·  ◈  ·  ◈  ·  NE  ·  ◈  ·  ◈  ·  ◈  ·  " +
-                "E  ·  ◈  ·  ◈  ·  ◈  ·  SE  ·  ◈  ·  ◈  ·  ◈  ·  ";
-
-        public int getViewLength() {
-            return viewLength;
-        }
-
-        public String getString() {
-            return string;
         }
     }
 }
