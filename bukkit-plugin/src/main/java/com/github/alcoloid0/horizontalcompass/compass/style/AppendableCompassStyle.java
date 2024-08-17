@@ -55,7 +55,7 @@ public abstract class AppendableCompassStyle implements CompassStyle {
 
         int halfAngleCount = this.angleCount() / 2;
 
-        for (int offset = -halfAngleCount; offset < halfAngleCount; offset++) {
+        for (int offset = -halfAngleCount; offset < (halfAngleCount + 1); offset++) {
             int angle = Math.floorMod(lookAngle + offset, 360);
 
             Waypoint waypoint = getWaypointByAngleBetween(forCompass, location, angle);
