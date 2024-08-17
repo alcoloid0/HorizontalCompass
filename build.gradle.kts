@@ -12,7 +12,7 @@ subprojects {
     apply(plugin = "org.cadixdev.licenser")
 
     group = "com.github.alcoloid0"
-    version = "1.1.1"
+    version = "1.1.2"
 
     java {
         toolchain.languageVersion.set(JavaLanguageVersion.of(8))
