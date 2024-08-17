@@ -42,7 +42,6 @@ public final class SettingsCompassFactory implements CompassFactory {
         map.put(CompassStyleTypeSetting.DEGREES, DegreesCompassStyle::new);
         map.put(CompassStyleTypeSetting.SIMPLE, SimpleCompassStyle::new);
         map.put(CompassStyleTypeSetting.RUST, RustCompassStyle::new);
-        map.put(CompassStyleTypeSetting.RUSTME, RustMeCompassStyle::new);
         map.put(CompassStyleTypeSetting.PURPUR, PurPurCompassStyle::new);
 
         STYLE_FACTORY = Collections.unmodifiableMap(map);

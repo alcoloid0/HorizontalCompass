@@ -15,7 +15,6 @@
 | DEGREES | ![](readme-src/degrees.gif) |
 | RUST    |  ![](readme-src/rust.gif)   |
 | SIMPLE  | ![](readme-src/simple.gif)  |
-| RUSTME  | ![](readme-src/rustme.gif)  |
 | PURPUR  | ![](readme-src/purpur.gif)  |
 
 ## Commands
@@ -31,7 +30,7 @@
 ```yaml
 compass-settings:
   type: BOSSBAR # BOSSBAR, ACTIONBAR
-  display: RUST # RUST, RUSTME, SIMPLE, DEGREES, PURPUR
+  display: RUST # RUST, SIMPLE, DEGREES, PURPUR
   boss-bar:
     color: WHITE # PINK, BLUE, RED, GREEN, YELLOW, PURPLE, WHITE
     overlay: PROGRESS # PROGRESS, NOTCHED_6, NOTCHED_10, NOTCHED_12, NOTCHED_20
