@@ -6,12 +6,11 @@
 
 ## Demonstration
 
-| display |         GIF-preview         |
-|---------|:---------------------------:|
-| DEGREES | ![](readme-src/degrees.gif) |
-| RUST    |  ![](readme-src/rust.gif)   |
-| SIMPLE  | ![](readme-src/simple.gif)  |
-| PURPUR  | ![](readme-src/purpur.gif)  |
+| display |           GIF-preview           |
+|---------|:-------------------------------:|
+| DEGREES | ![](readme-preview/degrees.gif) |
+| RUST    |  ![](readme-preview/rust.gif)   |
+| SIMPLE  | ![](readme-preview/simple.gif)  |
 
 ## Commands
 
@@ -39,9 +38,6 @@ display-settings:
     color: white
     marker-symbol: ▼
     delimiter: '|'
-  purpur:
-    view-length: 50
-    string: 'S  ·  ◈  ·  ◈  ·  ◈  ·  SW  ·  ◈  ·  ◈  ·  ◈  ·  W  ·  ◈  ·  ◈  ·  ◈  ·  NW  ·  ◈  ·  ◈  ·  ◈  ·  N  ·  ◈  ·  ◈  ·  ◈  ·  NE  ·  ◈  ·  ◈  ·  ◈  ·  E  ·  ◈  ·  ◈  ·  ◈  ·  SE  ·  ◈  ·  ◈  ·  ◈  ·  '
 waypoint-settings:
   cardinal-color: aqua
 ```
@@ -59,7 +55,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly 'com.github.alcoloid0.HorizontalCompass:api:1.1'
+    compileOnly 'com.github.alcoloid0.HorizontalCompass:api:1.1.2'
 }
 ```
 
@@ -81,7 +77,7 @@ For Maven projects, include the JitPack repository and dependency in your `pom.x
 <dependency>
     <groupId>com.github.alcoloid0.HorizontalCompass</groupId>
     <artifactId>api</artifactId>
-    <version>1.1</version>
+    <version>1.1.2</version>
 </dependency>
 ```
 
