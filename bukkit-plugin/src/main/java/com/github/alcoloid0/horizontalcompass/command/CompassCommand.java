@@ -27,6 +27,8 @@ import org.bukkit.util.StringUtil;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public final class CompassCommand implements TabExecutor {
@@ -59,19 +61,22 @@ public final class CompassCommand implements TabExecutor {
             return true;
         }
 
-        Compass compass = compassPlugin.getCompassByPlayer((Player) commandSender)
-                .orElseThrow();
+        Player player = (Player) commandSender;
+
+        Compass compass = compassPlugin.getCompassByPlayer(player).orElseThrow(RuntimeException::new);
 
         switch (args[0].toLowerCase()) {
-            case "show" -> {
+            case "show":
                 compass.show();
-                commandSender.sendMessage("Compass is now visible.");
-            }
-            case "hide" -> {
+                player.sendMessage("Compass is now visible.");
+                break;
+            case "hide":
                 compass.hide();
-                commandSender.sendMessage("Compass is now hidden.");
-            }
-            default -> commandSender.sendMessage("Unknown argument: " + args[0]);
+                player.sendMessage("Compass is now hidden.");
+                break;
+            default:
+                player.sendMessage("Unknown argument: " + args[0]);
+                break;
         }
 
         return true;
@@ -84,9 +89,9 @@ public final class CompassCommand implements TabExecutor {
                                                @NotNull String[] args) {
 
         if (!commandSender.hasPermission(USE_PERMISSION) || args.length > 1) {
-            return List.of();
+            return Collections.emptyList();
         }
 
-        return StringUtil.copyPartialMatches(args[0], List.of("show", "hide"), new ArrayList<>());
+        return StringUtil.copyPartialMatches(args[0], Arrays.asList("show", "hide"), new ArrayList<>());
     }
 }

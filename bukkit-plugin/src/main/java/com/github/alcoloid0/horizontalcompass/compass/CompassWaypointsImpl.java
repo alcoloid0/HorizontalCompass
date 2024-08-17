@@ -24,6 +24,7 @@ import com.github.alcoloid0.horizontalcompass.api.waypoint.WaypointIdentifier;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public final class CompassWaypointsImpl extends ArrayList<Waypoint> implements CompassWaypoints {
     private final Compass compass;
@@ -43,7 +44,7 @@ public final class CompassWaypointsImpl extends ArrayList<Waypoint> implements C
     public @NotNull List<Waypoint> get(@NotNull WaypointIdentifier identifier) {
         return this.waypoints.stream()
                 .filter(waypoint -> waypoint.getIdentifier().equals(identifier))
-                .toList();
+                .collect(Collectors.toList());
     }
 
     @Override

@@ -1,7 +1,7 @@
 name: HorizontalCompassHomes
 version: '${version}'
 main: com.github.alcoloid0.horizontalcompass.homes.HorizontalCompassHomes
-api-version: '1.20'
+api-version: '1.16'
 authors: [ alcoloid ]
 depend:
   - Essentials

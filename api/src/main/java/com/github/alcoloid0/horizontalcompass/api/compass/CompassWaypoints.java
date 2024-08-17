@@ -19,13 +19,10 @@ package com.github.alcoloid0.horizontalcompass.api.compass;
 
 import com.github.alcoloid0.horizontalcompass.api.waypoint.Waypoint;
 import com.github.alcoloid0.horizontalcompass.api.waypoint.WaypointIdentifier;
-import org.bukkit.Location;
-import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 
 public interface CompassWaypoints extends Collection<Waypoint> {
     void remove(@NotNull WaypointIdentifier identifier);
@@ -35,11 +32,4 @@ public interface CompassWaypoints extends Collection<Waypoint> {
 
     @NotNull
     Compass getCompass();
-
-    @Deprecated(since = "1.1.1", forRemoval = true)
-    @ApiStatus.Internal
-    @NotNull
-    default Optional<Waypoint> getByAngleBetween(@NotNull Location location, int angle) {
-        throw new RuntimeException("deprecated");
-    }
 }

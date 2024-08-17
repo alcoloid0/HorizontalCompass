@@ -18,7 +18,6 @@
 package com.github.alcoloid0.horizontalcompass.homes.waypoint;
 
 import com.github.alcoloid0.horizontalcompass.api.waypoint.WaypointIdentifier;
-import com.github.alcoloid0.horizontalcompass.homes.util.CompassUser;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -37,10 +36,6 @@ public final class HomeWaypointIdentifier implements WaypointIdentifier {
     @Contract(value = "_, _ -> new", pure = true)
     public static @NotNull WaypointIdentifier at(@NotNull Player player, @NotNull String homeName) {
         return new HomeWaypointIdentifier(player, homeName);
-    }
-
-    public static @NotNull WaypointIdentifier at(@NotNull CompassUser user, @NotNull String homeName) {
-        return HomeWaypointIdentifier.at(user.getPlayer(), homeName);
     }
 
     public void setHomeName(@NotNull String homeName) {

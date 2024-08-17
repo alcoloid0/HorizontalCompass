@@ -40,10 +40,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Unmodifiable;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public final class HorizontalCompass extends JavaPlugin implements HorizontalCompassAPI {
     private static final ServicesManager SERVICES = Bukkit.getServicesManager();
@@ -98,7 +95,7 @@ public final class HorizontalCompass extends JavaPlugin implements HorizontalCom
 
     @Override
     public @NotNull @Unmodifiable List<Compass> getCompassList() {
-        return List.copyOf(this.playerCompassMap.values());
+        return Collections.unmodifiableList(new ArrayList<>(this.playerCompassMap.values()));
     }
 
     @Override

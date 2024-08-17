@@ -15,7 +15,7 @@ subprojects {
     version = "1.1.1"
 
     java {
-        toolchain.languageVersion.set(JavaLanguageVersion.of(17))
+        toolchain.languageVersion.set(JavaLanguageVersion.of(8))
         withSourcesJar()
     }
 
@@ -53,6 +53,6 @@ subprojects {
 
     dependencies {
         compileOnly("org.jetbrains:annotations:24.0.0")
-        compileOnly("org.spigotmc:spigot-api:1.20.4-R0.1-SNAPSHOT")
+        compileOnly("org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT")
     }
 }

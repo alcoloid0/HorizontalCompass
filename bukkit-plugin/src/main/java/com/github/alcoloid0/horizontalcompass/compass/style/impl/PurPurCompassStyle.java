@@ -23,6 +23,8 @@ import com.github.alcoloid0.horizontalcompass.settings.Settings;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collections;
+
 public final class PurPurCompassStyle implements CompassStyle {
     private Component component = Component.empty();
 
@@ -32,7 +34,7 @@ public final class PurPurCompassStyle implements CompassStyle {
 
         int repeatCount = ((this.viewLength() / this.getString().length()) + 1) * 2;
 
-        String string = this.getString().repeat(repeatCount);
+        String string = String.join("", Collections.nCopies(repeatCount, this.getString()));
 
         int length = string.length();
 

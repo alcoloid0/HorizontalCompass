@@ -19,15 +19,35 @@ package com.github.alcoloid0.horizontalcompass.compass.factory;
 
 import com.github.alcoloid0.horizontalcompass.HorizontalCompass;
 import com.github.alcoloid0.horizontalcompass.api.compass.Compass;
-import com.github.alcoloid0.horizontalcompass.compass.style.impl.*;
 import com.github.alcoloid0.horizontalcompass.compass.impl.ActionBarCompass;
 import com.github.alcoloid0.horizontalcompass.compass.impl.BossBarCompass;
 import com.github.alcoloid0.horizontalcompass.compass.style.CompassStyle;
+import com.github.alcoloid0.horizontalcompass.compass.style.impl.*;
 import com.github.alcoloid0.horizontalcompass.settings.Settings;
+import com.github.alcoloid0.horizontalcompass.settings.setting.CompassStyleTypeSetting;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Supplier;
+
 public final class SettingsCompassFactory implements CompassFactory {
+    private static final Map<CompassStyleTypeSetting, Supplier<CompassStyle>> STYLE_FACTORY;
+
+    static {
+        Map<CompassStyleTypeSetting, Supplier<CompassStyle>> map = new HashMap<>();
+
+        map.put(CompassStyleTypeSetting.DEGREES, DegreesCompassStyle::new);
+        map.put(CompassStyleTypeSetting.SIMPLE, SimpleCompassStyle::new);
+        map.put(CompassStyleTypeSetting.RUST, RustCompassStyle::new);
+        map.put(CompassStyleTypeSetting.RUSTME, RustMeCompassStyle::new);
+        map.put(CompassStyleTypeSetting.PURPUR, PurPurCompassStyle::new);
+
+        STYLE_FACTORY = Collections.unmodifiableMap(map);
+    }
+
     private final HorizontalCompass compassPlugin;
 
     public SettingsCompassFactory(@NotNull HorizontalCompass compassPlugin) {
@@ -36,17 +56,14 @@ public final class SettingsCompassFactory implements CompassFactory {
 
     @Override
     public @NotNull Compass createCompass(@NotNull Player forPlayer) {
-        CompassStyle compassStyle = switch (Settings.compass().getStyle()) {
-            case DEGREES -> new DegreesCompassStyle();
-            case SIMPLE -> new SimpleCompassStyle();
-            case RUST -> new RustCompassStyle();
-            case RUSTME -> new RustMeCompassStyle();
-            case PURPUR -> new PurPurCompassStyle();
-        };
+        CompassStyle compassStyle = STYLE_FACTORY.get(Settings.compass().getStyle()).get();
 
-        return switch (Settings.compass().getType()) {
-            case ACTIONBAR -> new ActionBarCompass(this.compassPlugin, forPlayer, compassStyle);
-            case BOSSBAR -> new BossBarCompass(this.compassPlugin, forPlayer, compassStyle);
-        };
+        switch (Settings.compass().getType()) {
+            case ACTIONBAR:
+                return new ActionBarCompass(this.compassPlugin, forPlayer, compassStyle);
+            default:
+            case BOSSBAR:
+                return new BossBarCompass(this.compassPlugin, forPlayer, compassStyle);
+        }
     }
 }

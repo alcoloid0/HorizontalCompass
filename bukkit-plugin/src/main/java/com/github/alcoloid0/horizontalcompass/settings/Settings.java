@@ -120,7 +120,7 @@ public final class Settings {
 
     public @NotNull Settings backupAndRestore() {
         try {
-            Path toPath = this.filePath.resolveSibling("%s.old".formatted(FILE_NAME));
+            Path toPath = this.filePath.resolveSibling(String.format("%s.old", FILE_NAME));
             Files.deleteIfExists(toPath);
             Files.move(this.filePath, toPath);
 

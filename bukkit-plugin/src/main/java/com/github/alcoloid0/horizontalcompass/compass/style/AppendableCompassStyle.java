@@ -83,7 +83,7 @@ public abstract class AppendableCompassStyle implements CompassStyle {
         for (Waypoint waypoint : compass.getWaypoints()) {
             Vector vec = location.toVector().subtract(waypoint.getLocation().toVector());
             double theta = Math.atan2(vec.getZ(), vec.getX()) - (Math.PI / 2.0);
-            int angleBetween = Math.floorMod(Math.round(Math.toDegrees(theta)), 360);
+            long angleBetween = Math.floorMod(Math.round(Math.toDegrees(theta)), 360);
 
             if (angleBetween == angle) {
                 return waypoint;
