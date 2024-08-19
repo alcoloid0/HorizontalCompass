@@ -21,7 +21,7 @@ import com.github.alcoloid0.horizontalcompass.api.HorizontalCompassAPI;
 import com.github.alcoloid0.horizontalcompass.api.compass.Compass;
 import com.github.alcoloid0.horizontalcompass.api.waypoint.WaypointBuilder;
 import com.github.alcoloid0.horizontalcompass.command.CompassCommand;
-import com.github.alcoloid0.horizontalcompass.compass.factory.CompassFactory;
+import com.github.alcoloid0.horizontalcompass.compass.CompassRegistry;
 import com.github.alcoloid0.horizontalcompass.compass.factory.SettingsCompassFactory;
 import com.github.alcoloid0.horizontalcompass.listener.LookPacketListener;
 import com.github.alcoloid0.horizontalcompass.listener.PlayerListener;
@@ -33,27 +33,26 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.PluginCommand;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.ServicesManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Unmodifiable;
 
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
 
 public final class HorizontalCompass extends JavaPlugin implements HorizontalCompassAPI {
     private static final ServicesManager SERVICES = Bukkit.getServicesManager();
 
-    private final Map<Player, Compass> playerCompassMap = new HashMap<>();
-
-    private CompassFactory compassFactory;
+    private CompassRegistry compassRegistry;
     private BukkitAudiences adventure;
 
     @Override
     public void onEnable() {
         this.adventure = BukkitAudiences.create(this);
-        this.compassFactory = new SettingsCompassFactory(this);
+
+        this.compassRegistry = new CompassRegistry(new SettingsCompassFactory(this));
 
         Settings settings = Settings.initialize(this.getDataFolder());
 
@@ -88,25 +87,22 @@ public final class HorizontalCompass extends JavaPlugin implements HorizontalCom
             this.adventure.close();
         }
 
-        this.playerCompassMap.clear();
-        this.compassFactory = null;
+        this.compassRegistry = null;
         this.adventure = null;
     }
 
     @Override
     public @NotNull @Unmodifiable List<Compass> getCompassList() {
-        return Collections.unmodifiableList(new ArrayList<>(this.playerCompassMap.values()));
+        return compassRegistry.getCompassList();
     }
 
     @Override
     public @NotNull Optional<Compass> getCompassByPlayer(@NotNull OfflinePlayer player) {
-        if (!player.isOnline()) {
+        if (!player.isOnline() || player.getPlayer() == null) {
             return Optional.empty();
         }
 
-        return this.getCompassList().stream()
-                .filter(compass -> compass.getCompassPlayer().equals(player.getPlayer()))
-                .findFirst();
+        return Optional.ofNullable(compassRegistry.get(player.getPlayer()));
     }
 
     @Override
@@ -114,15 +110,11 @@ public final class HorizontalCompass extends JavaPlugin implements HorizontalCom
         return new WaypointBuilderImpl(location);
     }
 
-    public Map<Player, Compass> getPlayerCompassMap() {
-        return playerCompassMap;
+    public CompassRegistry getCompassRegistry() {
+        return compassRegistry;
     }
 
     public BukkitAudiences getAdventure() {
         return this.adventure;
-    }
-
-    public CompassFactory getCompassFactory() {
-        return compassFactory;
     }
 }

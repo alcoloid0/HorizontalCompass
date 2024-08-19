@@ -30,22 +30,18 @@ import com.github.alcoloid0.horizontalcompass.settings.setting.CompassStyleTypeS
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.EnumMap;
 import java.util.function.Supplier;
 
 public final class SettingsCompassFactory implements CompassFactory {
-    private static final Map<CompassStyleTypeSetting, Supplier<CompassStyle>> STYLE_FACTORY;
+    private static final EnumMap<CompassStyleTypeSetting, Supplier<CompassStyle>> STYLE_FACTORY;
 
     static {
-        Map<CompassStyleTypeSetting, Supplier<CompassStyle>> map = new HashMap<>();
+        STYLE_FACTORY = new EnumMap<>(CompassStyleTypeSetting.class);
 
-        map.put(CompassStyleTypeSetting.DEGREES, DegreesCompassStyle::new);
-        map.put(CompassStyleTypeSetting.SIMPLE, SimpleCompassStyle::new);
-        map.put(CompassStyleTypeSetting.RUST, RustCompassStyle::new);
-
-        STYLE_FACTORY = Collections.unmodifiableMap(map);
+        STYLE_FACTORY.put(CompassStyleTypeSetting.DEGREES, DegreesCompassStyle::new);
+        STYLE_FACTORY.put(CompassStyleTypeSetting.SIMPLE, SimpleCompassStyle::new);
+        STYLE_FACTORY.put(CompassStyleTypeSetting.RUST, RustCompassStyle::new);
     }
 
     private final HorizontalCompass compassPlugin;

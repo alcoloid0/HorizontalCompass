@@ -18,7 +18,6 @@
 package com.github.alcoloid0.horizontalcompass.command;
 
 import com.github.alcoloid0.horizontalcompass.HorizontalCompass;
-import com.github.alcoloid0.horizontalcompass.api.compass.Compass;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
@@ -61,23 +60,21 @@ public final class CompassCommand implements TabExecutor {
             return true;
         }
 
-        Player player = (Player) commandSender;
-
-        Compass compass = compassPlugin.getCompassByPlayer(player).orElseThrow(RuntimeException::new);
-
-        switch (args[0].toLowerCase()) {
-            case "show":
-                compass.show();
-                player.sendMessage("Compass is now visible.");
-                break;
-            case "hide":
-                compass.hide();
-                player.sendMessage("Compass is now hidden.");
-                break;
-            default:
-                player.sendMessage("Unknown argument: " + args[0]);
-                break;
-        }
+        compassPlugin.getCompassByPlayer((Player) commandSender).ifPresent(compass -> {
+            switch (args[0].toLowerCase()) {
+                case "show":
+                    compass.show();
+                    commandSender.sendMessage("Compass is now visible.");
+                    break;
+                case "hide":
+                    compass.hide();
+                    commandSender.sendMessage("Compass is now hidden.");
+                    break;
+                default:
+                    commandSender.sendMessage("Unknown argument: " + args[0]);
+                    break;
+            }
+        });
 
         return true;
     }

@@ -41,11 +41,7 @@ public class EssentialsHomes {
     }
 
     public static @NotNull Location getHomeLocation(@NotNull Player player, @NotNull String homeName) {
-        try {
-            return Objects.requireNonNull(ESSENTIALS).getUser(player).getHome(homeName);
-        } catch (Exception exception) {
-            throw new RuntimeException(exception);
-        }
+        return Objects.requireNonNull(ESSENTIALS).getUser(player).getHome(homeName);
     }
 
     public static @NotNull Map<String, Location> getHomes(@NotNull Player player) {

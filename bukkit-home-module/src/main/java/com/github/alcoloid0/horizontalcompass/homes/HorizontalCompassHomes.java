@@ -25,7 +25,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class HorizontalCompassHomes extends JavaPlugin {
-    private static HorizontalCompassAPI compassAPI;
+    private static HorizontalCompassAPI compassAPI = null;
 
     public static HorizontalCompassAPI getCompassAPI() {
         return compassAPI;

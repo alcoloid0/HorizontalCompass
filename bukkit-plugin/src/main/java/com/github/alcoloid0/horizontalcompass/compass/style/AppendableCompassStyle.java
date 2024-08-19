@@ -28,12 +28,10 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Arrays;
-
 public abstract class AppendableCompassStyle implements CompassStyle {
     protected TextComponent.Builder builder;
 
-    public AppendableCompassStyle() {
+    protected AppendableCompassStyle() {
         this.flush();
     }
 
@@ -51,28 +49,23 @@ public abstract class AppendableCompassStyle implements CompassStyle {
 
         Location location = forCompass.getCompassPlayer().getLocation();
 
-        int lookAngle = Math.round(forCompass.getCompassPlayer().getEyeLocation().getYaw()) + 180;
+        int lookAngle360 = Math.round(forCompass.getCompassPlayer().getEyeLocation().getYaw()) + 180;
 
         int halfAngleCount = this.angleCount() / 2;
 
         for (int offset = -halfAngleCount; offset < (halfAngleCount + 1); offset++) {
-            int angle = Math.floorMod(lookAngle + offset, 360);
+            int angle = Math.floorMod(lookAngle360 + offset, 360);
 
             Waypoint waypoint = getWaypointByAngleBetween(forCompass, location, angle);
+            Direction direction = Direction.byAzimuth(angle);
 
             if (waypoint != null) {
                 this.append(angle, waypoint);
-                continue;
-            }
-
-            Direction direction = getDirectionByAzimuth(angle);
-
-            if (direction != null) {
+            } else if (direction != null) {
                 this.append(angle, direction);
-                continue;
+            } else {
+                this.append(angle, angle == lookAngle360);
             }
-
-            this.append(angle, angle == lookAngle);
         }
     }
 
@@ -81,8 +74,9 @@ public abstract class AppendableCompassStyle implements CompassStyle {
                                                          int angle) {
 
         for (Waypoint waypoint : compass.getWaypoints()) {
-            Vector vec = location.toVector().subtract(waypoint.getLocation().toVector());
-            double theta = Math.atan2(vec.getZ(), vec.getX()) - (Math.PI / 2.0);
+            Vector difference = location.toVector().subtract(waypoint.getLocation().toVector());
+
+            double theta = Math.atan2(difference.getZ(), difference.getX()) - (Math.PI / 2.0);
             long angleBetween = Math.floorMod(Math.round(Math.toDegrees(theta)), 360);
 
             if (angleBetween == angle) {
@@ -91,13 +85,6 @@ public abstract class AppendableCompassStyle implements CompassStyle {
         }
 
         return null;
-    }
-
-    private @Nullable Direction getDirectionByAzimuth(int azimuth) {
-        return Arrays.stream(Direction.values())
-                .filter(dir -> dir.azimuth() == azimuth)
-                .findFirst()
-                .orElse(null);
     }
 
     @Override

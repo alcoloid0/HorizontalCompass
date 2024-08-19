@@ -18,31 +18,43 @@
 package com.github.alcoloid0.horizontalcompass.compass.impl;
 
 import com.github.alcoloid0.horizontalcompass.HorizontalCompass;
-import com.github.alcoloid0.horizontalcompass.compass.AbstractCompass;
+import com.github.alcoloid0.horizontalcompass.api.compass.Compass;
+import com.github.alcoloid0.horizontalcompass.api.compass.CompassWaypoints;
+import com.github.alcoloid0.horizontalcompass.compass.CompassWaypointsImpl;
 import com.github.alcoloid0.horizontalcompass.compass.style.CompassStyle;
 import com.github.alcoloid0.horizontalcompass.util.SimpleBukkitTask;
 import net.kyori.adventure.audience.Audience;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public final class ActionBarCompass extends AbstractCompass implements Runnable {
+public final class ActionBarCompass implements Compass {
     private final SimpleBukkitTask bukkitTask;
     private final Audience audience;
+    private final Player player;
+    private final CompassStyle compassStyle;
+    private final CompassWaypoints waypoints = new CompassWaypointsImpl(this);
 
     public ActionBarCompass(@NotNull HorizontalCompass compassPlugin,
                             @NotNull Player player,
-                            @NotNull CompassStyle style) {
+                            @NotNull CompassStyle compassStyle) {
 
-        super(player, style);
-
-        this.bukkitTask = new SimpleBukkitTask(compassPlugin, this);
-
+        this.player = player;
+        this.compassStyle = compassStyle;
         this.audience = compassPlugin.getAdventure().player(player);
+
+        Runnable runnable = () -> this.audience.sendActionBar(this.compassStyle.getComponent());
+
+        this.bukkitTask = new SimpleBukkitTask(compassPlugin, runnable);
     }
 
     @Override
-    public void show() {
-        this.bukkitTask.runTaskTimer(0, 0);
+    public @NotNull CompassWaypoints getWaypoints() {
+        return this.waypoints;
+    }
+
+    @Override
+    public @NotNull Player getCompassPlayer() {
+        return this.player;
     }
 
     @Override
@@ -51,7 +63,12 @@ public final class ActionBarCompass extends AbstractCompass implements Runnable 
     }
 
     @Override
-    public void run() {
-        this.audience.sendActionBar(this.style.getComponent());
+    public void show() {
+        this.bukkitTask.runTaskTimer(0, 0);
+    }
+
+    @Override
+    public void update() {
+        this.compassStyle.update(this);
     }
 }

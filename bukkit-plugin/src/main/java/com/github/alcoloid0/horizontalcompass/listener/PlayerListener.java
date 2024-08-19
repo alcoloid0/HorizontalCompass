@@ -39,24 +39,24 @@ public final class PlayerListener implements Listener {
     public void onPlayerJoin(@NotNull PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
-        Compass compass = compassPlugin.getCompassFactory().createCompass(player);
-
-        this.compassPlugin.getPlayerCompassMap().put(event.getPlayer(), compass);
+        Compass compass = compassPlugin.getCompassRegistry().create(player);
 
         compass.update();
         compass.show();
     }
 
     @EventHandler
-    public void onPlayerMove(@NotNull PlayerMoveEvent moveEvent) {
-        this.compassPlugin.getPlayerCompassMap().get(moveEvent.getPlayer()).update();
+    public void onPlayerMove(@NotNull PlayerMoveEvent event) {
+        this.compassPlugin.getCompassByPlayer(event.getPlayer()).ifPresent(Compass::update);
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerLeave(@NotNull PlayerQuitEvent quitEvent) {
         Player player = quitEvent.getPlayer();
 
-        this.compassPlugin.getPlayerCompassMap().get(player).hide();
-        this.compassPlugin.getPlayerCompassMap().remove(player);
+        this.compassPlugin.getCompassByPlayer(player).ifPresent(compass -> {
+            compass.hide();
+            this.compassPlugin.getCompassRegistry().remove(compass);
+        });
     }
 }

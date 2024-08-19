@@ -27,8 +27,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public final class CompassWaypointsImpl extends ArrayList<Waypoint> implements CompassWaypoints {
-    private final Compass compass;
-    private final List<Waypoint> waypoints;
+    private final transient Compass compass;
+    private final transient List<Waypoint> waypoints;
 
     public CompassWaypointsImpl(@NotNull Compass compass) {
         this.compass = compass;
@@ -50,5 +50,19 @@ public final class CompassWaypointsImpl extends ArrayList<Waypoint> implements C
     @Override
     public @NotNull Compass getCompass() {
         return this.compass;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        CompassWaypointsImpl other = (CompassWaypointsImpl) o;
+        return Objects.equals(compass, other.compass) && Objects.equals(waypoints, other.waypoints);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), compass, waypoints);
     }
 }

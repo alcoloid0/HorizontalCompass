@@ -17,15 +17,13 @@
 
 package com.github.alcoloid0.horizontalcompass.util;
 
+import org.jetbrains.annotations.Nullable;
+
+import java.util.Arrays;
+import java.util.function.Predicate;
+
 public enum Direction {
-    N(0),
-    NE(45),
-    E(90),
-    SE(135),
-    S(180),
-    SW(225),
-    W(270),
-    NW(315);
+    N(0), NE(45), E(90), SE(135), S(180), SW(225), W(270), NW(315);
 
     private final int azimuth;
 
@@ -35,5 +33,11 @@ public enum Direction {
 
     public int azimuth() {
         return this.azimuth;
+    }
+
+    public static @Nullable Direction byAzimuth(int azimuth) {
+        Predicate<Direction> filter = direction -> direction.azimuth() == azimuth;
+
+        return Arrays.stream(Direction.values()).filter(filter).findFirst().orElse(null);
     }
 }

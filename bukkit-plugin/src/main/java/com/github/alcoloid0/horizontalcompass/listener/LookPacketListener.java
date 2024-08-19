@@ -22,6 +22,7 @@ import com.comphenix.protocol.events.ListenerPriority;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketEvent;
 import com.github.alcoloid0.horizontalcompass.HorizontalCompass;
+import com.github.alcoloid0.horizontalcompass.api.compass.Compass;
 import org.jetbrains.annotations.NotNull;
 
 public final class LookPacketListener extends PacketAdapter {
@@ -35,6 +36,6 @@ public final class LookPacketListener extends PacketAdapter {
 
     @Override
     public void onPacketReceiving(@NotNull PacketEvent event) {
-        this.compassPlugin.getPlayerCompassMap().get(event.getPlayer()).update();
+        this.compassPlugin.getCompassByPlayer(event.getPlayer()).ifPresent(Compass::update);
     }
 }

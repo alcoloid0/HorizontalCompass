@@ -47,7 +47,7 @@ public final class Settings {
         this.filePath = new File(dataFolder, FILE_NAME).toPath();
         this.holder = new SettingsHolder();
 
-        TypeSerializerCollection kyori = ConfigurateComponentSerializer.configurate()
+        TypeSerializerCollection adventureSerializers = ConfigurateComponentSerializer.configurate()
                 .serializers();
 
         this.loader = YamlConfigurationLoader.builder()
@@ -56,7 +56,7 @@ public final class Settings {
                 .path(this.filePath)
                 .defaultOptions(options -> options
                         .shouldCopyDefaults(true)
-                        .serializers(builder -> builder.registerAll(kyori))
+                        .serializers(builder -> builder.registerAll(adventureSerializers))
                         .implicitInitialization(true))
                 .build();
     }
@@ -75,7 +75,7 @@ public final class Settings {
 
     public static @NotNull Settings instance() {
         if (instance == null) {
-            throw new RuntimeException("Instance not yet created. Call initialize() first.");
+            throw new IllegalStateException("Instance not yet created. Call initialize() first.");
         }
 
         return instance;
@@ -83,10 +83,12 @@ public final class Settings {
 
     public static @NotNull Settings initialize(@NotNull File dataFolder) {
         if (instance != null) {
-            throw new RuntimeException("Instance already created. Cannot reinitialize.");
+            throw new IllegalStateException("Instance already created. Cannot reinitialize.");
         }
 
-        return (instance = new Settings(dataFolder));
+        instance = new Settings(dataFolder);
+
+        return instance;
     }
 
     public boolean save() {

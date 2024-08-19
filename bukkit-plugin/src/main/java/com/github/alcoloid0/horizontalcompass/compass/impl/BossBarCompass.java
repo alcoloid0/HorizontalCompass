@@ -18,7 +18,9 @@
 package com.github.alcoloid0.horizontalcompass.compass.impl;
 
 import com.github.alcoloid0.horizontalcompass.HorizontalCompass;
-import com.github.alcoloid0.horizontalcompass.compass.AbstractCompass;
+import com.github.alcoloid0.horizontalcompass.api.compass.Compass;
+import com.github.alcoloid0.horizontalcompass.api.compass.CompassWaypoints;
+import com.github.alcoloid0.horizontalcompass.compass.CompassWaypointsImpl;
 import com.github.alcoloid0.horizontalcompass.compass.style.CompassStyle;
 import com.github.alcoloid0.horizontalcompass.settings.Settings;
 import net.kyori.adventure.audience.Audience;
@@ -27,33 +29,40 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public final class BossBarCompass extends AbstractCompass {
+public final class BossBarCompass implements Compass {
     private final BossBar bossBar;
     private final Audience audience;
+    private final Player player;
+    private final CompassStyle compassStyle;
+    private final CompassWaypoints waypoints = new CompassWaypointsImpl(this);
 
     public BossBarCompass(@NotNull HorizontalCompass compassPlugin,
                           @NotNull Player player,
-                          @NotNull CompassStyle style) {
+                          @NotNull CompassStyle compassStyle) {
 
-        super(player, style);
-
-        this.bossBar = BossBar.bossBar(Component.empty(),
-                0,
-                Settings.compass().getBossBar().getColor(),
-                Settings.compass().getBossBar().getOverlay());
-
+        this.player = player;
+        this.compassStyle = compassStyle;
         this.audience = compassPlugin.getAdventure().player(player);
+
+        BossBar.Color color = Settings.compass().getBossBar().getColor();
+        BossBar.Overlay overlay = Settings.compass().getBossBar().getOverlay();
+
+        this.bossBar = BossBar.bossBar(Component.empty(), 0, color, overlay);
     }
 
     @Override
-    public void update() {
-        super.update();
+    public @NotNull CompassWaypoints getWaypoints() {
+        return this.waypoints;
+    }
 
-        this.bossBar.name(this.style.getComponent());
+    @Override
+    public @NotNull Player getCompassPlayer() {
+        return this.player;
+    }
 
-        if (Settings.compass().getBossBar().isShowProgress()) {
-            this.bossBar.progress((this.player.getEyeLocation().getYaw() + 180.0f) / 360.0f);
-        }
+    @Override
+    public void hide() {
+        this.audience.hideBossBar(this.bossBar);
     }
 
     @Override
@@ -62,7 +71,13 @@ public final class BossBarCompass extends AbstractCompass {
     }
 
     @Override
-    public void hide() {
-        this.audience.hideBossBar(this.bossBar);
+    public void update() {
+        this.compassStyle.update(this);
+
+        this.bossBar.name(this.compassStyle.getComponent());
+
+        if (Settings.compass().getBossBar().isShowProgress()) {
+            this.bossBar.progress((this.player.getEyeLocation().getYaw() + 180.0f) / 360.0f);
+        }
     }
 }

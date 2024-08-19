@@ -21,6 +21,7 @@ import com.github.alcoloid0.horizontalcompass.api.compass.Compass;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+@FunctionalInterface
 public interface CompassFactory {
     @NotNull
     Compass createCompass(@NotNull Player forPlayer);
