@@ -56,3 +56,8 @@ subprojects {
         compileOnly("org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT")
     }
 }
+
+// HACK: https://stackoverflow.com/a/70161403
+tasks {
+    listOf(jar.get(), build.get()).forEach { task -> task.enabled = false }
+}
