@@ -67,7 +67,7 @@ public final class WaypointImpl implements Waypoint {
     }
 
     @Override
-    public void updateLocation(@NotNull Location location) {
+    public void setLocation(@NotNull Location location) {
         this.location = location;
     }
 }

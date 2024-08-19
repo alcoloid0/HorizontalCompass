@@ -18,7 +18,6 @@
 package com.github.alcoloid0.horizontalcompass.api.compass;
 
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 public interface Compass {
@@ -32,6 +31,5 @@ public interface Compass {
 
     void show();
 
-    @ApiStatus.Internal
     void update();
 }

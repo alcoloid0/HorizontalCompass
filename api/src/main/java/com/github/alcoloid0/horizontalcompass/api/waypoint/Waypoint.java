@@ -19,6 +19,7 @@ package com.github.alcoloid0.horizontalcompass.api.waypoint;
 
 import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Location;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 public interface Waypoint {
@@ -38,5 +39,10 @@ public interface Waypoint {
     @NotNull
     Location getLocation();
 
-    void updateLocation(@NotNull Location location);
+    void setLocation(@NotNull Location location);
+
+    @ApiStatus.Obsolete
+    default void updateLocation(@NotNull Location location) {
+        this.setLocation(location);
+    }
 }
